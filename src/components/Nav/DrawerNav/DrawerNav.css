@@ -1,0 +1,14 @@
+.selected-nav {
+    border: 2px solid #FFE26E;
+    background-color: #FFE26E;
+    transition: 0.5s ease-in-out;
+}
+
+.other-nav {
+    border: 2px solid transparent;
+    transition: 0.5s ease-in-out;
+}
+
+.other-nav:hover {
+    background-color: #ffe26e66;
+}

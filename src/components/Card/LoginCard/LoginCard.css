@@ -1,0 +1,115 @@
+.login__card__container {
+    /* height: 500px; */
+    width: 420px;
+    margin: auto;
+    /* box-shadow: 0px 2px 5px -2px; */
+}
+
+.login__card {
+    height: 100%;
+    width: 90%;
+    margin: auto;
+    padding: 10px;
+}
+
+.login__header {
+    margin: 20px auto;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.login__header h1 {
+    font-size: 2.5rem;
+    font-weight: bolder;
+
+}
+
+.login__inputs {
+    height: 60%;
+    width: 100%;
+}
+
+.input__container {
+    height: 35%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.input__label {
+    height: 40%;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.login__input {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login__button__container {
+    height: 30%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login__button {
+    padding: 10px;
+    width: 100%;
+    font-size: 1.1rem;
+    background-color: #FFE26E;
+    border: 2px solid #FFE26E;
+    font-weight: bold;
+    border-radius: 16px;
+    text-transform: capitalize;
+    transition: 0.5s ease-out;
+    color: white;
+}
+
+.login__button:hover {
+
+    background-color: transparent;
+    color: #FFE26E;
+}
+
+.login__other__actions {
+    height: 20%;
+    width: 100%;
+}
+
+.css-hdw1oc {
+    display: none;
+}
+
+
+.form-check-input:checked {
+    background-color: #28a745;
+
+    border-color: #28a745;
+
+}
+
+.form-check-input:checked:focus {
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+}
+
+.custom-input:checked {
+    background-color: #28a745;
+    /* Change to your desired color */
+    border-color: #28a745;
+    /* Change to your desired color */
+}
+
+.custom-input:checked:focus {
+    box-shadow: 0 0 0 0.25rem rgba(40, 167, 69, 0.25);
+}

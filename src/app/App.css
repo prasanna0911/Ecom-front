@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Roboto:wght@500&family=Ubuntu:wght@500&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+
+}
+
+body {
+    background-color: rgb(252, 252, 252) !important;
+}
+
+div {
+    background-color: transparent;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+
+a:hover {
+    text-decoration: none;
+}
+
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+    padding: 10px 14px !important;
+}
+
+
+.custom-box {
+    /* height: 100px; */
+    width: 100%;
+    padding: 30px;
+    background-color: aqua;
+}
+
+/* .css-bhp9pd-MuiPaper-root-MuiCard-root {
+    box-shadow: 10px 10px 20px #babecc, -10px -10px 20px #ffffff !important;
+    border-radius: 16px !important;
+} */
