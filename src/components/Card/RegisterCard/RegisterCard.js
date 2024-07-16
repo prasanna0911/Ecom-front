@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./RegisterCard.css";
 import {
   Button,
@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import GoogleIcon from "@mui/icons-material/Google";
+import { ApiServices } from "../../../api/api";
 
 const RegisterCard = () => {
   const [mailValue, setMailValue] = useState("");
@@ -20,6 +21,9 @@ const RegisterCard = () => {
   const [fnameError, setFnameError] = useState(false);
   const [lnameValue, setLnameValue] = useState("");
   const [lnameError, setLnameError] = useState(false);
+  const [usernameValue, setUsernameValue] = useState("");
+  const [usernameError, setUsernameError] = useState(false);
+  const [usernameErrorMsg, setUsernameErrorMsg] = useState(false);
   const [passValue, setPassValue] = useState("");
   const [passError, setPassError] = useState(false);
   const [passErrorMsg, setPassErrorMsg] = useState("");
@@ -27,12 +31,16 @@ const RegisterCard = () => {
   const [cpassError, setCpassError] = useState(false);
   const [cpassErrorMsg, setCpassErrorMsg] = useState("");
 
-  const handleSubmit = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
     setFnameError(false);
     setLnameError(false);
     setMailError(false);
     setPassError(false);
     setCpassError(false);
+    setUsernameError(false);
+    setUsernameErrorMsg("");
     if (!fnameValue) {
       setFnameError(true);
       return;
@@ -59,6 +67,27 @@ const RegisterCard = () => {
       setCpassErrorMsg("Password didn't match");
       return;
     } else {
+      var json = {
+        FirstName: fnameValue,
+        LastName: lnameValue,
+        Username: usernameValue,
+        Email: mailValue,
+        Password: passValue,
+      };
+      console.log("json", json);
+
+      ApiServices.signup(json).then((res) => {
+        console.log("res", res);
+        if (res.response_code === 200) {
+          if (res.success) {
+            alert(res.message);
+            navigate("/account/login");
+          } else {
+            setUsernameError(true);
+            setUsernameErrorMsg(res.message);
+          }
+        }
+      });
       console.log("Login Success");
     }
   };
@@ -98,6 +127,22 @@ const RegisterCard = () => {
           onChange={(e) => setLnameValue(e.target.value)}
           error={lnameError}
           helperText={lnameError ? "Last name cannot be empty" : ""}
+        />
+        <FormHelperText>
+          <Typography variant="subtitle1" gutterBottom>
+            Username
+          </Typography>
+        </FormHelperText>
+        <TextField
+          style={{ width: "100%", maxWidth: 500 }}
+          id="fullWidth"
+          variant="outlined"
+          className="w-100 mb-2"
+          placeholder="Enter your username"
+          value={usernameValue}
+          onChange={(e) => setUsernameValue(e.target.value)}
+          error={usernameError}
+          helperText={usernameError ? usernameErrorMsg : ""}
         />
         <FormHelperText>
           <Typography variant="subtitle1" gutterBottom>

@@ -70,7 +70,7 @@ const DrawerNav = () => {
               className={
                 item.nav_link === path
                   ? "selected-nav mx-3 rounded-3 mb-2"
-                  : "other-nav mx-3 rounded-3 mb-2 pt-1"
+                  : "other-nav mx-3 rounded-3 mb-2"
               }
               onClick={() => navigate(item.nav_link)}
             >

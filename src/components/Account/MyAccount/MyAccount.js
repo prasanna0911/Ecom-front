@@ -29,6 +29,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MyReviews from "../MyReviews";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useMyContext } from "../../../Context/MyContext";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -88,6 +89,7 @@ const MyAccount = () => {
   const initialTab = parseInt(queryParams.get("tab") || "0", 10);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const { setIsLogin } = useMyContext();
 
   const [value, setValue] = useState(initialTab);
   const [logoutOpen, setLogoutOpen] = useState(false);
@@ -104,6 +106,13 @@ const MyAccount = () => {
 
   const handleRoute = (route) => {
     navigate(route);
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    setIsLogin(false);
+    setLogoutOpen(false);
+    navigate("/account/login");
   };
   return (
     <Account>
@@ -301,7 +310,7 @@ const MyAccount = () => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" color="error">
+          <Button variant="contained" color="error" onClick={() => logout()}>
             Logout
           </Button>
           <Button onClick={() => setLogoutOpen(false)}>cancel</Button>

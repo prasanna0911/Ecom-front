@@ -10,18 +10,22 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { Row, Col } from "react-bootstrap";
+import { ApiServices } from "../../../api/api";
+import { useMyContext } from "../../../Context/MyContext";
 
 const LoginCard = () => {
-  const [mailValue, setMailValue] = useState("");
+  const [userValue, setUserValue] = useState("");
   const [mailError, setMailError] = useState(false);
   const [passValue, setPassValue] = useState("");
   const [passError, setPassError] = useState(false);
   const [passErrorMsg, setPassErrorMsg] = useState("");
 
+  const { setIsLogin } = useMyContext();
+
   const handleSubmit = () => {
     setMailError(false);
     setPassError(false);
-    if (!mailValue) {
+    if (!userValue) {
       setMailError(true);
       return;
     } else if (!passValue) {
@@ -29,6 +33,21 @@ const LoginCard = () => {
       setPassErrorMsg("Password cannot be empty");
       return;
     } else {
+      var json = {
+        Username: userValue,
+        Password: passValue,
+      };
+      ApiServices.Login(json).then((res) => {
+        console.log("res", res);
+        if (res.response_code === 200) {
+          localStorage.setItem("token", res.token);
+          setIsLogin(true);
+          alert("login successfully");
+          window.location.replace("/account/me");
+        } else {
+          alert(res.message);
+        }
+      });
       console.log("Login Success");
     }
   };
@@ -47,9 +66,9 @@ const LoginCard = () => {
           id="fullWidth"
           variant="outlined"
           className="w-100 mb-2"
-          placeholder="Enter your mail"
-          value={mailValue}
-          onChange={(e) => setMailValue(e.target.value)}
+          placeholder="Enter your username"
+          value={userValue}
+          onChange={(e) => setUserValue(e.target.value)}
           error={mailError}
           helperText={mailError ? "Email cannot be empty" : ""}
         />

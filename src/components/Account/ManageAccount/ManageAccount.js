@@ -19,19 +19,20 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AccountHeader from "../AccountHeader";
 import { useMyContext } from "../../../Context/MyContext";
+import { ApiServices } from "../../../api/api";
 
 const ManageAccount = () => {
   const { MobileScreen } = useMyContext();
 
-  const [userValue, setUserValue] = useState("prasanna@1234");
+  const [userValue, setUserValue] = useState("");
   const [userError, setUserError] = useState(false);
-  const [mailValue, setMailValue] = useState("prasanna@gmail.com");
+  const [mailValue, setMailValue] = useState("");
   const [mailError, setMailError] = useState(false);
-  const [fnameValue, setFnameValue] = useState("prasanna");
-  const [lnameValue, setLnameValue] = useState("prasanna");
+  const [fnameValue, setFnameValue] = useState("");
+  const [lnameValue, setLnameValue] = useState("");
   const [passValue, setPassValue] = useState("");
   const [passError, setPassError] = useState(false);
   const [newPassValue, setNewPassValue] = useState("");
@@ -40,16 +41,10 @@ const ManageAccount = () => {
   const [cpassValue, setCpassValue] = useState("");
   const [cpassError, setCpassError] = useState(false);
   const [newPhoneNumber, setNewPhoneNumber] = useState(0);
-  const [phoneNumber, setPhoneNumber] = useState(9812345678);
+  const [phoneNumber, setPhoneNumber] = useState();
 
   //userdata
-  const [userData, setUserData] = useState({
-    firstname: "prasanna",
-    lastname: "prasanna",
-    username: "prasanna@1234",
-    mail: "prasanna@gmail.com",
-    // phonenumber: 9876543210,
-  });
+  const [userData, setUserData] = useState({});
 
   //edit dialogs
   const [nameEditOpen, setNameEditOpen] = useState(false);
@@ -59,6 +54,24 @@ const ManageAccount = () => {
   const [phonenumberAddOpen, setPhonenumberAddOpen] = useState(false);
   const [phonenumberEditOpen, setPhonenumberEditOpen] = useState(false);
 
+  const getUserData = async () => {
+    ApiServices.UserData().then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setUserData(res.userData);
+        setFnameValue(res.userData?.first_name);
+        setLnameValue(res.userData?.last_name);
+        setUserValue(res.userData?.username);
+        setMailValue(res.userData?.email);
+        setPhoneNumber(res.userData?.mobile_number);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   //email validation
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -67,10 +80,18 @@ const ManageAccount = () => {
 
   //update functions
 
-  const handleNameUpdate = () => {
-    userData.firstname = fnameValue;
-    userData.lastname = lnameValue;
-    setNameEditOpen(false);
+  const handleNameUpdate = async () => {
+    var json = {
+      FirstName: fnameValue,
+      LastName: lnameValue,
+    };
+    ApiServices.UpdateName(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setNameEditOpen(false);
+        getUserData();
+      }
+    });
   };
 
   const handleUsernameUpdate = () => {
@@ -89,8 +110,16 @@ const ManageAccount = () => {
       return;
     }
     setMailError(false);
-    userData.mail = mailValue;
-    setMailEditOpen(false);
+    var json = {
+      Email: mailValue,
+    };
+    ApiServices.UpdateEmail(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setMailEditOpen(false);
+        getUserData();
+      }
+    });
   };
 
   const handlePasswordUpdate = () => {
@@ -98,10 +127,10 @@ const ManageAccount = () => {
     setNewPassError(false);
     setNewPassErrorMsg("");
     setCpassError(false);
-    if (passValue !== "prasanna12") {
-      setPassError(true);
-      return;
-    }
+    // if (passValue !== "prasanna12") {
+    //   setPassError(true);
+    //   return;
+    // }
     if (newPassValue.length < 8) {
       setNewPassError(true);
       setNewPassErrorMsg("Password must contain atleast 8 charecters");
@@ -117,19 +146,43 @@ const ManageAccount = () => {
       return;
     }
 
-    console.log("password changed successfully");
-    setPasswordEditOpen(false);
+    var json = {
+      OldPassword: passValue,
+      NewPassword: newPassValue,
+    };
+    ApiServices.UpdatePassword(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setPasswordEditOpen(false);
+        getUserData();
+      }
+    });
   };
 
   const handleAddNumber = () => {
-    console.log("new number added");
-    userData.phonenumber = newPhoneNumber;
-    setPhonenumberAddOpen(false);
+    var json = {
+      MobileNumber: newPhoneNumber,
+    };
+    ApiServices.UpdateMobileNumber(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setPhonenumberAddOpen(false);
+        getUserData();
+      }
+    });
   };
 
   const handleEditNumber = () => {
-    userData.phonenumber = phoneNumber;
-    setPhonenumberEditOpen(false);
+    var json = {
+      MobileNumber: phoneNumber,
+    };
+    ApiServices.UpdateMobileNumber(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setPhonenumberEditOpen(false);
+        getUserData();
+      }
+    });
   };
   return (
     // <Account>
@@ -164,7 +217,7 @@ const ManageAccount = () => {
                   >
                     <ListItemText
                       primary="Name"
-                      secondary={`${userData.firstname} ${userData.lastname}`}
+                      secondary={`${userData.first_name} ${userData.last_name}`}
                     />
                   </ListItem>
                   <Divider />
@@ -196,7 +249,7 @@ const ManageAccount = () => {
                       </Button>
                     }
                   >
-                    <ListItemText primary="Email" secondary={userData.mail} />
+                    <ListItemText primary="Email" secondary={userData.email} />
                   </ListItem>
                   <Divider />
                   <ListItem
@@ -215,7 +268,7 @@ const ManageAccount = () => {
                   <Divider />
                   <ListItem
                     secondaryAction={
-                      userData.phonenumber ? (
+                      userData.mobile_number ? (
                         <Button
                           variant="contained"
                           className="text-capitalize py-1"
@@ -237,8 +290,8 @@ const ManageAccount = () => {
                     <ListItemText
                       primary="Mobile number"
                       secondary={
-                        userData.phonenumber
-                          ? userData.phonenumber
+                        userData.mobile_number
+                          ? userData.mobile_number
                           : "Add a phone number"
                       }
                     />
