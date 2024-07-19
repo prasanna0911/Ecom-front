@@ -53,9 +53,7 @@ const Item = (props) => {
 
   const fetchProductDetails = async () => {
     setData(props.item);
-    setActiveImage(
-      `https://shema-backend.vercel.app/public/${props.item?.category}/${props.item?.image[1].filename}`
-    );
+    setActiveImage(props.item?.primaryImage[0].URL);
     window.scrollTo(0, 0);
   };
   console.log("data", data);
@@ -151,23 +149,15 @@ const Item = (props) => {
                       key={imgURL}
                     >
                       <img
-                        src={`https://shema-backend.vercel.app/public/${data?.category}/${imgURL.filename}`}
+                        src={imgURL.URL}
                         className="w-100 h-100"
                         style={{
                           objectFit: "scale-down",
                           mixBlendMode: "multiply",
                           cursor: "pointer",
                         }}
-                        onMouseEnter={() =>
-                          handleMouseEnterProduct(
-                            `https://shema-backend.vercel.app/public/${data?.category}/${imgURL.filename}`
-                          )
-                        }
-                        onClick={() =>
-                          handleMouseEnterProduct(
-                            `https://shema-backend.vercel.app/public/${data?.category}/${imgURL.filename}`
-                          )
-                        }
+                        onMouseEnter={() => handleMouseEnterProduct(imgURL.URL)}
+                        onClick={() => handleMouseEnterProduct(imgURL.URL)}
                       />
                     </div>
                   ))}

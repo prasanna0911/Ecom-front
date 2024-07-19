@@ -8,7 +8,7 @@ const RelatedCard = (props) => {
       <CardContent className="related__product__card__inner p-1">
         <div className="related__product__image">
           <img
-            src={`https://shema-backend.vercel.app/public/${props.item.category}/${props.item.image[0].filename}`}
+            src={props.item?.primaryImage[0].URL}
             alt="item"
             className="product__img"
           />

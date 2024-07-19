@@ -9,11 +9,7 @@ const ProductCarousel = (props) => {
           {props?.item?.image?.map((img) => (
             <Carousel.Item>
               <div className="carousel__image__container">
-                <img
-                  className="carousel__image"
-                  src={`https://shema-backend.vercel.app/public/${props.item.category}/${img.filename}`}
-                  alt="item"
-                />
+                <img className="carousel__image" src={img.URL} alt="item" />
               </div>
             </Carousel.Item>
           ))}

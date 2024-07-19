@@ -121,22 +121,10 @@ const Reviews = ({ item }) => {
             </div>
           </div>
           <div className="d-flex gap-3">
-            <img
-              src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[0].filename}`}
-              width={50}
-              alt="main_img"
-            />
-            <img
-              src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[1].filename}`}
-              width={50}
-              alt="main_img"
-            />
-            {item.image[2]?.filename && (
-              <img
-                src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[2]?.filename}`}
-                width={50}
-                alt="main_img"
-              />
+            <img src={item.image[0].URL} width={50} alt="main_img" />
+            <img src={item.image[1].URL} width={50} alt="main_img" />
+            {item.image[2]?.URL && (
+              <img src={item.image[2].URL} width={50} alt="main_img" />
             )}
           </div>
           <span className="d-block mb-1">
@@ -181,22 +169,10 @@ const Reviews = ({ item }) => {
             </div>
           </div>
           <div className="d-flex gap-3">
-            <img
-              src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[0].filename}`}
-              width={50}
-              alt="main_img"
-            />
-            <img
-              src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[1].filename}`}
-              width={50}
-              alt="main_img"
-            />
-            {item.image[2]?.filename && (
-              <img
-                src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[2]?.filename}`}
-                width={50}
-                alt="main_img"
-              />
+            <img src={item.image[0].URL} width={50} alt="main_img" />
+            <img src={item.image[1].URL} width={50} alt="main_img" />
+            {item.image[2]?.URL && (
+              <img src={item.image[2].URL} width={50} alt="main_img" />
             )}
           </div>
           <span className="d-block mb-1">
@@ -241,22 +217,10 @@ const Reviews = ({ item }) => {
             </div>
           </div>
           <div className="d-flex gap-3">
-            <img
-              src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[0].filename}`}
-              width={50}
-              alt="main_img"
-            />
-            <img
-              src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[1].filename}`}
-              width={50}
-              alt="main_img"
-            />
-            {item.image[2]?.filename && (
-              <img
-                src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[2]?.filename}`}
-                width={50}
-                alt="main_img"
-              />
+            <img src={item.image[0].URL} width={50} alt="main_img" />
+            <img src={item.image[1].URL} width={50} alt="main_img" />
+            {item.image[2]?.URL && (
+              <img src={item.image[2].URL} width={50} alt="main_img" />
             )}
           </div>
           <span className="d-block mb-1">

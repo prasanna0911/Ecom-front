@@ -4,6 +4,7 @@ import axios from "axios";
 import ShopCategory from "./Container/ShopCategory";
 import "./Shop.css";
 import ReactLoading from "react-loading";
+import { ApiServices } from "../../api/api";
 
 const Shop = () => {
   TabTitle("Shop - SHEMA");
@@ -13,16 +14,29 @@ const Shop = () => {
   const [loading, setLoading] = useState(true);
   console.log("menItems", menItems);
 
-  useEffect(() => {
-    axios
-      .get("https://shema-backend.vercel.app/api/items")
-      .then((res) => {
-        setMenItems(res.data.filter((item) => item.category === "men"));
-        setKidsItems(res.data.filter((item) => item.category === "kids"));
-        setWomenItems(res.data.filter((item) => item.category === "women"));
+  const getAllItems = async () => {
+    ApiServices.GetAllProducts().then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        // setFeaturedItems(res.Data)
+        setMenItems(res.Data.filter((item) => item.category === "men"));
+        setKidsItems(res.Data.filter((item) => item.category === "kids"));
+        setWomenItems(res.Data.filter((item) => item.category === "women"));
         setLoading(false);
-      })
-      .catch((err) => console.log(err));
+      }
+    });
+  };
+  useEffect(() => {
+    getAllItems();
+    // axios
+    //   .get("https://shema-backend.vercel.app/api/items")
+    //   .then((res) => {
+    //     setMenItems(res.data.filter((item) => item.category === "men"));
+    //     setKidsItems(res.data.filter((item) => item.category === "kids"));
+    //     setWomenItems(res.data.filter((item) => item.category === "women"));
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => console.log(err));
     window.scrollTo(0, 0);
   }, []);
 

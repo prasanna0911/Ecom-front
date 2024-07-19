@@ -3,22 +3,42 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import ReactLoading from 'react-loading';
 import Item from '../components/Item/Item';
+import { ApiServices } from '../api/api';
 
 const ProductView = (props) => {
     const param = useParams()
     const [item, setItem] = useState()
     const [loading, setLoading] = useState(true)
 
+    const getFeaturedItems = async () => {
+        ApiServices.GetAllProducts().then(res => {
+            console.log('res', res);
+            if (res.response_code === 200) {
+                setItem(res.Data?.filter((item) => item._id === param.id))
+                setLoading(false)
+            }
+        })
+    }
+
     useEffect(() => {
         window.scrollTo(0, 0)
-        axios.get("https://shema-backend.vercel.app/api/items")
-            .then(res => {
-                console.log(res)
-                setItem(res.data.filter((item) => item._id === param.id))
-                console.log(res.data.filter((item) => item._id === param.id))
-                setLoading(false)
-            })
-            .catch(err => console.log(err))
+        getFeaturedItems()
+        // ApiServices.GetAllProducts().then(res => {
+        //     console.log(res)
+        //     // if (res.response_code === 200) {
+        //     setItem(res?.filter((item) => item._id === param.id))
+        //     console.log(res.filter((item) => item._id === param.id))
+        //     setLoading(false)
+        //     // }
+        // })
+        // axios.get("https://shema-backend.vercel.app/api/items")
+        //     .then(res => {
+        //         console.log(res)
+        //         setItem(res.data.filter((item) => item._id === param.id))
+        //         console.log(res.data.filter((item) => item._id === param.id))
+        //         setLoading(false)
+        //     })
+        //     .catch(err => console.log(err))
 
     }, [param.id])
 

@@ -5,16 +5,27 @@ import FeaturedItems from "../components/Featured/Items/FetauredItems";
 import FeaturedCategories from "../components/Featured/Categories/FeaturedCategories";
 import { TabTitle } from "../utils/General";
 import { Box, Grid } from "@radix-ui/themes";
+import { ApiServices } from "../api/api";
 
 
 const Home = () => {
     const [featuredItems, setFeaturedItems] = useState()
     TabTitle("Home - Shema");
 
+    const getFeaturedItems = async () => {
+        ApiServices.GetAllProducts().then(res => {
+            console.log('res', res);
+            if (res.response_code === 200) {
+                setFeaturedItems(res.Data)
+            }
+        })
+    }
+
     useEffect(() => {
-        axios.get("https://shema-backend.vercel.app/api/items")
-            .then(res => setFeaturedItems(res.data))
-            .catch(err => console.log(err))
+        getFeaturedItems()
+        // axios.get("https://shema-backend.vercel.app/api/items")
+        //     .then(res => setFeaturedItems(res.data))
+        //     .catch(err => console.log(err))
 
         window.scrollTo(0, 0)
     }, [])

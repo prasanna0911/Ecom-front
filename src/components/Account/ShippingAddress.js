@@ -1,5 +1,5 @@
 // import node module libraries
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Modal, Form } from "react-bootstrap";
 import {
@@ -19,12 +19,13 @@ import {
 } from "@mui/material";
 import { useMyContext } from "../../Context/MyContext";
 import AccountHeader from "./AccountHeader";
-
-// import widget as custom components
+import { ApiServices } from "../../api/api";
 
 const ShippingAddress = () => {
   const { MobileScreen } = useMyContext();
+  const [myAddresses, setMyAddresses] = useState([]);
 
+  //new address
   const [modalShow, setModalShow] = useState(false);
   const [newAddressDialog, setNewAddressDialog] = useState(false);
   const [newAddressName, setNewAddressName] = useState("");
@@ -33,29 +34,55 @@ const ShippingAddress = () => {
   const [newCity, setNewCity] = useState("");
   const [newState, setNewState] = useState("");
   const [newZipCode, setNewZipCode] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+  const [newPhoneNumber, setNewPhoneNumber] = useState("");
   const [isPrimary, setIsPrimary] = useState(false);
 
+  //edit address
   const [addressDialog, setAddressDialog] = useState(false);
+  const [selectedAddressId, setSelectedAddressId] = useState("");
   const [addressName, setAddressName] = useState("");
   const [addressLine1, setAddressLine1] = useState("");
   const [addressLine2, setAddressLine2] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [zipCode, setZipCode] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [editPrimary, setEditPrimary] = useState(false);
 
   const [addressDelete, setAddressDelete] = useState(false);
+  const [deleteId, setDeleteId] = useState("");
+
+  const getBillingAddresses = async () => {
+    ApiServices.UserData().then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setMyAddresses(res.userData?.addresses);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getBillingAddresses();
+  }, []);
 
   const handleUpdateDialog = (address) => {
+    setSelectedAddressId(address._id);
     setAddressName(address.name);
     setAddressLine1(address.address_line1);
     setAddressLine2(address.address_line2);
     setCity(address.city);
     setState(address.state);
     setZipCode(address.zip_code);
+    setEmail(address.email);
+    setPhoneNumber(address.phone);
+    setEditPrimary(address.primary);
     setAddressDialog(true);
   };
 
   const handleDeleteDialog = (address) => {
+    setDeleteId(address._id);
     setAddressDelete(true);
   };
 
@@ -185,6 +212,99 @@ const ShippingAddress = () => {
     );
   };
 
+  const handleAddressCreate = async () => {
+    console.log("newAddressName", newAddressName);
+    console.log("newAddressLine1", newAddressLine1);
+    console.log("newAddressLine2", newAddressLine2);
+    console.log("newCity", newCity);
+    console.log("newState", newState);
+    console.log("newZipCode", newZipCode);
+    console.log("newEmail", newEmail);
+    console.log("newPhoneNumber", newPhoneNumber);
+    console.log("isPrimary", isPrimary);
+
+    var json = {
+      Name: newAddressName,
+      AddressLine1: newAddressLine1,
+      AddressLine2: newAddressLine2,
+      City: newCity,
+      State: newState,
+      ZipCode: newZipCode,
+      Email: newEmail,
+      Phone: newPhoneNumber,
+      Primary: isPrimary,
+    };
+    ApiServices.AddShippingAddress(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setModalShow(false);
+        getBillingAddresses();
+      }
+    });
+  };
+
+  const handleUpdateAddress = async () => {
+    var json = {
+      Id: selectedAddressId,
+      Name: addressName,
+      AddressLine1: addressLine1,
+      AddressLine2: addressLine2,
+      City: city,
+      State: state,
+      ZipCode: zipCode,
+      Email: email,
+      Phone: phoneNumber,
+      Primary: editPrimary,
+    };
+    console.log("json", json);
+    ApiServices.EditShippingAddress(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        getBillingAddresses();
+        setAddressDialog(false);
+      }
+    });
+  };
+
+  const handleAddressDelete = async () => {
+    var json = {
+      Id: deleteId,
+    };
+    ApiServices.DeleteShippingAddress(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setAddressDelete(false);
+        getBillingAddresses();
+      }
+    });
+  };
+
+  const handleAddPrimaryAddress = async (id) => {
+    var json = {
+      Id: id,
+    };
+    console.log("json", json);
+    ApiServices.SetPrimaryAddress(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        getBillingAddresses();
+      }
+    });
+  };
+
+  const handleRemovePrimaryAddress = async (id) => {
+    var json = {
+      Id: id,
+    };
+    console.log("json", json);
+    ApiServices.RemovePrimaryAddress(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        getBillingAddresses();
+      }
+    });
+  };
+
   return (
     <div style={{ padding: MobileScreen ? "none" : "20px" }}>
       {!MobileScreen && (
@@ -209,12 +329,12 @@ const ShippingAddress = () => {
           />
           <CardContent>
             {/* <Row className="align-items-center"> */}
-            {MyAddresses.map((address, index) => (
+            {myAddresses?.map((address, index) => (
               <Row
                 className="mt-4 p-2"
                 style={{
                   borderBottom:
-                    index !== MyAddresses.length - 1
+                    index !== myAddresses?.length - 1
                       ? "1px solid #ddd"
                       : "none",
                 }}
@@ -237,9 +357,18 @@ const ShippingAddress = () => {
                     </span>
                     <span className="d-block mb-4">{address.state}</span>
                     {address.primary ? (
-                      <Button>Remove as Default</Button>
+                      <Button
+                        onClick={() => handleRemovePrimaryAddress(address._id)}
+                      >
+                        Remove as Default
+                      </Button>
                     ) : (
-                      <Button variant="contained">Set As Default</Button>
+                      <Button
+                        variant="contained"
+                        onClick={() => handleAddPrimaryAddress(address._id)}
+                      >
+                        Set As Default
+                      </Button>
                     )}
                     <Button
                       color="warning"
@@ -374,6 +503,34 @@ const ShippingAddress = () => {
                   value={newState}
                   onChange={(e) => setNewState(e.target.value)}
                 />
+                <FormHelperText>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Email
+                  </Typography>
+                </FormHelperText>
+                <TextField
+                  style={{ width: "100%" }}
+                  id="fullWidth"
+                  variant="outlined"
+                  className="w-100 mb-2"
+                  placeholder="Enter your email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                />
+                <FormHelperText>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Mobile number
+                  </Typography>
+                </FormHelperText>
+                <TextField
+                  style={{ width: "100%" }}
+                  id="fullWidth"
+                  variant="outlined"
+                  className="w-100 mb-2"
+                  placeholder="Enter your mobile number"
+                  value={newPhoneNumber}
+                  onChange={(e) => setNewPhoneNumber(e.target.value)}
+                />
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -385,7 +542,12 @@ const ShippingAddress = () => {
                 />
               </DialogContent>
               <DialogActions>
-                <Button variant="contained">Create</Button>
+                <Button
+                  variant="contained"
+                  onClick={() => handleAddressCreate()}
+                >
+                  Create
+                </Button>
                 <Button onClick={() => setNewAddressDialog(false)}>
                   Cancel
                 </Button>
@@ -487,9 +649,51 @@ const ShippingAddress = () => {
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                 />
+                <FormHelperText>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Email
+                  </Typography>
+                </FormHelperText>
+                <TextField
+                  style={{ width: "100%" }}
+                  id="fullWidth"
+                  variant="outlined"
+                  className="w-100 mb-2"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <FormHelperText>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Mobile number
+                  </Typography>
+                </FormHelperText>
+                <TextField
+                  style={{ width: "100%" }}
+                  id="fullWidth"
+                  variant="outlined"
+                  className="w-100 mb-2"
+                  placeholder="Enter your mobile number"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={editPrimary}
+                      onChange={() => setEditPrimary((prev) => !prev)}
+                    />
+                  }
+                  label="Set as primary address"
+                />
               </DialogContent>
               <DialogActions>
-                <Button variant="contained">Create</Button>
+                <Button
+                  variant="contained"
+                  onClick={() => handleUpdateAddress()}
+                >
+                  Update
+                </Button>
                 <Button onClick={() => setAddressDialog(false)}>Cancel</Button>
               </DialogActions>
             </Dialog>
@@ -508,7 +712,11 @@ const ShippingAddress = () => {
                 </Typography>
               </DialogContent>
               <DialogActions>
-                <Button variant="contained" color="error">
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => handleAddressDelete()}
+                >
                   Delete
                 </Button>
                 <Button onClick={() => setAddressDelete(false)}>Cancel</Button>

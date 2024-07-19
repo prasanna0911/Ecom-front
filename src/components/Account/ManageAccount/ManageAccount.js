@@ -95,13 +95,24 @@ const ManageAccount = () => {
   };
 
   const handleUsernameUpdate = () => {
-    if (userValue === "prasanna12") {
-      setUserError(true);
-      return;
-    }
-    setUserError(false);
-    userData.username = userValue;
-    setUsernameEditOpen(false);
+    // if (userValue === "prasanna12") {
+    //   setUserError(true);
+    //   return;
+    // }
+    // setUserError(false);
+    var json = {
+      Username: userValue,
+    };
+    ApiServices.UpdateUserName(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setUsernameEditOpen(false);
+        if (res.newToken) {
+          localStorage.setItem("token", res.newToken);
+          window.location.reload();
+        }
+      }
+    });
   };
 
   const handleEmailUpdate = () => {
@@ -332,7 +343,6 @@ const ManageAccount = () => {
                       }
                     />
                   </ListItem>
-                  <Divider />
                 </List>
               </CardContent>
             </Card>

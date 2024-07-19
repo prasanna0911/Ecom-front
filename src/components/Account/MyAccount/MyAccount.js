@@ -30,6 +30,7 @@ import MyReviews from "../MyReviews";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useMyContext } from "../../../Context/MyContext";
+import Payments from "../Payments";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -231,7 +232,7 @@ const MyAccount = () => {
             <MyReviews />
           </TabPanel>
           <TabPanel value={value} index={4}>
-            Item Five
+            <Payments />
           </TabPanel>
         </Box>
       ) : (
