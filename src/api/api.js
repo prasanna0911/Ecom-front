@@ -143,6 +143,33 @@ const RemovePrimaryAddress = async (data) => {
     return error;
   }
 };
+
+const AddToCart = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/addtocart", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const GetCartItems = async () => {
+  try {
+    const response = await instance.get(baseUrl + "/getcartitems");
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const RemoveFromCart = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/removefromcart", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
 export const ApiServices = {
   signup,
   Login,
@@ -158,4 +185,7 @@ export const ApiServices = {
   DeleteShippingAddress,
   SetPrimaryAddress,
   RemovePrimaryAddress,
+  AddToCart,
+  GetCartItems,
+  RemoveFromCart,
 };

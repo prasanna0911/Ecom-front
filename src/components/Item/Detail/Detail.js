@@ -15,12 +15,14 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
+import { ApiServices } from "../../../api/api";
+import { useMyContext } from "../../../Context/MyContext";
 
 const Detail = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState(props.item.size[0]);
 
-  const cartItems = useContext(CartItemsContext);
+  // const cartItems = useContext(CartItemsContext);
   const wishItems = useContext(WishItemsContext);
 
   const handleSizeChange = (event) => {
@@ -37,8 +39,20 @@ const Detail = (props) => {
     }
   };
 
+  const { cartItems, getCartItems, setCartItems } = useMyContext();
+
   const handelAddToCart = () => {
-    cartItems.addItem(props.item, quantity, size);
+    console.log("props.item", props.item);
+    var json = {
+      Id: props.item._id,
+    };
+    ApiServices.AddToCart(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        getCartItems();
+      }
+    });
+    // cartItems.addItem(props.item, quantity, size);
   };
 
   const handelAddToWish = () => {

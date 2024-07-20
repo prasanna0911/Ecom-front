@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { ApiServices } from "../api/api";
 
 const MyContext = createContext();
 
@@ -8,6 +9,7 @@ const MyContextProvider = ({ children }) => {
   const [darkThemeMode, setDarkThemeMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
   const theme = useTheme();
   const MobileScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const MediumScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -33,6 +35,20 @@ const MyContextProvider = ({ children }) => {
       setIsLogin(false);
     }
   }, [token]);
+
+  const getCartItems = () => {
+    ApiServices.GetCartItems().then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setCartItems(res.cart_items);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getCartItems();
+  }, []);
+
   return (
     <MyContext.Provider
       value={{
@@ -44,6 +60,9 @@ const MyContextProvider = ({ children }) => {
         MediumScreen,
         isLogin,
         setIsLogin,
+        getCartItems,
+        cartItems,
+        setCartItems,
       }}
     >
       {children}
