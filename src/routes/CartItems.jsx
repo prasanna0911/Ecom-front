@@ -13,7 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export const CartItems = () => {
     TabTitle("Cart Items - Shema");
-    const { cartItems, getCartItems, setCartItems } = useMyContext()
+    const { cartItems, getCartItems, setCartItems, getWishlistItems } = useMyContext()
 
     const removeFromCart = async (id) => {
         var json = {
@@ -24,6 +24,19 @@ export const CartItems = () => {
             console.log('res', res);
             if (res.response_code === 200) {
                 getCartItems()
+            }
+        })
+    }
+
+    const addToFavourite = async (id) => {
+        var json = {
+            Id: id
+        }
+        console.log('json', json);
+        ApiServices.AddToFavourites(json).then(res => {
+            console.log('res', res);
+            if (res.response_code === 200) {
+                getWishlistItems()
             }
         })
     }
@@ -70,7 +83,7 @@ export const CartItems = () => {
                             </div>
                         </div>
                         <div className='d-flex gap-2 mt-3'>
-                            <IconButton style={{ backgroundColor: '#ffe26e' }}><FavoriteIcon style={{ color: 'white' }} /></IconButton>
+                            <IconButton onClick={() => addToFavourite(item._id)} style={{ backgroundColor: '#ffe26e' }}><FavoriteIcon style={{ color: 'white' }} /></IconButton>
                             <Button startIcon={<ShoppingCartIcon />} variant='contained'>Buy now</Button>
                             <Button startIcon={<CloseIcon />} variant='outlined' color='error' onClick={() => removeFromCart(item._id)}>Remove from cart</Button>
                         </div>

@@ -10,6 +10,7 @@ const MyContextProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [wishListItems, setWishListItems] = useState([]);
   const theme = useTheme();
   const MobileScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const MediumScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -49,6 +50,18 @@ const MyContextProvider = ({ children }) => {
     getCartItems();
   }, []);
 
+  const getWishlistItems = () => {
+    ApiServices.GetFavouriteItems().then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        setWishListItems(res.wishlist);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getWishlistItems();
+  }, []);
   return (
     <MyContext.Provider
       value={{
@@ -63,6 +76,9 @@ const MyContextProvider = ({ children }) => {
         getCartItems,
         cartItems,
         setCartItems,
+        wishListItems,
+        setWishListItems,
+        getWishlistItems,
       }}
     >
       {children}

@@ -39,7 +39,14 @@ const Detail = (props) => {
     }
   };
 
-  const { cartItems, getCartItems, setCartItems } = useMyContext();
+  const {
+    cartItems,
+    getCartItems,
+    setCartItems,
+    wishListItems,
+    setWishListItems,
+    getWishlistItems,
+  } = useMyContext();
 
   const handelAddToCart = () => {
     console.log("props.item", props.item);
@@ -56,7 +63,16 @@ const Detail = (props) => {
   };
 
   const handelAddToWish = () => {
-    wishItems.addItem(props.item);
+    // wishItems.addItem(props.item);
+    var json = {
+      Id: props.item._id,
+    };
+    ApiServices.AddToFavourites(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        getWishlistItems();
+      }
+    });
   };
 
   const [alignment, setAlignment] = useState("");

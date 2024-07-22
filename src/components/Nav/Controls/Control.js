@@ -9,9 +9,8 @@ import { WishItemsContext } from "../../../Context/WishItemsContext";
 import { useMyContext } from "../../../Context/MyContext";
 
 const Control = () => {
-  const wishItems = useContext(WishItemsContext);
+  const { isLogin, setIsLogin, wishListItems } = useMyContext();
 
-  const { isLogin, setIsLogin } = useMyContext();
   console.log("isLogin", isLogin);
 
   return (
@@ -28,7 +27,7 @@ const Control = () => {
         </div>
         <div className="control">
           <Link to="/wishlist">
-            <Badge badgeContent={wishItems.items.length} color="error">
+            <Badge badgeContent={wishListItems.length} color="error">
               <FavoriteBorderIcon color="black" sx={{ width: "35px" }} />
             </Badge>
           </Link>

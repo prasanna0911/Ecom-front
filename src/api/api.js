@@ -170,6 +170,35 @@ const RemoveFromCart = async (data) => {
     return error;
   }
 };
+const AddToFavourites = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/addtofavourites", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const GetFavouriteItems = async () => {
+  try {
+    const response = await instance.get(baseUrl + "/getfavouriteitems");
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const RemoveFromFavourites = async (data) => {
+  try {
+    const response = await instance.post(
+      baseUrl + "/removefromfavourites",
+      data
+    );
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
 export const ApiServices = {
   signup,
   Login,
@@ -188,4 +217,7 @@ export const ApiServices = {
   AddToCart,
   GetCartItems,
   RemoveFromCart,
+  AddToFavourites,
+  GetFavouriteItems,
+  RemoveFromFavourites,
 };
