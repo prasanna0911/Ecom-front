@@ -13,7 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export const CartItems = () => {
     TabTitle("Cart Items - Shema");
-    const { cartItems, getCartItems, setCartItems, getWishlistItems } = useMyContext()
+    const { cartItems, getCartItems, setCartItems, wishListItems, getWishlistItems } = useMyContext()
 
     const removeFromCart = async (id) => {
         var json = {
@@ -40,6 +40,45 @@ export const CartItems = () => {
             }
         })
     }
+
+    const handelRemoveItem = (id) => {
+        var json = {
+            Id: id,
+        };
+        ApiServices.RemoveFromFavourites(json).then((res) => {
+            console.log("res", res);
+            if (res.response_code === 200) {
+                getWishlistItems();
+            }
+        });
+    };
+
+    const increaseCartItemCount = async (id) => {
+        var json = {
+            Id: id
+        }
+        console.log('json', json);
+        ApiServices.IncreaseCartItemCount(json).then(res => {
+            console.log('res', res);
+            if (res.response_code === 200) {
+                getCartItems()
+            }
+        })
+    }
+    const decreaseCartItemCount = async (id) => {
+        var json = {
+            Id: id
+        }
+        console.log('json', json);
+        ApiServices.DecreaseCartItemCount(json).then(res => {
+            console.log('res', res);
+            if (res.response_code === 200) {
+                getCartItems()
+            }
+        })
+    }
+
+    console.log('wishlist', wishListItems);
     return (
         <div className='p-5  d-flex justify-content-center align-items-center flex-column' >
             {cartItems?.map((item) => (
@@ -59,11 +98,11 @@ export const CartItems = () => {
                                     className="product__img"
                                 />
                                 <div className='d-flex gap-1 align-items-center'>
-                                    <IconButton size='small'>
+                                    <IconButton onClick={() => decreaseCartItemCount(item._id)} disabled={item.count <= 1}>
                                         <RemoveIcon fontSize='small' />
                                     </IconButton>
-                                    <Typography className='px-3 py-2 rounded-pill border' fontSize='small' >3</Typography>
-                                    <IconButton size='small'>
+                                    <Typography className='px-3 py-2 rounded-pill border' fontSize='small' >{item.count}</Typography>
+                                    <IconButton onClick={() => increaseCartItemCount(item._id)}>
                                         <AddIcon fontSize='small' />
                                     </IconButton>
                                 </div>
@@ -78,12 +117,17 @@ export const CartItems = () => {
                                 <p className="mb-1">
                                     Size: {item.size[0]} | color: {item.color}
                                 </p>
-                                <p className="mb-1">Total: ${item.price}</p>
+                                <p className="mb-1 fw-bold">Total : ${item.count * item.price}</p>
 
                             </div>
                         </div>
                         <div className='d-flex gap-2 mt-3'>
-                            <IconButton onClick={() => addToFavourite(item._id)} style={{ backgroundColor: '#ffe26e' }}><FavoriteIcon style={{ color: 'white' }} /></IconButton>
+                            {wishListItems?.some((product) => product._id === item._id) ? (
+                                <IconButton onClick={() => handelRemoveItem(item._id)} className='fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
+                            ) : (
+                                <IconButton onClick={() => addToFavourite(item._id)} className='not-fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
+                            )}
+
                             <Button startIcon={<ShoppingCartIcon />} variant='contained'>Buy now</Button>
                             <Button startIcon={<CloseIcon />} variant='outlined' color='error' onClick={() => removeFromCart(item._id)}>Remove from cart</Button>
                         </div>

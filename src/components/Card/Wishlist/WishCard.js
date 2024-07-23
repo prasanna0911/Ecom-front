@@ -14,11 +14,12 @@ import { WishItemsContext } from "../../../Context/WishItemsContext";
 import Star from "@mui/icons-material/Star";
 import { ApiServices } from "../../../api/api";
 import { useMyContext } from "../../../Context/MyContext";
+import { useNavigate } from "react-router-dom";
 
 const WishCard = (props) => {
   const wishItems = useContext(WishItemsContext);
-  const { getCartItems, getWishlistItems } = useMyContext();
-
+  const { cartItems, getCartItems, getWishlistItems } = useMyContext();
+  const navigate = useNavigate();
   const handelRemoveItem = () => {
     var json = {
       Id: props.item._id,
@@ -82,24 +83,46 @@ const WishCard = (props) => {
         </div>
       </div>
       <div className="d-flex gap-2 align-items-center">
-        <Button
-          variant="outlined"
-          onClick={handelAddToCart}
-          sx={[
-            {
-              "&:hover": {
-                backgroundColor: "#FFE26E",
-                borderColor: "#FFE26E",
-                color: "black",
+        {cartItems?.some((product) => product._id === props.item._id) ? (
+          <Button
+            variant="outlined"
+            onClick={() => navigate("/cartitems")}
+            sx={[
+              {
+                "&:hover": {
+                  backgroundColor: "#FFE26E",
+                  borderColor: "#FFE26E",
+                  color: "black",
+                },
+                borderColor: "black",
+                backgroundColor: "black",
+                color: "#FFE26E",
               },
-              borderColor: "black",
-              backgroundColor: "black",
-              color: "#FFE26E",
-            },
-          ]}
-        >
-          Add to cart
-        </Button>
+            ]}
+          >
+            go to cart
+          </Button>
+        ) : (
+          <Button
+            variant="outlined"
+            onClick={handelAddToCart}
+            sx={[
+              {
+                "&:hover": {
+                  backgroundColor: "#FFE26E",
+                  borderColor: "#FFE26E",
+                  color: "black",
+                },
+                borderColor: "black",
+                backgroundColor: "black",
+                color: "#FFE26E",
+              },
+            ]}
+          >
+            Add to cart
+          </Button>
+        )}
+
         <IconButton onClick={handelRemoveItem}>
           <HighlightOffIcon />
         </IconButton>

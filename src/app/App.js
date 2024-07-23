@@ -30,6 +30,7 @@ import darkTheme from "../Themes/darkTheme";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { CartItems } from "../routes/CartItems";
+import Checkout from "../routes/Checkout";
 
 function App() {
   const [darkThemeMode, setDarkThemeMode] = useState(false);
@@ -97,6 +98,7 @@ function App() {
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/search/*" element={<SearchView />} />
                   <Route path="/cartitems" element={<CartItems />} />
+                  <Route path="/checkout/*" element={<Checkout />} />
                 </Routes>
                 <Footer />
                 <Routes>
