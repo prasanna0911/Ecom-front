@@ -8,8 +8,14 @@ import { Button, Typography } from "@mui/material";
 import { ApiServices } from "../../api/api";
 import { Col, Row } from "react-bootstrap";
 
-const ShippingAddress = () => {
+const ShippingAddress = ({
+  handleNext,
+  handleBack,
+  shippingAddressData,
+  setShippingAddressData,
+}) => {
   const [myAddresses, setMyAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState("");
   const getBillingAddresses = async () => {
     ApiServices.UserData().then((res) => {
       console.log("res", res);
@@ -22,6 +28,24 @@ const ShippingAddress = () => {
   useEffect(() => {
     getBillingAddresses();
   }, []);
+
+  const handleSubmit = () => {
+    if (selectedAddress) {
+      const sel_address = myAddresses.find(
+        (add) => add._id === selectedAddress
+      );
+      setShippingAddressData(sel_address);
+      handleNext();
+    }
+  };
+
+  useEffect(() => {
+    if (shippingAddressData) {
+      setSelectedAddress(shippingAddressData._id);
+    }
+  }, []);
+
+  console.log("selectedAddress", selectedAddress);
   return (
     <div>
       <Typography variant="h5" className="mb-1">
@@ -36,11 +60,11 @@ const ShippingAddress = () => {
       </div>
       <FormControl className="w-100">
         <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
           name="radio-buttons-group"
           //   row
+          value={selectedAddress}
           className="w-100"
+          onChange={(e) => setSelectedAddress(e.target.value)}
         >
           {myAddresses?.map((address, index) => (
             <FormControlLabel
@@ -68,6 +92,18 @@ const ShippingAddress = () => {
           ))}
         </RadioGroup>
       </FormControl>
+      <div className="d-flex justify-content-between w-100 mt-3">
+        <Button variant="outlined" onClick={() => handleBack()}>
+          back
+        </Button>
+        <Button
+          variant="contained"
+          disabled={!selectedAddress}
+          onClick={() => handleSubmit()}
+        >
+          next
+        </Button>
+      </div>
     </div>
   );
 };

@@ -19,6 +19,7 @@ import StepLabel from "@mui/material/StepLabel";
 import { Col, Row } from "react-bootstrap";
 import AccountHeader from "./AccountHeader";
 import { useMyContext } from "../../Context/MyContext";
+import { ApiServices } from "../../api/api";
 
 const steps = [
   "Order Received",
@@ -29,6 +30,7 @@ const steps = [
 
 const MyOrders = () => {
   const [menItems, setMenItems] = useState([]);
+  const [myOrders, setMyOrders] = useState([]);
   const [orderOpen, setOrderOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState({});
   const { MobileScreen } = useMyContext();
@@ -45,7 +47,17 @@ const MyOrders = () => {
     setSelectedOrder({});
   };
 
+  const getMyOrders = () => {
+    ApiServices.GetMyOrders().then((res) => {
+      console.log("res orders", res);
+      if (res.response_code === 200) {
+        setMyOrders(res.my_orders);
+      }
+    });
+  };
+
   useEffect(() => {
+    getMyOrders();
     axios
       .get("https://shema-backend.vercel.app/api/items")
       .then((res) => {
@@ -66,7 +78,7 @@ const MyOrders = () => {
       )}
       {MobileScreen && <h3 className="mb-4">My Orders</h3>}
 
-      {menItems?.map((item) => (
+      {myOrders?.map((item) => (
         <Card
           key={item._id} // Ensure each Card has a unique key
           className="mb-3 py-2 px-1 d-flex justify-content-between align-items-start flex-wrap"
@@ -74,23 +86,25 @@ const MyOrders = () => {
         >
           <CardContent className="d-flex gap-4 flex-wrap">
             <img
-              src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[1].filename}`}
+              src={`${item.product_info?.primaryImage[0]?.URL}`}
               alt="item"
               width={150}
               className="product__img"
             />
             <div style={{ maxWidth: "400px" }}>
-              <h4>{item.name}</h4>
-              <p className="mb-1">{item.description}</p>
+              <h4>{item.product_info?.name}</h4>
+              <p className="mb-1">{item.product_info?.description}</p>
               <p className="mb-1">
-                {item.highlights.join(" | ").slice(0, 75)}...
+                Size: {item.product_info?.size[0]} color:{" "}
+                {item.product_info?.color}
               </p>
-              <p className="mb-1">
-                Size: {item.size[0]} color: {item.color}
-              </p>
-              <p className="mb-1">Quantity: 2 </p>
-              <p className="mb-1">Total: ${item.price}</p>
-              <Chip variant="contained" color="success" label="Delivered" />
+              <p className="mb-1">Quantity: {item.product_info?.count} </p>
+              <p className="mb-1">Total: ${item.total_amount}</p>
+              <Chip
+                variant="contained"
+                color={item.payment_status === "paid" ? "success" : "warning"}
+                label={item.payment_status}
+              />
             </div>
           </CardContent>
           <CardContent>
@@ -100,10 +114,11 @@ const MyOrders = () => {
           </CardContent>
         </Card>
       ))}
-      <Dialog open={orderOpen} onClose={handleClose} fullWidth maxWidth="lg">
+      <Dialog open={orderOpen} onClose={handleClose} fullWidth maxWidth="md">
         <DialogTitle>
-          <Typography variant="h5">Order id:98706574532</Typography>
+          <Typography variant="h5">Order id : {selectedOrder?._id}</Typography>
         </DialogTitle>
+
         <DialogContent>
           <Row className="w-100 d-flex align-items-center mb-4">
             {" "}
@@ -113,26 +128,38 @@ const MyOrders = () => {
               sm={12}
               className="d-flex justify-content-center"
             >
-              {selectedOrder?.image && (
+              {selectedOrder?.product_info?.primaryImage?.[0]?.URL && (
                 <img
-                  src={`https://shema-backend.vercel.app/public/${selectedOrder.category}/${selectedOrder.image[1]?.filename}`}
-                  alt={selectedOrder?.name}
-                  width={200}
+                  src={selectedOrder?.product_info?.primaryImage?.[0]?.URL}
+                  alt={selectedOrder?.product_info?.name}
+                  width={100}
                   className="product__img"
                 />
               )}
             </Col>
             <Col xl={6} md={6} sm={12}>
               <div style={{ maxWidth: "400px" }}>
-                <h3>{selectedOrder?.name}</h3>
-                <h5 className="mb-1">{selectedOrder?.description}</h5>
-                <p className="mb-1">{selectedOrder?.highlights?.join(" | ")}</p>
+                <h3>{selectedOrder?.product_info?.name}</h3>
+                <h5 className="mb-1">
+                  {selectedOrder?.product_info?.description}
+                </h5>
                 <p className="mb-1">
-                  Size: {selectedOrder?.size?.[0]} color: {selectedOrder?.color}
+                  Size: {selectedOrder?.product_info?.size?.[0]} color:{" "}
+                  {selectedOrder?.product_info?.color}
                 </p>
-                <p className="mb-1">Quantity: 2 </p>
-                <p className="mb-1">Total: ${selectedOrder?.price}</p>
-                <Chip variant="contained" color="success" label="Delivered" />
+                <p className="mb-1">
+                  Quantity: {selectedOrder?.product_info?.count}{" "}
+                </p>
+                <p className="mb-1">Total: ${selectedOrder?.total_amount}</p>
+                <Chip
+                  variant="contained"
+                  color={
+                    selectedOrder?.payment_status === "paid"
+                      ? "success"
+                      : "warning"
+                  }
+                  label={selectedOrder?.payment_status}
+                />
               </div>
             </Col>
           </Row>
@@ -161,18 +188,21 @@ const MyOrders = () => {
               </Col>
               <Col xl={6} md={6} sm={12}>
                 <p className="mb-1">
-                  1234 Elm Street ,Apartment 5B Springfield, <br />
-                  Dubai main road,
+                  {selectedOrder?.shipping_address?.address_line1}, <br />
+                  {selectedOrder?.shipping_address?.address_line2 &&
+                    selectedOrder?.shipping_address?.address_line2 + ","}
                   <br />
-                  IL 62704, USA <br />
-                  Phone: (555) 123-4567
+                  {selectedOrder?.shipping_address?.city} -{" "}
+                  {selectedOrder?.shipping_address?.zip_code},{" "}
+                  {selectedOrder?.shipping_address?.state} <br />
+                  Phone: {selectedOrder?.shipping_address?.phone}
                 </p>
               </Col>
             </Row>
           </div>
 
           <Box sx={{ width: "100%" }}>
-            <Stepper activeStep={4} alternativeLabel>
+            <Stepper activeStep={2} alternativeLabel>
               {steps.map((label) => (
                 <Step key={label} color="success">
                   <StepLabel>{label}</StepLabel>

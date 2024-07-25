@@ -59,7 +59,7 @@ function App() {
             <SearchProvider>
               <Router>
                 <Header />
-                <Switch checked={darkThemeMode} onChange={toggleDarkMode} />
+                {/* <Switch checked={darkThemeMode} onChange={toggleDarkMode} /> */}
                 <Routes>
                   <Route index element={<Home />} />
                   <Route path="/account">
@@ -98,7 +98,7 @@ function App() {
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/search/*" element={<SearchView />} />
                   <Route path="/cartitems" element={<CartItems />} />
-                  <Route path="/checkout/*" element={<Checkout />} />
+                  <Route path="/checkout/:id" element={<Checkout />} />
                 </Routes>
                 <Footer />
                 <Routes>

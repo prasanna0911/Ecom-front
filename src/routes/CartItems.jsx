@@ -9,12 +9,13 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Star from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useNavigate } from 'react-router-dom';
 
 
 export const CartItems = () => {
     TabTitle("Cart Items - Shema");
     const { cartItems, getCartItems, setCartItems, wishListItems, getWishlistItems } = useMyContext()
-
+    const navigate = useNavigate()
     const removeFromCart = async (id) => {
         var json = {
             Id: id
@@ -78,6 +79,9 @@ export const CartItems = () => {
         })
     }
 
+    const handleCheckoutRoute = (id) => {
+        navigate(`/checkout/${id}`)
+    }
     console.log('wishlist', wishListItems);
     return (
         <div className='p-5  d-flex justify-content-center align-items-center flex-column' >
@@ -128,7 +132,7 @@ export const CartItems = () => {
                                 <IconButton onClick={() => addToFavourite(item._id)} className='not-fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
                             )}
 
-                            <Button startIcon={<ShoppingCartIcon />} variant='contained'>Buy now</Button>
+                            <Button startIcon={<ShoppingCartIcon />} variant='contained' onClick={() => handleCheckoutRoute(item.cartItemId)}>Buy now</Button>
                             <Button startIcon={<CloseIcon />} variant='outlined' color='error' onClick={() => removeFromCart(item._id)}>Remove from cart</Button>
                         </div>
                     </CardContent>

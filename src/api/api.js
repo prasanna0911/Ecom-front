@@ -225,6 +225,25 @@ const DecreaseCartItemCount = async (data) => {
   }
 };
 
+//order api
+
+const PostOrder = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/postorder", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+const GetMyOrders = async (data) => {
+  try {
+    const response = await instance.get(baseUrl + "/getmyorders", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const ApiServices = {
   signup,
   Login,
@@ -248,4 +267,6 @@ export const ApiServices = {
   AddToFavourites,
   GetFavouriteItems,
   RemoveFromFavourites,
+  PostOrder,
+  GetMyOrders,
 };

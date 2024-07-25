@@ -1,6 +1,4 @@
-
-
-import * as React from 'react';
+import React, { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -13,11 +11,36 @@ import ShippingAddress from '../components/Checkout/ShippingAddress';
 import PaymentInfo from '../components/Checkout/PaymentInfo';
 import { Col, Row } from 'react-bootstrap';
 import OrderSummery from '../components/Checkout/OrderSummery';
+import { useParams } from 'react-router-dom';
+import { ApiServices } from '../api/api';
+import OrderSuccess from "../components/Checkout/OrderSuccess";
 
 const steps = ['Billing Info', 'Shipping Address', 'Payment info'];
 
 export default function Checkout() {
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = useState(0);
+    const [checkoutItem, setCheckoutItem] = useState({});
+    const [billingData, setBillingData] = useState({});
+    const [shippingAddressData, setShippingAddressData] = useState('');
+    const [paymentMethod, setPaymentMethod] = useState('');
+    const param = useParams()
+    console.log('params', param.id);
+
+    const getProductDetails = async () => {
+        ApiServices.GetCartItems().then(res => {
+            console.log(res);
+            if (res.response_code === 200) {
+                const foundItem = res.cart_items?.find(item => item.cartItemId === param.id)
+                if (foundItem) {
+                    setCheckoutItem(foundItem)
+                    window.scrollTo(0, 0)
+                }
+            }
+        })
+    }
+    useEffect(() => {
+        getProductDetails()
+    }, [param.id])
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
         window.scrollTo(0, 0)
@@ -28,10 +51,33 @@ export default function Checkout() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
     };
+    const handleOrderSubmit = (pay_method) => {
+        const discount = 10;
+        const shipping = 25;
 
-    const handleReset = () => {
-        setActiveStep(0);
-    };
+        var json = {
+            ShippingAddress: shippingAddressData,
+            BillingInfo: billingData,
+            PaymentMethod: pay_method,
+            ProductInfo: checkoutItem,
+            TotalAmount: checkoutItem.count * checkoutItem?.price -
+                (checkoutItem.count * checkoutItem?.price * discount) / 100 +
+                shipping,
+        }
+        console.log('json', json);
+        ApiServices.PostOrder(json).then(res => {
+            console.log('res', res);
+            if (res.response_code === 200) {
+                if (pay_method === 'cash') {
+                    handleNext()
+                }
+                if (pay_method === 'online') {
+                    console.log('stripe api call');
+                }
+            }
+        })
+    }
+
 
     return (
 
@@ -62,30 +108,24 @@ export default function Checkout() {
                 })}
             </Stepper>
             {activeStep === steps.length ? (
-                <React.Fragment>
-                    <Typography sx={{ mt: 2, mb: 1 }}>
-                        All steps completed - you&apos;re finished
-                    </Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                        <Box sx={{ flex: '1 1 auto' }} />
-                        <Button onClick={handleReset}>Reset</Button>
-                    </Box>
-                </React.Fragment>
+                <div>
+                    <OrderSuccess />
+                </div>
             ) : (
                 <Row >
                     <Col xl='8' lg='8' sm='12' xs='12' className='mt-4'>
                         <Card className='p-3 pb-0'>
                             <CardContent>
                                 {activeStep === 0 ? (
-                                    <BillingInfo />
+                                    <BillingInfo handleNext={handleNext} billingData={billingData} setBillingData={setBillingData} />
                                 ) : activeStep === 1 ? (
-                                    <ShippingAddress />
+                                    <ShippingAddress handleNext={handleNext} handleBack={handleBack} shippingAddressData={shippingAddressData} setShippingAddressData={setShippingAddressData} />
                                 ) : activeStep === 2 ? (
-                                    <PaymentInfo />
+                                    <PaymentInfo handleOrderSubmit={handleOrderSubmit} handleNext={handleNext} handleBack={handleBack} paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} />
                                 ) : (
                                     <div></div>
                                 )}
-                                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                                {/* <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                                     <Button
                                         color="inherit"
                                         disabled={activeStep === 0}
@@ -99,12 +139,12 @@ export default function Checkout() {
                                     <Button onClick={handleNext}>
                                         {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                                     </Button>
-                                </Box>
+                                </Box> */}
                             </CardContent>
                         </Card>
                     </Col>
                     <Col xl='4' lg='4' sm='12' xs='12' className='mt-4'>
-                        <OrderSummery />
+                        <OrderSummery checkoutItem={checkoutItem} />
                     </Col>
                 </Row>
             )}

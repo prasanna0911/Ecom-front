@@ -8,20 +8,32 @@ import { Button, Typography } from "@mui/material";
 import { ApiServices } from "../../api/api";
 import { Col, Row } from "react-bootstrap";
 
-const PaymentInfo = () => {
-  const [myAddresses, setMyAddresses] = useState([]);
-  const getBillingAddresses = async () => {
-    ApiServices.UserData().then((res) => {
-      console.log("res", res);
-      if (res.response_code === 200) {
-        setMyAddresses(res.userData?.addresses);
-      }
-    });
-  };
+const PaymentInfo = ({
+  handleOrderSubmit,
+  handleNext,
+  handleBack,
+  paymentMethod,
+  setPaymentMethod,
+}) => {
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+  console.log("selectedPaymentMethod", selectedPaymentMethod);
 
   useEffect(() => {
-    getBillingAddresses();
+    if (paymentMethod) {
+      setSelectedPaymentMethod(paymentMethod);
+    }
   }, []);
+
+  const handleSubmit = () => {
+    if (selectedPaymentMethod === "cash") {
+      setPaymentMethod(selectedPaymentMethod);
+      handleOrderSubmit("cash");
+    } else if (selectedPaymentMethod === "online") {
+      setPaymentMethod(selectedPaymentMethod);
+      handleOrderSubmit("online");
+      console.log("route to stripe");
+    }
+  };
   return (
     <div>
       <Typography variant="h5" className="mb-1">
@@ -33,11 +45,11 @@ const PaymentInfo = () => {
 
       <FormControl className="w-100">
         <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
           name="radio-buttons-group"
           //   row
           className="w-100"
+          value={selectedPaymentMethod}
+          onChange={(e) => setSelectedPaymentMethod(e.target.value)}
         >
           <FormControlLabel
             value="cash"
@@ -72,6 +84,18 @@ const PaymentInfo = () => {
           />
         </RadioGroup>
       </FormControl>
+      <div className="d-flex justify-content-between w-100 mt-3">
+        <Button variant="outlined" onClick={() => handleBack()}>
+          back
+        </Button>
+        <Button
+          variant="contained"
+          disabled={!selectedPaymentMethod}
+          onClick={() => handleSubmit()}
+        >
+          finish
+        </Button>
+      </div>
     </div>
   );
 };
