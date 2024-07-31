@@ -11,7 +11,7 @@ import ShippingAddress from '../components/Checkout/ShippingAddress';
 import PaymentInfo from '../components/Checkout/PaymentInfo';
 import { Col, Row } from 'react-bootstrap';
 import OrderSummery from '../components/Checkout/OrderSummery';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ApiServices } from '../api/api';
 import OrderSuccess from "../components/Checkout/OrderSuccess";
 
@@ -73,6 +73,7 @@ export default function Checkout() {
                 }
                 if (pay_method === 'online') {
                     console.log('stripe api call');
+                    window.location.replace(res.PaymentURL)
                 }
             }
         })

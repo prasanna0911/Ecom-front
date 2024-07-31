@@ -31,6 +31,9 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { CartItems } from "../routes/CartItems";
 import Checkout from "../routes/Checkout";
+import Order from "../routes/Order";
+import PaymentSuccess from "../components/Checkout/PaymentSuccess";
+import PaymentFailure from "../components/Checkout/PaymentFailure";
 
 function App() {
   const [darkThemeMode, setDarkThemeMode] = useState(false);
@@ -99,6 +102,15 @@ function App() {
                   <Route path="/search/*" element={<SearchView />} />
                   <Route path="/cartitems" element={<CartItems />} />
                   <Route path="/checkout/:id" element={<Checkout />} />
+                  <Route
+                    path="/checkout/paymentsuccess"
+                    element={<PaymentSuccess />}
+                  />
+                  <Route
+                    path="/checkout/paymentfailure"
+                    element={<PaymentFailure />}
+                  />
+                  <Route path="/order/:id" element={<Order />} />
                 </Routes>
                 <Footer />
                 <Routes>

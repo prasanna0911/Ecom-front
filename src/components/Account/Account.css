@@ -40,3 +40,94 @@
 .css-1u4zpwo-MuiSvgIcon-root-MuiStepIcon-root.Mui-completed {
     color: green !important;
 }
+
+.order_product_detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order_product_detail_price {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+@media (max-width:480px) {
+    .order_product_detail_price {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
+#progressBar {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-left: 0;
+    overflow: hidden;
+    color: #455a64;
+}
+
+#progressBar li {
+    list-style-type: none;
+    font-size: 13px;
+    font-weight: 400;
+    width: 25%;
+    float: left;
+    position: relative;
+}
+
+#progressBar .step-0::before {
+    content: '';
+    color: #fff;
+}
+
+#progressBar li::before {
+    width: 30px;
+    height: 30px;
+    line-height: 45px;
+    display: block;
+    font-size: 20px;
+    background: #c5cae9;
+    border-radius: 58%;
+    margin: auto;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+}
+
+#progressBar li::after {
+    content: '';
+    width: 100%;
+    height: 10px;
+    background: #c5cae9;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    z-index: 1;
+}
+
+/* #progressBar li:nth-child(2)::after,
+#progressBar li:nth-child(3)::after {
+    left: -50%
+} */
+
+#progressBar li:first-child::after {
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    position: absolute;
+    left: 50%;
+}
+
+#progressBar li:last-child::after {
+    border-top-right-radius: 10px;
+    /* border-bottom-left-radius: 10px; */
+    position: absolute;
+    left: -50%;
+}
+
+#progressBar .active::before,
+#progressBar .active::after {
+    background-color: #164719;
+}

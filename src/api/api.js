@@ -243,6 +243,25 @@ const GetMyOrders = async (data) => {
     return error;
   }
 };
+const CancellMyOrder = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/cencelmyorders", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+//pay check
+
+const PayCheck = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/paycheck", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
 
 export const ApiServices = {
   signup,
@@ -269,4 +288,6 @@ export const ApiServices = {
   RemoveFromFavourites,
   PostOrder,
   GetMyOrders,
+  CancellMyOrder,
+  PayCheck,
 };

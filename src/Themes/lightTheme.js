@@ -85,6 +85,13 @@ const lightTheme = createTheme({
         },
       },
     },
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          borderWidth: "1px",
+        },
+      },
+    },
   },
   //   typography: {
   //     fontFamily: "inter",

@@ -26,9 +26,9 @@ const Payments = () => {
     ApiServices.GetAllProducts(json).then((res) => {
       console.log("res", res);
       if (res.response_code == 200) {
-        if (res.result) {
-          setData(res?.result?.data);
-          setLength(res?.result.length);
+        if (res.Data) {
+          setData(res?.Data);
+          setLength(res?.Data.length);
         }
       }
     });

@@ -127,9 +127,9 @@ export const CartItems = () => {
                         </div>
                         <div className='d-flex gap-2 mt-3'>
                             {wishListItems?.some((product) => product._id === item._id) ? (
-                                <IconButton onClick={() => handelRemoveItem(item._id)} className='fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
+                                <IconButton onClick={() => handelRemoveItem(item._id)} className='not-fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
                             ) : (
-                                <IconButton onClick={() => addToFavourite(item._id)} className='not-fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
+                                <IconButton onClick={() => addToFavourite(item._id)} className='fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
                             )}
 
                             <Button startIcon={<ShoppingCartIcon />} variant='contained' onClick={() => handleCheckoutRoute(item.cartItemId)}>Buy now</Button>
