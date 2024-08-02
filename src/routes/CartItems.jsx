@@ -115,7 +115,7 @@ export const CartItems = () => {
                                 <h5>{item.name}</h5>
                                 <p className="mb-1">{item.description}</p>
                                 <div className="d-flex gap-2 my-1">
-                                    <Rating value='4.5' precision='0.5' readOnly />
+                                    <Rating value={4.5} precision={0.5} readOnly />
                                     <span>(1,453)</span>
                                 </div>
                                 <p className="mb-1">

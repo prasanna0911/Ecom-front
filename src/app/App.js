@@ -34,6 +34,7 @@ import Checkout from "../routes/Checkout";
 import Order from "../routes/Order";
 import PaymentSuccess from "../components/Checkout/PaymentSuccess";
 import PaymentFailure from "../components/Checkout/PaymentFailure";
+import RatingsAndReviews from "../routes/RatingsAndReviews";
 
 function App() {
   const [darkThemeMode, setDarkThemeMode] = useState(false);
@@ -111,6 +112,10 @@ function App() {
                     element={<PaymentFailure />}
                   />
                   <Route path="/order/:id" element={<Order />} />
+                  <Route
+                    path="/ratingsandreviews/:id"
+                    element={<RatingsAndReviews />}
+                  />
                 </Routes>
                 <Footer />
                 <Routes>

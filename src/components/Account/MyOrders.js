@@ -94,6 +94,10 @@ const MyOrders = () => {
     });
   };
 
+  const handleRatingsRoute = (e, id) => {
+    e.stopPropagation();
+    navigate(`/ratingsandreviews/${id}`);
+  };
   const activeStep = 2;
   return (
     <div
@@ -133,7 +137,7 @@ const MyOrders = () => {
               <p className="mb-1 fw-bold">Total: ${item.total_amount}</p>
             </div>
           </CardContent>
-          <CardContent className="d-flex flex-column align-items-start gap-2">
+          <CardContent className="d-flex flex-column align-items-end gap-2">
             {/* {item?.delivery_status} */}
             {item?.delivery_status === "cancelled" && (
               <h6 className="mb-1 d-flex gap-1 align-items-center">
@@ -162,15 +166,26 @@ const MyOrders = () => {
                 {new Date(item?.delivery_date).toString().slice(4, 15)}
               </h6>
             )}
-
+            {item.delivery_status === "delivered" ? (
+              <Button
+                variant="contained"
+                startIcon={<StarIcon />}
+                onClick={(e) => handleRatingsRoute(e, item.product_info._id)}
+              >
+                Rate & review this product
+              </Button>
+            ) : item.delivery_status === "cancelled" ? (
+              <div></div>
+            ) : (
+              <Typography variant="body1" color="green">
+                Estimated delivery in {new Date().toString().slice(0, 15)}
+              </Typography>
+            )}
             {/* <Chip
               variant="contained"
               color={item.payment_status === "paid" ? "success" : "warning"}
               label={item.payment_status}
             /> */}
-            <Button variant="contained" startIcon={<StarIcon />}>
-              Rate & review this product
-            </Button>
 
             {/* <Button
               variant="outlined"

@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Button, Card, CardContent, Divider, IconButton, Link, List, ListItem, Typography } from '@mui/material'
+import { Box, Breadcrumbs, Button, Card, CardContent, Chip, Divider, IconButton, Link, List, ListItem, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
@@ -41,7 +41,7 @@ const Order = () => {
     }, [param]);
     return (
         <div className='d-flex justify-content-center align-items-center'>
-            <div className='p-5 w-100' style={{ maxWidth: '900px' }}>
+            <div className='py-4 mx-5 w-100' style={{ maxWidth: '900px' }}>
                 <Box className="w-100 d-flex align-items-start gap-1 py-2">
                     <IconButton >
                         <ArrowBackIosIcon />
@@ -74,43 +74,58 @@ const Order = () => {
                 </Box>
                 <Card>
                     <CardContent>
-                        <div className="d-flex gap-3">
-                            <Typography variant="body1">
-                                Order date :{" "}
-                                {new Date(selectedOrder?.order_date).toString().slice(0, 15)}
-                            </Typography>
-                            <Typography variant="body1" color="green">
-                                Estimated delivery in {new Date().toString().slice(0, 15)}
-                            </Typography>
-                        </div>
-                        <div className="d-flex gap-2">
-                            <Button variant="contained" size="small" endIcon={<GpsFixedIcon />}>
-                                track order
-                            </Button>
-                            {selectedOrder?.delivery_status !== "cancelled" &&
-                                selectedOrder?.delivery_status !== "delivered" && (
-                                    <Button
-                                        variant="outlined"
-                                        color="error"
-                                        size="small"
-                                        startIcon={<CloseIcon />}
-                                        onClick={() => cancelOrder(selectedOrder?._id)}
-                                    >
-                                        cancel order
+                        <div className='p-3 border rounded-3'>
+                            <div className='d-flex justify-content-between align-items-center mb-3 gap-2 flex-wrap'>
+                                <Typography variant="body1">
+                                    #{selectedOrder._id}
+                                </Typography>
+                                <div className="d-flex gap-2">
+                                    <Button variant="contained" size="small" endIcon={<GpsFixedIcon fontSize='small' />}>
+                                        track order
                                     </Button>
+                                    {selectedOrder?.delivery_status !== "cancelled" &&
+                                        selectedOrder?.delivery_status !== "delivered" && (
+                                            <Button
+                                                variant="outlined"
+                                                color="error"
+                                                size="small"
+                                                startIcon={<CloseIcon />}
+                                                onClick={() => cancelOrder(selectedOrder?._id)}
+                                            >
+                                                cancel order
+                                            </Button>
+                                        )}
+                                    {selectedOrder?.delivery_status === "delivered" && (
+                                        <Button
+                                            variant="outlined"
+                                            color="secondary"
+                                            size="small"
+                                            startIcon={<ReplyIcon />}
+                                        // onClick={() => cancelOrder(selectedOrder?._id)}
+                                        >
+                                            return
+                                        </Button>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="d-flex gap-2 flex-wrap ">
+
+                                {/* <Typography variant="body1" color="green">
+                                Estimated delivery in {new Date().toString().slice(0, 15)}
+                            </Typography> */}
+                                <Chip label={`Ordered on ${new Date(selectedOrder?.order_date).toString().slice(0, 15)}`} />
+                                {selectedOrder?.shipment_date && (
+                                    <Chip label={`Shipped on ${new Date(selectedOrder?.shipment_date).toString().slice(0, 15)}`} />
                                 )}
-                            {selectedOrder?.delivery_status === "delivered" && (
-                                <Button
-                                    variant="outlined"
-                                    color="secondary"
-                                    size="small"
-                                    startIcon={<ReplyIcon />}
-                                    onClick={() => cancelOrder(selectedOrder?._id)}
-                                >
-                                    return
-                                </Button>
-                            )}
+                                {selectedOrder?.delivery_date && (
+                                    <Chip label={`Delivered on ${new Date(selectedOrder?.delivery_date).toString().slice(0, 15)}`} />
+                                )}
+                                {selectedOrder?.cencelled_date && (
+                                    <Chip label={`Cancelled on ${new Date(selectedOrder?.cencelled_date).toString().slice(0, 15)}`} />
+                                )}
+                            </div>
                         </div>
+
                         <div className="order_product_detail gap-2 flex-wrap p-3 border rounded-3 my-4">
                             <div className="d-flex align-items-center gap-3 ">
                                 {selectedOrder?.product_info?.primaryImage?.[0]?.URL && (
@@ -143,9 +158,6 @@ const Order = () => {
                         </div>
                         <Row>
                             <Col xl={12} md={6} sm={12}>
-                                {/* <Typography variant="subtitle1" className="mb-1">
-                Order Summary
-              </Typography> */}
                                 <List>
                                     <ListItem
                                         secondaryAction={`$${selectedOrder?.product_info?.count *
@@ -186,15 +198,17 @@ const Order = () => {
                         <Divider />
                         <Row style={{ padding: "0px 16px" }} className="mt-3">
                             <Col xl={6} md={6} sm={12}>
-                                <p>Payment</p>
+                                <p className='d-flex gap-2'>Payment  <Chip label={selectedOrder?.payment_status} fontSize='small' size='small' color={selectedOrder?.payment_status === 'paid' ? 'success' : 'warning'} /></p>
 
                                 <div className="p-3 border rounded-3">
                                     <p>
                                         {selectedOrder?.payment_method === "cash"
                                             ? "Cash on delivery"
-                                            : "online payment"}
+                                            : "Online payment"}
                                     </p>
-                                    <p>{selectedOrder?.payment_status}</p>
+                                    {selectedOrder?.payment_status === 'paid' && (
+                                        <p>Payment Date : {new Date(selectedOrder?.payment_date).toString().slice(0, 15)}</p>
+                                    )}
                                     {selectedOrder?.card_details && (
                                         <>
                                             <p className="mb-1">
@@ -209,7 +223,8 @@ const Order = () => {
                                             </p>
                                         </>
                                     )}
-                                    {selectedOrder?.invoice === "paid" && (
+                                    {selectedOrder?.invoice && (
+
                                         <Button
                                             startIcon={<ReceiptIcon />}
                                             color="secondary"
@@ -222,6 +237,7 @@ const Order = () => {
                                             invoice
                                         </Button>
                                     )}
+
                                 </div>
                             </Col>
                             <Col xl={6} md={6} sm={12}>

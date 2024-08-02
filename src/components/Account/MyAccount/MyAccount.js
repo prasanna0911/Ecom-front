@@ -70,19 +70,6 @@ function a11yProps(index) {
   };
 }
 
-const rows = [
-  createData("Versace", "$699", 2, "$1399", "pending"),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-  createData("Versace", "$699", 2, "$1399", "pending"),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 const MyAccount = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -115,6 +102,18 @@ const MyAccount = () => {
     setLogoutOpen(false);
     navigate("/account/login");
   };
+
+  const data = [
+    { id: 1, category: "fruits", name: "apple" },
+    { id: 2, category: "fruits", name: "banana" },
+    { id: 3, category: "vegetables", name: "carrot" },
+    { id: 4, category: "fruits", name: "grape" },
+    { id: 5, category: "vegetables", name: "broccoli" },
+  ];
+
+  const groupedByCategory = Object.groupBy(data, ({ category }) => category);
+
+  console.log(groupedByCategory);
   return (
     <Account>
       {/* <div className="order__history__container">
@@ -196,6 +195,12 @@ const MyAccount = () => {
               minWidth: "200px",
             }}
           >
+            {/* <div className="d-flex flex-column align-items-center mb-2 gap-2">
+              <Avatar style={{ height: "100px", width: "100px" }} />
+              <Typography variant="body1" className="text-dark">
+                Prasanna
+              </Typography>
+            </div> */}
             <Tab label="My Account" {...a11yProps(0)} />
             <Tab label="My Orders" {...a11yProps(1)} />
             <Tab label="Manage Addresses" {...a11yProps(2)} />
