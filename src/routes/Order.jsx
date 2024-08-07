@@ -1,7 +1,7 @@
 import { Box, Breadcrumbs, Button, Card, CardContent, Chip, Divider, IconButton, Link, List, ListItem, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ApiServices } from '../api/api'
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
@@ -12,6 +12,9 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 const Order = () => {
     const param = useParams()
     const [selectedOrder, setSelectedOrder] = useState({});
+    const navigate = useNavigate()
+
+
 
     const cancelOrder = (id) => {
         var json = {
@@ -43,7 +46,7 @@ const Order = () => {
         <div className='d-flex justify-content-center align-items-center'>
             <div className='py-4 mx-5 w-100' style={{ maxWidth: '900px' }}>
                 <Box className="w-100 d-flex align-items-start gap-1 py-2">
-                    <IconButton >
+                    <IconButton onClick={() => navigate(-1)}>
                         <ArrowBackIosIcon />
                     </IconButton>
                     <div>

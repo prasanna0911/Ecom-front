@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:5000";
-// const baseUrl = process.env.API_BASE_URL;
-console.log("baseUrl", baseUrl);
+// const baseUrl = "http://localhost:5000";
+const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
 let token;
 if (typeof window !== "undefined") {
@@ -13,6 +12,9 @@ const instance = axios.create({
   baseURL: process.env.API_BASE_URL,
   headers: { Authorization: "Bearer " + token },
 });
+
+console.log("baseUrl", process.env.API_BASE_URL);
+console.log("REACT_APP_API_BASE_URL:", process.env.REACT_APP_API_BASE_URL);
 
 //product api
 

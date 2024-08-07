@@ -98,6 +98,11 @@ const MyOrders = () => {
     e.stopPropagation();
     navigate(`/ratingsandreviews/${id}`);
   };
+
+  console.log(
+    "REACT_APP_API_BASE_URL in order:",
+    process.env.REACT_APP_API_BASE_URL
+  );
   const activeStep = 2;
   return (
     <div
@@ -117,7 +122,7 @@ const MyOrders = () => {
           // data-aos="fade-left"
           onClick={() => navigate(`/order/${item._id}`)}
         >
-          <CardContent className="d-flex gap-4 flex-wrap align-items-center">
+          <CardContent className="d-flex gap-4 align-items-center">
             <img
               src={`${item.product_info?.primaryImage[0]?.URL}`}
               alt="item"
@@ -125,7 +130,7 @@ const MyOrders = () => {
               className="product__img"
             />
             <div style={{ maxWidth: "400px" }}>
-              <h5>{item.product_info?.name}</h5>
+              <h5 style={{ fontSize: "16px" }}>{item.product_info?.name}</h5>
               <h6 className="mb-1">{item.product_info?.description}</h6>
               <p className="mb-1" style={{ fontSize: "small" }}>
                 Size: {item.product_info?.size[0]} color:{" "}
