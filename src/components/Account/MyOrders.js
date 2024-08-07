@@ -100,7 +100,7 @@ const MyOrders = () => {
   };
 
   console.log(
-    "REACT_APP_API_BASE_URL in order:",
+    "REACT_APP_API_BASE_URL in order1:",
     process.env.REACT_APP_API_BASE_URL
   );
   const activeStep = 2;
