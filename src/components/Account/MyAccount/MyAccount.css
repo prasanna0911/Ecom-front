@@ -98,3 +98,41 @@
     margin-bottom: 5px;
     border-radius: 10px;
 }
+
+.order-card {
+    gap: 1rem;
+    align-items: center;
+}
+
+.order-card-detail {
+    gap: 0.25rem;
+    align-items: end;
+}
+
+@media (max-width:500px) {
+    .order-card {
+        gap: 0.5rem;
+        align-items: start;
+        padding-bottom: 8px !important;
+    }
+
+    .order-card img {
+        width: 80px;
+    }
+
+    .order-card-detail {
+        align-items: start;
+        padding-top: 0px !important;
+        padding-bottom: 16px !important;
+    }
+
+    .order-card-detail h6 {
+        font-size: 14px;
+        align-items: start !important;
+    }
+
+    .order-card-detail svg {
+        font-size: 14px;
+    }
+
+}

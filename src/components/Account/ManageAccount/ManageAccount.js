@@ -221,6 +221,7 @@ const ManageAccount = () => {
                         variant="contained"
                         className="text-capitalize py-1"
                         onClick={() => setNameEditOpen(true)}
+                        size="small"
                       >
                         edit
                       </Button>
@@ -236,8 +237,9 @@ const ManageAccount = () => {
                     secondaryAction={
                       <Button
                         variant="contained"
-                        className="text-capitalize py-1"
+                        className="text-capitalize"
                         onClick={() => setUsernameEditOpen(true)}
+                        size="small"
                       >
                         edit
                       </Button>
@@ -253,8 +255,9 @@ const ManageAccount = () => {
                     secondaryAction={
                       <Button
                         variant="contained"
-                        className="text-capitalize py-1"
+                        className="text-capitalize "
                         onClick={() => setMailEditOpen(true)}
+                        size="small"
                       >
                         edit
                       </Button>
@@ -267,8 +270,9 @@ const ManageAccount = () => {
                     secondaryAction={
                       <Button
                         variant="contained"
-                        className="text-capitalize py-1"
+                        className="text-capitalize"
                         onClick={() => setPasswordEditOpen(true)}
+                        size="small"
                       >
                         edit
                       </Button>
@@ -282,16 +286,18 @@ const ManageAccount = () => {
                       userData.mobile_number ? (
                         <Button
                           variant="contained"
-                          className="text-capitalize py-1"
+                          className="text-capitalize"
                           onClick={() => setPhonenumberEditOpen(true)}
+                          size="small"
                         >
                           edit
                         </Button>
                       ) : (
                         <Button
                           variant="contained"
-                          className="text-capitalize py-1"
+                          className="text-capitalize"
                           onClick={() => setPhonenumberAddOpen(true)}
+                          size="small"
                         >
                           Add
                         </Button>
@@ -312,7 +318,8 @@ const ManageAccount = () => {
                     secondaryAction={
                       <Button
                         variant="contained"
-                        className="text-capitalize py-1"
+                        className="text-capitalize"
+                        size="small"
                       >
                         Turn on
                       </Button>
@@ -330,7 +337,8 @@ const ManageAccount = () => {
                     secondaryAction={
                       <Button
                         variant="contained"
-                        className="text-capitalize py-1"
+                        className="text-capitalize"
+                        size="small"
                       >
                         Start
                       </Button>

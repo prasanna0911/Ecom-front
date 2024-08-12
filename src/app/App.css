@@ -45,6 +45,11 @@ a:hover {
     border: 2px solid #ffe26e !important
 }
 
+.not-fav-icon-button:hover {
+    background-color: #ffe26e30 !important;
+
+}
+
 .not-fav-icon-button .fav-icon {
     color: #ffe26e;
 }

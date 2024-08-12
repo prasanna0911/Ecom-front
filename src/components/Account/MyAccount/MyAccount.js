@@ -190,9 +190,11 @@ const MyAccount = () => {
             TabIndicatorProps={{ sx: { display: "none" } }}
             aria-label="Vertical tabs example"
             sx={{
-              // borderRight: 1,
-              // borderColor: "divider",
               minWidth: "200px",
+              position: "sticky",
+              height: "100vh",
+              top: 0,
+              zIndex: 1,
             }}
           >
             {/* <div className="d-flex flex-column align-items-center mb-2 gap-2">

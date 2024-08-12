@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const AccountHeader = ({ head, breadcrumb }) => {
   const navigate = useNavigate();
   return (
-    <Box className="w-100 d-flex align-items-start py-2 mb-3">
+    <Box className="w-100 d-flex align-items-start mb-3">
       <IconButton onClick={() => navigate("/account/me")}>
         <ArrowBackIosIcon />
       </IconButton>

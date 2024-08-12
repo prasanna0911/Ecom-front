@@ -9,7 +9,7 @@ if (typeof window !== "undefined") {
 }
 
 const instance = axios.create({
-  baseURL: process.env.API_BASE_URL,
+  baseURL: process.env.REACT_APP_API_BASE_URL,
   headers: { Authorization: "Bearer " + token },
 });
 

@@ -12,7 +12,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
@@ -28,6 +28,7 @@ import ReceiptIcon from "@mui/icons-material/Receipt";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import CloseIcon from "@mui/icons-material/Close";
 import ReplyIcon from "@mui/icons-material/Reply";
+import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
 import "./Account.css";
 
 const steps = ["Order Placed", "Shipped", "Out for Delivery", "Delivered"];
@@ -104,11 +105,32 @@ const MyOrders = () => {
     process.env.REACT_APP_API_BASE_URL
   );
   const activeStep = 2;
+
+  // const initialState = { count: 0 };
+
+  // function reducer(state, action) {
+  //   switch (action.type) {
+  //     case "increment":
+  //       return { count: state.count + 1 };
+  //     case "decrement":
+  //       return { count: state.count - 1 };
+  //     case "reset":
+  //       return { count: 0 };
+  //     default:
+  //       throw new Error("Unknown action type");
+  //   }
+  // }
+
+  // const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <div
       className="d-grid align-self-center"
       style={{ padding: MobileScreen ? "none" : "20px" }}
     >
+      {/* <p>Count: {state.count}</p>
+      <button onClick={() => dispatch({ type: "increment" })}>Increment</button>
+      <button onClick={() => dispatch({ type: "decrement" })}>Decrement</button>
+      <button onClick={() => dispatch({ type: "reset" })}>Reset</button> */}
       {!MobileScreen && (
         <AccountHeader head="My Orders" breadcrumb="My Orders" />
       )}
@@ -122,14 +144,14 @@ const MyOrders = () => {
           // data-aos="fade-left"
           onClick={() => navigate(`/order/${item._id}`)}
         >
-          <CardContent className="d-flex gap-4 align-items-center">
+          <CardContent className="d-flex order-card">
             <img
               src={`${item.product_info?.primaryImage[0]?.URL}`}
               alt="item"
               width={100}
               className="product__img"
             />
-            <div style={{ maxWidth: "400px" }}>
+            <div>
               <h5 style={{ fontSize: "16px" }}>{item.product_info?.name}</h5>
               <h6 className="mb-1">{item.product_info?.description}</h6>
               <p className="mb-1" style={{ fontSize: "small" }}>
@@ -142,7 +164,7 @@ const MyOrders = () => {
               <p className="mb-1 fw-bold">Total: ${item.total_amount}</p>
             </div>
           </CardContent>
-          <CardContent className="d-flex flex-column align-items-end gap-2">
+          <CardContent className="d-flex flex-column order-card-detail">
             {/* {item?.delivery_status} */}
             {item?.delivery_status === "cancelled" && (
               <h6 className="mb-1 d-flex gap-1 align-items-center">
@@ -175,6 +197,7 @@ const MyOrders = () => {
               <Button
                 variant="contained"
                 startIcon={<StarIcon />}
+                size="small"
                 onClick={(e) => handleRatingsRoute(e, item.product_info._id)}
               >
                 Rate & review this product
@@ -182,9 +205,13 @@ const MyOrders = () => {
             ) : item.delivery_status === "cancelled" ? (
               <div></div>
             ) : (
-              <Typography variant="body1" color="green">
+              <h6
+                style={{ color: "green" }}
+                className="d-flex gap-1 align-items-start mb-0"
+              >
+                <AirplanemodeActiveIcon fontSize="small" />
                 Estimated delivery in {new Date().toString().slice(0, 15)}
-              </Typography>
+              </h6>
             )}
             {/* <Chip
               variant="contained"
