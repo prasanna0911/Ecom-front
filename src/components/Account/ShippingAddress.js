@@ -1,6 +1,5 @@
 // import node module libraries
-import React, { Fragment, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { Row, Col, Modal, Form } from "react-bootstrap";
 import {
   Card,
@@ -20,6 +19,11 @@ import {
 import { useMyContext } from "../../Context/MyContext";
 import AccountHeader from "./AccountHeader";
 import { ApiServices } from "../../api/api";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 const ShippingAddress = () => {
   const { MobileScreen } = useMyContext();
@@ -98,31 +102,6 @@ const ShippingAddress = () => {
     { value: "New York", label: "New York" },
     { value: "Los Angeles", label: "Los Angeles" },
     { value: "Chicago", label: "Chicago" },
-  ];
-
-  const MyAddresses = [
-    {
-      name: "Home",
-      address_line1: "3812 Orchard Street",
-      address_line2: "Bloomington",
-      city: "Minnesota",
-      state: "United states",
-      zip_code: "55431",
-      primary: true,
-      email: "valarietarrant@dashui.com",
-      phone: "321-654-0987",
-    },
-    {
-      name: "Office",
-      address_line1: "3853 Coal Road",
-      address_line2: "Tannersville",
-      city: "Pennsylvania",
-      state: "United states ",
-      zip_code: "18372",
-      primary: false,
-      email: "myofficemail@dashui.com",
-      phone: "321-654-0999",
-    },
   ];
 
   const NewBillingAddressModal = (props) => {
@@ -315,23 +294,24 @@ const ShippingAddress = () => {
           <CardHeader
             className="border-bottom"
             title={
-              <div className="d-flex justify-content-between align-items-center">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-1">
                 <h4 className="mb-0">Billing address</h4>{" "}
                 <Button
                   variant="contained"
                   //   className="triangle-button"
                   onClick={() => setNewAddressDialog(true)}
+                  startIcon={<AddIcon />}
                 >
                   Add New Address
                 </Button>
               </div>
             }
           />
-          <CardContent>
+          <CardContent className="p-0">
             {/* <Row className="align-items-center"> */}
             {myAddresses?.map((address, index) => (
               <Row
-                className="mt-4 p-2"
+                className="p-4"
                 style={{
                   borderBottom:
                     index !== myAddresses?.length - 1
@@ -339,11 +319,11 @@ const ShippingAddress = () => {
                       : "none",
                 }}
               >
-                <Col lg={6} md={12} xs={12} className="mb-4 mb-lg-0">
-                  <div className="mb-3 mb-lg-0">
-                    <span className="d-block mb-3 text-dark fw-bold">
-                      {address.name}
-                    </span>
+                <span className="d-block mb-2 text-dark fw-bold">
+                  {address.name}
+                </span>
+                <Col lg={6} md={6} sm={12} xs={12} className="mb-lg-0">
+                  <div className="mb-2 mb-lg-0">
                     <span className="d-block mb-1">
                       {address.address_line1},
                     </span>
@@ -355,52 +335,62 @@ const ShippingAddress = () => {
                     <span className="d-block mb-1">
                       {address.city} {address.zip_code},
                     </span>
-                    <span className="d-block mb-4">{address.state}</span>
-                    {address.primary ? (
-                      <Button
-                        onClick={() => handleRemovePrimaryAddress(address._id)}
-                      >
-                        Remove as Default
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="contained"
-                        onClick={() => handleAddPrimaryAddress(address._id)}
-                      >
-                        Set As Default
-                      </Button>
-                    )}
-                    <Button
-                      color="warning"
-                      onClick={() => handleUpdateDialog(address)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      color="error"
-                      onClick={() => handleDeleteDialog(address)}
-                    >
-                      Delete
-                    </Button>
+                    <span className="d-block mb-1">{address.state}</span>
                   </div>
                 </Col>
                 <Col
                   lg={6}
-                  md={12}
+                  md={6}
+                  sm={12}
                   xs={12}
-                  className="d-flex justify-content-lg-end"
+                  className="d-flex justify-content-start justify-content-md-end"
                 >
                   <div className="mb-2">
                     <p className="mb-1">
                       {/* E-mail: <Link href="#">valarietarrant@dashui.com</Link> */}
                       {address.email}
                     </p>
-                    <p>{address.phone}</p>
+                    <p className="mb-0">{address.phone}</p>
                   </div>
                 </Col>
-                {/* <Col xs={12}>
-                  <hr className="my-6" />
-                </Col> */}
+                <Col
+                  lg={12}
+                  md={12}
+                  xs={12}
+                  className="py-2 d-flex gap-2 flex-wrap"
+                >
+                  {address.primary ? (
+                    <Button
+                      onClick={() => handleRemovePrimaryAddress(address._id)}
+                      variant="outlined"
+                      startIcon={<CloseIcon />}
+                    >
+                      Remove as Default
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      onClick={() => handleAddPrimaryAddress(address._id)}
+                      startIcon={<DoneAllIcon />}
+                    >
+                      Set As Default
+                    </Button>
+                  )}
+                  <Button
+                    color="warning"
+                    onClick={() => handleUpdateDialog(address)}
+                    startIcon={<BorderColorIcon />}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    color="error"
+                    onClick={() => handleDeleteDialog(address)}
+                    startIcon={<DeleteIcon />}
+                  >
+                    Delete
+                  </Button>
+                </Col>
               </Row>
             ))}
             <NewBillingAddressModal

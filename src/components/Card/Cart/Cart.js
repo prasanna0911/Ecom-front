@@ -57,14 +57,14 @@ const Cart = () => {
   //       return;
   //     }
   //   };
-  const { cartItems, getCartItems, setCartItems } = useMyContext();
+  const { cartItems, isLogin, getCartItems, setCartItems } = useMyContext();
 
   return (
     <Fragment>
       <Badge badgeContent={cartItems.length} color="error">
         <ShoppingCartIcon
           color="black"
-          onClick={() => navigate("/cartitems")}
+          onClick={() => navigate(isLogin ? "/cartitems" : "/account/login")}
           sx={{ width: "35px" }}
         />
       </Badge>

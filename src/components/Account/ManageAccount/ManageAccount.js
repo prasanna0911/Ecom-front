@@ -54,6 +54,13 @@ const ManageAccount = () => {
   const [phonenumberAddOpen, setPhonenumberAddOpen] = useState(false);
   const [phonenumberEditOpen, setPhonenumberEditOpen] = useState(false);
 
+  let count = 0;
+
+  const Increment = () => {
+    count += 1;
+    console.log("count", count);
+  };
+
   const getUserData = async () => {
     ApiServices.UserData().then((res) => {
       console.log("res", res);

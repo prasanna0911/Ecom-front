@@ -77,7 +77,7 @@ const MyAccount = () => {
   const initialTab = parseInt(queryParams.get("tab") || "0", 10);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const { setIsLogin } = useMyContext();
+  const { setIsLogin, setCartItems, setWishListItems } = useMyContext();
 
   const [value, setValue] = useState(initialTab);
   const [logoutOpen, setLogoutOpen] = useState(false);
@@ -100,6 +100,8 @@ const MyAccount = () => {
     localStorage.clear();
     setIsLogin(false);
     setLogoutOpen(false);
+    setWishListItems([]);
+    setCartItems([]);
     navigate("/account/login");
   };
 

@@ -57,3 +57,13 @@
 
 /* .wishlist__item__label> div {
 } */
+
+@media (max-width:900px) {
+    .wishlist__container {
+        width: 90%;
+    }
+
+    .wishlist__items__container {
+        padding: 20px 0px;
+    }
+}

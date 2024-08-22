@@ -23,6 +23,11 @@ a:hover {
     text-decoration: none;
 }
 
+:root {
+    --primary-color: #ffe26e;
+    --secondary-color: #2ecc71;
+}
+
 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
     padding: 10px 14px !important;
 }

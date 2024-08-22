@@ -1,0 +1,22 @@
+.policy_container {
+    margin: 5%;
+    background-color: rgba(233, 233, 233, 25%);
+}
+
+.policy_container h3 {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.policy_card {
+    width: 300px;
+}
+
+.featured__categories__header__line {
+    width: 100px;
+    height: 6px;
+    background-color: #FFE26E;
+    align-self: center;
+    border-radius: 25px;
+    margin-bottom: 30px;
+}

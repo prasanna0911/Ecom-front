@@ -6,6 +6,8 @@ import FeaturedCategories from "../components/Featured/Categories/FeaturedCatego
 import { TabTitle } from "../utils/General";
 import { Box, Grid } from "@radix-ui/themes";
 import { ApiServices } from "../api/api";
+import Policy from "../components/Policy/Policy";
+import About from "../components/About/About";
 
 
 const Home = () => {
@@ -35,6 +37,9 @@ const Home = () => {
             <Landing />
             <FeaturedCategories />
             <FeaturedItems items={featuredItems} />
+
+            <About />
+            <Policy />
             {/* <Grid gap="3" columns={{ xl: "300px 250px 1fr", lg: "250px 200px 1fr", md: "200px 150px 1fr", sm: "150px 100px 1fr", xs: "1fr" }} width="auto">
                 <Box className="custom-box" >1</Box>
                 <Box className="custom-box" >2</Box>

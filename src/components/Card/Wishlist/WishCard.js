@@ -47,18 +47,16 @@ const WishCard = (props) => {
 
   return (
     <Card className="wishcard">
-      <div className="d-flex gap-3">
-        <div className="wish__item__image">
-          <img
-            src={props.item.primaryImage[0].URL}
-            alt="item"
-            className="wish__image"
-          />
-        </div>
+      <div className="wishcard_item_details">
+        <img
+          src={props.item.primaryImage[0].URL}
+          alt="item"
+          className="wish__image"
+        />
         <div className="wish__item__name flex-column">
-          <p className="mb-0 fs-5">{props.item.name}</p>
-          <p className="mb-1 fs-6">{props.item.description}</p>
-          <div className="d-flex gap-2 mb-3">
+          <p className="mb-1">{props.item.name}</p>
+          <h6 className="mb-1">{props.item.description}</h6>
+          <div className="d-flex gap-2 mb-2">
             <Chip
               color="success"
               size="small"
@@ -75,14 +73,14 @@ const WishCard = (props) => {
             />
             <span style={{ fontSize: "small" }}>(1,453)</span>
           </div>
-          <p className="mb-1 d-flex gap-3 fw-bold">
-            ${props.item.price}
+          <div className="mb-1 fw-bold flex-wrap wish__item__price">
+            <span>${props.item.price}</span>
             <span className="text-decoration-line-through">$1299</span>
             <span className="text-success">12% offer</span>
-          </p>
+          </div>
         </div>
       </div>
-      <div className="d-flex gap-2 align-items-center">
+      <div className="d-flex gap-2 align-items-center justify-content-end wishcard_item_footer">
         {cartItems?.some((product) => product._id === props.item._id) ? (
           <Button
             variant="outlined"
@@ -123,7 +121,7 @@ const WishCard = (props) => {
           </Button>
         )}
 
-        <IconButton onClick={handelRemoveItem}>
+        <IconButton onClick={handelRemoveItem} color="error">
           <HighlightOffIcon />
         </IconButton>
       </div>

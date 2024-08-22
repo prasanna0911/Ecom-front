@@ -26,7 +26,7 @@ const Control = () => {
           </Link>
         </div>
         <div className="control">
-          <Link to="/wishlist">
+          <Link to={isLogin ? "/wishlist" : "/account/login"}>
             <Badge badgeContent={wishListItems.length} color="error">
               <FavoriteBorderIcon color="black" sx={{ width: "35px" }} />
             </Badge>

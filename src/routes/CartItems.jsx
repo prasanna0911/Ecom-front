@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMyContext } from '../Context/MyContext'
-import { Box, Button, ButtonGroup, Card, CardContent, Chip, IconButton, Rating, TextField, ToggleButtonGroup, Typography } from '@mui/material'
+import { Box, Button, ButtonGroup, Card, CardActionArea, CardActions, CardContent, Chip, IconButton, Rating, TextField, ToggleButtonGroup, Typography } from '@mui/material'
 import { TabTitle } from '../utils/General';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,11 +10,13 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import Star from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useNavigate } from 'react-router-dom';
+import './routestyles/CartItems.css'
+import AccountHeader from '../components/Account/AccountHeader';
 
 
 export const CartItems = () => {
     TabTitle("Cart Items - Shema");
-    const { cartItems, getCartItems, setCartItems, wishListItems, getWishlistItems } = useMyContext()
+    const { cartItems, getCartItems, setCartItems, wishListItems, getWishlistItems, MobileScreen } = useMyContext()
     const navigate = useNavigate()
     const removeFromCart = async (id) => {
         var json = {
@@ -84,63 +86,81 @@ export const CartItems = () => {
     }
     console.log('wishlist', wishListItems);
     return (
-        <div className='p-5  d-flex justify-content-center align-items-center flex-column' >
-            {cartItems?.map((item) => (
-                <Card
-                    key={item._id} // Ensure each Card has a unique key
-                    className="mb-3 py-2 px-1 d-flex justify-content-between align-items-start flex-wrap w-100"
-                    style={{ maxWidth: '900px' }}
-                // data-aos="fade-left"
-                >
-                    <CardContent >
-                        <div className="d-flex gap-4 flex-wrap align-items-start">
-                            <div className='d-flex flex-column gap-2 align-items-center'>
-                                <img
-                                    src={item.primaryImage[0]?.URL}
-                                    alt="item"
-                                    width={80}
-                                    className="product__img"
-                                />
-                                <div className='d-flex gap-1 align-items-center'>
-                                    <IconButton onClick={() => decreaseCartItemCount(item._id)} disabled={item.count <= 1}>
-                                        <RemoveIcon fontSize='small' />
-                                    </IconButton>
-                                    <Typography className='px-3 py-2 rounded-pill border' fontSize='small' >{item.count}</Typography>
-                                    <IconButton onClick={() => increaseCartItemCount(item._id)}>
-                                        <AddIcon fontSize='small' />
-                                    </IconButton>
+        <div style={{ padding: MobileScreen ? "3rem" : "20px" }}>
+            {!MobileScreen && (
+                <AccountHeader head="My Cart" breadcrumb="" />
+            )}
+            <div className='d-flex justify-content-center align-items-center flex-column' >
+                {cartItems?.map((item) => (
+                    <Card
+                        key={item._id}
+                        className='mb-3  w-100'
+                        style={{ maxWidth: '900px' }}
+                    // data-aos="fade-left"
+                    >
+                        <CardContent className="d-flex justify-content-between align-items-start flex-wrap">
+                            <div className="d-flex product">
+                                <div className='d-flex flex-column gap-1 align-items-center'>
+                                    <img
+                                        src={item.primaryImage[0]?.URL}
+                                        alt="item"
+                                        className="product_image"
+                                    />
+                                    <div className='d-flex gap-1 align-items-center'>
+                                        <IconButton onClick={() => decreaseCartItemCount(item._id)} disabled={item.count <= 1}>
+                                            <RemoveIcon fontSize='small' />
+                                        </IconButton>
+                                        <Typography className='rounded-pill border product_count'  >{item.count}</Typography>
+                                        <IconButton onClick={() => increaseCartItemCount(item._id)}>
+                                            <AddIcon fontSize='small' />
+                                        </IconButton>
+                                    </div>
+                                </div>
+                                <div style={{ maxWidth: "400px" }} className='product_details'>
+                                    <h5>{item.name}</h5>
+                                    <h6 className="mb-1">{item.description}</h6>
+                                    <p className="mb-1" style={{ fontSize: 'small' }}>
+                                        Size: {item.size[0]} | color: {item.color}
+                                    </p>
+                                    <div className="d-flex gap-2 my-2">
+                                        <Chip
+                                            color="success"
+                                            size="small"
+                                            className="rounded"
+                                            style={{ height: "auto" }}
+                                            label={
+                                                <Box
+                                                    className="d-flex align-items-center justify-content-center gap-1"
+                                                    style={{ fontSize: "small" }}
+                                                >
+                                                    4.1 <Star fontSize="1rem" />
+                                                </Box>
+                                            }
+                                        />
+                                        <span style={{ fontSize: "small" }}>(1,453)</span>
+                                    </div>
+
+                                    <p className="mb-1 fw-bold product__price">Total : ${item.count * item.price}</p>
+
                                 </div>
                             </div>
-                            <div style={{ maxWidth: "400px" }}>
-                                <h5>{item.name}</h5>
-                                <p className="mb-1">{item.description}</p>
-                                <div className="d-flex gap-2 my-1">
-                                    <Rating value={4.5} precision={0.5} readOnly />
-                                    <span>(1,453)</span>
-                                </div>
-                                <p className="mb-1">
-                                    Size: {item.size[0]} | color: {item.color}
-                                </p>
-                                <p className="mb-1 fw-bold">Total : ${item.count * item.price}</p>
+                            <p className='mb-0'>Delivery by Thu Jul 25 | Free</p>
+                        </CardContent>
+                        <CardContent className='pt-0'>
+                            <div className='d-flex gap-2 flex-wrap align-items-center'>
+                                {wishListItems?.some((product) => product._id === item._id) ? (
+                                    <IconButton size='small' onClick={() => handelRemoveItem(item._id)} className='not-fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
+                                ) : (
+                                    <IconButton size='small' onClick={() => addToFavourite(item._id)} className='fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
+                                )}
 
+                                <Button className='product_action_button' startIcon={<ShoppingCartIcon />} variant='contained' onClick={() => handleCheckoutRoute(item.cartItemId)}>Buy now</Button>
+                                <Button className='product_action_button' startIcon={<CloseIcon />} variant='outlined' color='error' onClick={() => removeFromCart(item._id)}>Remove from cart</Button>
                             </div>
-                        </div>
-                        <div className='d-flex gap-2 mt-3'>
-                            {wishListItems?.some((product) => product._id === item._id) ? (
-                                <IconButton onClick={() => handelRemoveItem(item._id)} className='not-fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
-                            ) : (
-                                <IconButton onClick={() => addToFavourite(item._id)} className='fav-icon-button' ><FavoriteIcon className='fav-icon' /></IconButton>
-                            )}
-
-                            <Button startIcon={<ShoppingCartIcon />} variant='contained' onClick={() => handleCheckoutRoute(item.cartItemId)}>Buy now</Button>
-                            <Button startIcon={<CloseIcon />} variant='outlined' color='error' onClick={() => removeFromCart(item._id)}>Remove from cart</Button>
-                        </div>
-                    </CardContent>
-                    <CardContent>
-                        <p>Delivery by Thu Jul 25 | Free</p>
-                    </CardContent>
-                </Card>
-            ))}
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
         </div>
     )
 }

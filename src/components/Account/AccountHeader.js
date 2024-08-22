@@ -7,24 +7,26 @@ const AccountHeader = ({ head, breadcrumb }) => {
   const navigate = useNavigate();
   return (
     <Box className="w-100 d-flex align-items-start mb-3">
-      <IconButton onClick={() => navigate("/account/me")}>
+      <IconButton onClick={() => navigate(-1)}>
         <ArrowBackIosIcon />
       </IconButton>
       <div>
         <Typography variant="h6">{head}</Typography>
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link
-            underline="hover"
-            color="inherit"
-            href="/account/me"
-            fontSize="small"
-          >
-            Account
-          </Link>
-          <Link underline="hover" color="inherit" fontSize="small">
-            {breadcrumb}
-          </Link>
-        </Breadcrumbs>
+        {breadcrumb && (
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link
+              underline="hover"
+              color="inherit"
+              href="/account/me"
+              fontSize="small"
+            >
+              Account
+            </Link>
+            <Link underline="hover" color="inherit" fontSize="small">
+              {breadcrumb}
+            </Link>
+          </Breadcrumbs>
+        )}
       </div>
     </Box>
   );

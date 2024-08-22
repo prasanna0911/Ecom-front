@@ -58,73 +58,71 @@ function App() {
     <MyContextProvider>
       <ThemeProvider theme={darkThemeMode ? darkTheme : lightTheme}>
         <CssBaseline />
-        <CartItemsProvider>
+        {/* <CartItemsProvider>
           <WishItemsProvider>
-            <SearchProvider>
-              <Router>
-                <Header />
-                {/* <Switch checked={darkThemeMode} onChange={toggleDarkMode} /> */}
-                <Routes>
-                  <Route index element={<Home />} />
-                  <Route path="/account">
-                    <Route path="me" element={<MyAccount />} />
-                    <Route path="me/myaccount" element={<ManageAccount />} />
-                    <Route path="me/myorders" element={<MyOrders />} />
-                    <Route
-                      path="me/manageaddress"
-                      element={<ShippingAddress />}
-                    />
-                    <Route path="me/myreviews" element={<MyReviews />} />
-                    <Route path="me/payments" element={<MyOrders />} />
-                    {/* <Route path="manage" element={<ManageAccount />} /> */}
-                    <Route path="login" element={<Login />} />
-                    <Route path="register" element={<Register />} />
-                    <Route path="*" element={<Login />} />
-                  </Route>
-                  <Route path="/shop" element={<Shop />} />
-                  <Route path="/category">
-                    <Route path=":id" element={<CategoryView />} />
-                  </Route>
-                  <Route path="/item">
-                    <Route path="/item/men">
-                      <Route path=":id" element={<ItemView />} />
-                    </Route>
-                    <Route path="/item/women">
-                      <Route path=":id" element={<ItemView />} />
-                    </Route>
-                    <Route path="/item/kids">
-                      <Route path=":id" element={<ItemView />} />
-                    </Route>
-                    <Route path="/item/featured">
-                      <Route path=":id" element={<ItemView />} />
-                    </Route>
-                  </Route>
-                  <Route path="/wishlist" element={<Wishlist />} />
-                  <Route path="/search/*" element={<SearchView />} />
-                  <Route path="/cartitems" element={<CartItems />} />
-                  <Route path="/checkout/:id" element={<Checkout />} />
-                  <Route
-                    path="/checkout/paymentsuccess"
-                    element={<PaymentSuccess />}
-                  />
-                  <Route
-                    path="/checkout/paymentfailure"
-                    element={<PaymentFailure />}
-                  />
-                  <Route path="/order/:id" element={<Order />} />
-                  <Route
-                    path="/ratingsandreviews/:id"
-                    element={<RatingsAndReviews />}
-                  />
-                </Routes>
-                <Footer />
-                <Routes>
-                  <Route path="/admin" element={<Wishlist />} />
-                </Routes>
-              </Router>
-            </SearchProvider>
+            <SearchProvider> */}
+        <Router>
+          <Header />
+          {/* <Switch checked={darkThemeMode} onChange={toggleDarkMode} /> */}
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/account">
+              <Route path="me" element={<MyAccount />} />
+              <Route path="me/myaccount" element={<ManageAccount />} />
+              <Route path="me/myorders" element={<MyOrders />} />
+              <Route path="me/manageaddress" element={<ShippingAddress />} />
+              <Route path="me/myreviews" element={<MyReviews />} />
+              <Route path="me/payments" element={<MyOrders />} />
+              {/* <Route path="manage" element={<ManageAccount />} /> */}
+              <Route path="login" element={<Login />} />
+              <Route path="register" element={<Register />} />
+              <Route path="*" element={<Login />} />
+            </Route>
+            <Route path="/shop" element={<Shop />} />
+
+            <Route path="/category">
+              <Route path=":id" element={<CategoryView />} />
+            </Route>
+            <Route path="/item">
+              <Route path="/item/men">
+                <Route path=":id" element={<ItemView />} />
+              </Route>
+              <Route path="/item/women">
+                <Route path=":id" element={<ItemView />} />
+              </Route>
+              <Route path="/item/kids">
+                <Route path=":id" element={<ItemView />} />
+              </Route>
+              <Route path="/item/featured">
+                <Route path=":id" element={<ItemView />} />
+              </Route>
+            </Route>
+            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/search/*" element={<SearchView />} />
+            <Route path="/cartitems" element={<CartItems />} />
+            <Route path="/checkout/:id" element={<Checkout />} />
+            <Route
+              path="/checkout/paymentsuccess"
+              element={<PaymentSuccess />}
+            />
+            <Route
+              path="/checkout/paymentfailure"
+              element={<PaymentFailure />}
+            />
+            <Route path="/order/:id" element={<Order />} />
+            <Route
+              path="/ratingsandreviews/:id"
+              element={<RatingsAndReviews />}
+            />
+          </Routes>
+          <Footer />
+          <Routes>
+            <Route path="/admin" element={<Wishlist />} />
+          </Routes>
+        </Router>
+        {/* </SearchProvider>
           </WishItemsProvider>
-        </CartItemsProvider>
+        </CartItemsProvider> */}
       </ThemeProvider>
     </MyContextProvider>
   );

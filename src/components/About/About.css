@@ -1,0 +1,25 @@
+.paragraph {
+    max-width: 400px;
+    width: 100%;
+    /* Set the maximum width */
+    word-wrap: break-word;
+    /* Ensure words break to the next line if they are too long */
+}
+
+.about__header__line {
+    width: 100px;
+    height: 6px;
+    background-color: #FFE26E;
+    align-self: center;
+    border-radius: 25px;
+}
+
+.about_container {
+    margin: 5%;
+    background-color: rgba(233, 233, 233, 25%);
+}
+
+.about_container h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}

@@ -14,12 +14,13 @@ const CategoryCard = (props) => {
       </div>
       <div className="category__card__detail">
         <div className="category__name">
-          {/* <span>{props.data.name}</span> */}
+          <span>{props.data.name}</span>
         </div>
         <div className="category__card__action">
           <Link to={props.data.url}>
             <Button
               variant="outlined"
+              size="small"
               sx={[
                 {
                   "&:hover": {
