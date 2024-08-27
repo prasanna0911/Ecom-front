@@ -63,32 +63,22 @@ const ItemCard = (props) => {
 
   return (
     <Card
-      className="product__card__card"
+      className="item"
+      // className="product__card__card"
       data-aos="fade-up"
-      // data-aos-once="true"
     >
-      {/* <CardMedia
-        component="img"
-        height="330"
-        image={props.item?.primaryImage[0].URL}
-        alt="green iguana"
-      /> */}
-      <CardContent className="product__card p-0 pb-2">
-        <div
-          className="product__image"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        >
-          <img
-            src={props.item?.primaryImage[0].URL}
-            alt="item"
-            className="product__img"
-          />
-        </div>
+      <CardContent className="p-0 pb-2">
+        {/* <CardContent className="product__card p-0 pb-2"> */}
+        <img
+          src={props.item?.primaryImage[0].URL}
+          alt="item"
+          // className="product__img"
+        />
         {wishListItems?.some((product) => product._id === props.item?._id) ? (
           <IconButton
             onClick={() => handelRemoveItem(props.item?._id)}
             className="not-fav-icon-button position-absolute top-0 end-0 m-2"
+            size="small"
           >
             <FavoriteIcon className="fav-icon" />
           </IconButton>
@@ -96,6 +86,7 @@ const ItemCard = (props) => {
           <IconButton
             onClick={() => addToFavourite(props.item?._id)}
             className="fav-icon-button position-absolute top-0 end-0 m-2"
+            size="small"
           >
             <FavoriteIcon className="fav-icon" />
             {/* <FavoriteBorderIcon className="fav-icon" /> */}
@@ -110,15 +101,16 @@ const ItemCard = (props) => {
               {/* </Link> */}
             </div>
             <div className="product__description">
+              {/* <span>{props.item.description}</span> */}
               <span>{props.item.description?.slice(0, 25)}...</span>
             </div>
           </Link>
-          <div className="product__price d-flex gap-2">
-            <span>${props.item.price}</span>
-            <span className="text-decoration-line-through">$1299</span>
-            <span className="text-success">12% offer</span>
+          <div className="item-prices">
+            <span className="item-price-new">${props.item.price}</span>
+            <span className="item-price-old">$1299</span>
+            {/* <span className="text-success">12% offer</span> */}
           </div>
-          <div className="product__card__action gap-1 align-items-center mt-2">
+          {/* <div className="product__card__action gap-1 align-items-center mt-2">
             <Button
               variant="contained"
               startIcon={<AddShoppingCartIcon />}
@@ -135,7 +127,7 @@ const ItemCard = (props) => {
             >
               buy now
             </Button>
-            {/* {wishListItems?.some(
+             {wishListItems?.some(
               (product) => product._id === props.item?._id
             ) ? (
               <IconButton
@@ -151,8 +143,8 @@ const ItemCard = (props) => {
               >
                 <FavoriteBorderIcon className="fav-icon" />
               </IconButton>
-            )} */}
-          </div>
+            )} 
+          </div> */}
         </div>
         {/* <div className="layer">
           <h3>LONDON</h3>

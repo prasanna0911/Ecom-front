@@ -34,7 +34,6 @@ const Reviews = ({ item }) => {
                 style={{ width: "75%" }}
               ></div>
             </div>
-            <span className="d-flex"></span>
           </div>
           <div className="d-flex gap-2 align-items-center">
             <span className="d-flex">

@@ -69,3 +69,30 @@ a:hover {
 /* .fav-icon-button .fav-icon {
     color: #ffffff;
 } */
+
+/* @media (max-width:600) {
+    .not-fav-icon-button .fav-icon {
+        font-size: 13px !important;
+    }
+} */
+
+
+@media(max-width:800px) {
+    .not-fav-icon-button .fav-icon {
+        font-size: 14px !important;
+    }
+
+    .fav-icon-button .fav-icon {
+        font-size: 14px !important;
+    }
+}
+
+@media(max-width:500px) {
+    .not-fav-icon-button .fav-icon {
+        font-size: 18px !important;
+    }
+
+    .fav-icon-button .fav-icon {
+        font-size: 18px !important;
+    }
+}

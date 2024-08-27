@@ -7,7 +7,9 @@
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap-reverse;
-    background-color: var(--primary-color);
+    /* background-color: var(--primary-color); */
+    background-image: linear-gradient(var(--primary-color), #ffe26e41);
+    /* background: url('../../asset/img/Web\ 1920\ –\ 1.png') no-repeat cover; */
     /* background-color: #ffe26e; */
     position: relative;
 }

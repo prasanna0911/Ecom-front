@@ -85,20 +85,18 @@ const Detail = (props) => {
     <div className="product__detail__container">
       <div className="product__detail">
         <div className="product__main__detail">
-          <p className="mb-0">brand</p>
+          {/* <p className="mb-0">{props.item.name}</p> */}
           <div className="product__name__main">{props.item.name}</div>
-          <div className="product__detail__description mb-1">
+          <div className="product__detail__description">
             {props.item.description}
           </div>
-          <div className="product__color mb-1">
-            <div>COLOR</div>
-            <div
-              className="product-color"
-              style={{ backgroundColor: `${props.item.color}` }}
-            ></div>
+
+          <div className="product__price__detail mb-2">
+            <p className="current">${props.item.price}</p>
+            <p className="original">$1344</p>
+            <p className="offer">76% off</p>
           </div>
-          <div className="product__price__detail mb-2">${props.item.price}</div>
-          <div className="d-flex gap-3 mb-3">
+          <div className="d-flex gap-2 mb-3 align-items-center">
             <Chip
               color="success"
               size="small"
@@ -108,8 +106,17 @@ const Detail = (props) => {
                 </Box>
               }
             />
-            <span>1,453 ratings and 21 reviews</span>
+            <span style={{ fontSize: "14px" }}>
+              (1,453 ratings and 21 reviews)
+            </span>
           </div>
+          {/* <div className="product__color mb-1">
+            <div>COLOR</div>
+            <div
+              className="product-color"
+              style={{ backgroundColor: `${props.item.color}` }}
+            ></div>
+          </div> */}
           <ToggleButtonGroup
             color="primary"
             value={alignment}
@@ -119,7 +126,7 @@ const Detail = (props) => {
             className="mb-3"
           >
             {props.item.size.map((size) => (
-              <ToggleButton className="border-left me-2 px-3 py-1" value={size}>
+              <ToggleButton className="border-left me-2 px-3 py-2" value={size}>
                 {size}
               </ToggleButton>
             ))}

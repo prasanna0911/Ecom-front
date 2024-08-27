@@ -89,17 +89,17 @@ const Item = (props) => {
   console.log("props", props);
 
   return (
-    <div className="  p-4">
+    <div className="p-4">
       <Row>
         {/***product Image */}
         <Col xl="6" lg="6" md="6" sm="12">
           {MediumScreen ? (
-            <div className="d-flex flex-column flex-lg-row-reverse gap-2 h-96">
+            <div className="d-flex flex-row-reverse justify-content-center align-items-start gap-2">
               <div
                 className="position-relative bg-slate-200 p-2"
                 style={{
-                  height: "400px",
-                  width: "400px",
+                  height: "500px",
+                  width: "500px",
                   lgHeight: "384px",
                   lgWidth: "384px",
                 }}
@@ -167,6 +167,7 @@ const Item = (props) => {
           ) : (
             <ItemCarousel item={props.item} />
           )}
+          
         </Col>
         {/***product details */}
         <Col xl="6" lg="6" md="6" sm="12">
