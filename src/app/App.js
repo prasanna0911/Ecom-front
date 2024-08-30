@@ -54,6 +54,10 @@ function App() {
     });
     AOS.refresh();
   }, []);
+  const handleRightClick = (event) => {
+    // event.preventDefault(); // Prevent the default context menu
+    alert("Right-click is disabled on this element.");
+  };
   return (
     <MyContextProvider>
       <ThemeProvider theme={darkThemeMode ? darkTheme : lightTheme}>
@@ -61,6 +65,7 @@ function App() {
         {/* <CartItemsProvider>
           <WishItemsProvider>
             <SearchProvider> */}
+        {/* <div onContextMenu={handleRightClick}> */}
         <Router>
           <Header />
           {/* <Switch checked={darkThemeMode} onChange={toggleDarkMode} /> */}
@@ -120,6 +125,7 @@ function App() {
             <Route path="/admin" element={<Wishlist />} />
           </Routes>
         </Router>
+        {/* </div> */}
         {/* </SearchProvider>
           </WishItemsProvider>
         </CartItemsProvider> */}
