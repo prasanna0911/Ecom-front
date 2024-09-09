@@ -1,3 +1,7 @@
+.cart_container {
+    padding: 3rem;
+}
+
 .product {
     gap: 1rem;
     align-items: center;

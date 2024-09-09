@@ -253,6 +253,14 @@ const CancellMyOrder = async (data) => {
     return error;
   }
 };
+const GetOrderHistory = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/getorderhistory", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
 
 //pay check
 
@@ -291,5 +299,6 @@ export const ApiServices = {
   PostOrder,
   GetMyOrders,
   CancellMyOrder,
+  GetOrderHistory,
   PayCheck,
 };

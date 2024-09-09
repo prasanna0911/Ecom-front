@@ -1,0 +1,39 @@
+.reviews-container {
+    padding: 24px 0px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.reviews-head {
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.reviews-body {
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.rating_chip {
+    padding: 4px 7px;
+    border-radius: 12px;
+    font-size: 12px;
+    background-color: #26a541;
+    vertical-align: baseline;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    line-height: normal;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.reviewer {
+    /* margin-bottom: 6px; */
+    font-size: 13px;
+    color: #878787;
+}
+
+.reviewer-certificate {
+    font-size: 13px;
+    color: #878787;
+}

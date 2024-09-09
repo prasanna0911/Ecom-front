@@ -11,6 +11,7 @@ const MyContextProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [wishListItems, setWishListItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const theme = useTheme();
   const MobileScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const MediumScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -79,6 +80,8 @@ const MyContextProvider = ({ children }) => {
         wishListItems,
         setWishListItems,
         getWishlistItems,
+        searchQuery,
+        setSearchQuery,
       }}
     >
       {children}

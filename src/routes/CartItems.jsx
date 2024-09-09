@@ -89,7 +89,8 @@ export const CartItems = () => {
     return (
         <>
             {cartItems?.length > 0 ? (
-                <div style={{ padding: MobileScreen ? "3rem" : "20px" }}>
+
+                <div className='cart_container' style={{ padding: MobileScreen ? "3rem" : "10px" }}>
                     {!MobileScreen && (
                         <AccountHeader head="My Cart" breadcrumb="" />
                     )}

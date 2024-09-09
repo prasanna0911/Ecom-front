@@ -45,7 +45,7 @@
     width: 100%;
     font-size: 18px;
     font-weight: 400;
-    margin-bottom: 6px;
+    /* margin-bottom: 6px; */
 }
 
 
@@ -183,4 +183,71 @@
 
 .buy__button:hover {
     background-color: #000000d1;
+}
+
+.rating_chip {
+    padding: 4px 7px;
+    border-radius: 14px;
+    font-size: 16px;
+    background-color: #26a541;
+    vertical-align: baseline;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    line-height: normal;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.toggle_button_group {
+    margin-top: 16px;
+    display: flex;
+    /* justify-content: space-between; */
+
+}
+
+.toggle_button_group p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #878787;
+    margin-top: 8px;
+    min-width: 100px;
+    margin-bottom: 0;
+}
+
+
+.delivery_date {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 3px;
+    color: #212121;
+}
+
+.delivery_time {
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.cod {
+    font-size: 14px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.delivery_date_2 {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 3px;
+    color: #212121;
+}
+
+@media (max-width:500px) {
+    .toggle_button_group {
+        flex-direction: column;
+        gap: 5px;
+    }
 }

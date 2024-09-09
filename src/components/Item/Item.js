@@ -30,7 +30,7 @@ import { Col, Row } from "react-bootstrap";
 import Detail from "./Detail/Detail";
 import Description from "./Description/Description";
 import { Divider } from "@mui/material";
-import Reviews from "./Reviews";
+import Reviews from "./Reviews/Reviews";
 import ItemCarousel from "./Carousel/ItemCarousel";
 import { useMyContext } from "../../Context/MyContext";
 
@@ -167,7 +167,6 @@ const Item = (props) => {
           ) : (
             <ItemCarousel item={props.item} />
           )}
-          
         </Col>
         {/***product details */}
         <Col xl="6" lg="6" md="6" sm="12">

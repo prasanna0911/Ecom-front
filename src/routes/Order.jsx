@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Button, Card, CardContent, Chip, Divider, IconButton, Link, List, ListItem, Typography } from '@mui/material'
+import { Box, Breadcrumbs, Button, Card, CardContent, Chip, Divider, IconButton, Link, List, ListItem, Step, StepContent, StepLabel, Stepper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -12,6 +12,8 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 const Order = () => {
     const param = useParams()
     const [selectedOrder, setSelectedOrder] = useState({});
+    const [steps, setSteps] = useState([])
+    const [activeStep, setActiveStep] = useState(0);
     const navigate = useNavigate()
 
 
@@ -29,11 +31,25 @@ const Order = () => {
         });
     };
 
+    const getOrderHistory = () => {
+        var json = {
+            Id: param.id
+        }
+        ApiServices.GetOrderHistory(json).then((res) => {
+            console.log('res', res)
+            if (res.response_code === 200) {
+                setSteps(res.steps)
+                setActiveStep(res.activeStatus)
+            }
+        })
+    }
+
     const getMyOrders = () => {
         ApiServices.GetMyOrders().then((res) => {
             console.log("res orders", res);
             if (res.response_code === 200) {
                 setSelectedOrder(res.my_orders?.find(order => order._id === param.id));
+                getOrderHistory()
             }
         });
     };
@@ -42,6 +58,35 @@ const Order = () => {
         getMyOrders();
         window.scrollTo(0, 0);
     }, [param]);
+
+
+    // const steps = [
+    //     {
+    //         label: 'Order Confirmed',
+    //         date: 'Fri, 31st Mar 23 - 10:14pm',
+    //         description: `Your Order has been placed `,
+    //     },
+    //     {
+    //         label: 'Shipped',
+    //         date: 'Fri, 31st Mar 23 - 10:14pm',
+    //         description: 'Your item has been shipped.',
+    //     },
+    //     {
+    //         label: 'Out for delivery',
+    //         date: 'Fri, 31st Mar 23 - 10:14pm',
+    //         description: 'Your item is out for delivery.',
+    //     },
+    //     {
+    //         label: 'Delivered',
+    //         date: 'Fri, 31st Mar 23 - 10:14pm',
+    //         description: 'Your item has been delivered.',
+    //     },
+    // ];
+
+
+
+
+
     return (
         <div className='d-flex justify-content-center align-items-center'>
             <div className='py-4 mx-5 w-100' style={{ maxWidth: '900px' }}>
@@ -83,9 +128,9 @@ const Order = () => {
                                     #{selectedOrder._id}
                                 </Typography>
                                 <div className="d-flex gap-2">
-                                    <Button variant="contained" size="small" endIcon={<GpsFixedIcon fontSize='small' />}>
+                                    {/* <Button variant="contained" size="small" endIcon={<GpsFixedIcon fontSize='small' />}>
                                         track order
-                                    </Button>
+                                    </Button> */}
                                     {selectedOrder?.delivery_status !== "cancelled" &&
                                         selectedOrder?.delivery_status !== "delivered" && (
                                             <Button
@@ -199,8 +244,8 @@ const Order = () => {
                             </Col>
                         </Row>
                         <Divider />
-                        <Row style={{ padding: "0px 16px" }} className="mt-3">
-                            <Col xl={6} md={6} sm={12}>
+                        <Row className="px-sm-2 px-0">
+                            <Col xl={6} md={6} sm={12} className='mt-3'>
                                 <p className='d-flex gap-2'>Payment  <Chip label={selectedOrder?.payment_status} fontSize='small' size='small' color={selectedOrder?.payment_status === 'paid' ? 'success' : 'warning'} /></p>
 
                                 <div className="p-3 border rounded-3">
@@ -243,7 +288,7 @@ const Order = () => {
 
                                 </div>
                             </Col>
-                            <Col xl={6} md={6} sm={12}>
+                            <Col xl={6} md={6} sm={12} className='mt-3'>
                                 <p>Shipment</p>
                                 <p className="mb-1 p-3 border rounded-3">
                                     {selectedOrder?.shipping_address?.address_line1}, <br />
@@ -257,7 +302,38 @@ const Order = () => {
                                 </p>
                             </Col>
                         </Row>
-                        <div className="row d-flex justify-content-center">
+                        <Row className="mt-3 px-sm-2 px-0">
+                            <Col xl={12} md={12} sm={12}>
+                                <p className='d-flex gap-2'>Order history</p>
+
+                                <div className="p-3 border rounded-3">
+                                    <Stepper activeStep={activeStep} orientation="vertical">
+                                        {steps.map((step, index) => (
+                                            <Step key={step.label}>
+                                                <StepLabel>{step.label}</StepLabel>
+                                                {/* Show StepContent for steps that have been completed or are currently active */}
+
+
+                                                <div className='d-flex flex-column' style={{
+                                                    marginLeft: '12px',
+                                                    paddingLeft: '20px',
+                                                    paddingRight: '8px',
+                                                    borderLeft: index === steps.length - 1 ? '1px solid #fff' : '1px solid #bdbdbd', // Adjust the index condition
+                                                }}>
+                                                    <Typography variant='caption'>{step.description}</Typography>
+                                                    <Typography variant='caption'>{step.date}</Typography>
+                                                </div>
+
+                                            </Step>
+
+                                        ))}
+
+                                    </Stepper>
+
+                                </div>
+                            </Col>
+                        </Row>
+                        {/* <div className="row d-flex justify-content-center">
                             <div className="col-12">
                                 <ul id="progressBar" className="text-center">
                                     <li className="active step-0"></li>
@@ -266,7 +342,7 @@ const Order = () => {
                                     <li className="step-0"></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> */}
                     </CardContent>
 
                 </Card>

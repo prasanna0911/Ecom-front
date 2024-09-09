@@ -96,3 +96,41 @@ a:hover {
         font-size: 18px !important;
     }
 }
+
+
+
+.order-tracking-stepper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.step-marker {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: lightgray;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.completed .step-marker {
+    background-color: green;
+}
+
+.step-content h4 {
+    margin: 0;
+}
+
+.completed .step-content p {
+    color: gray;
+}

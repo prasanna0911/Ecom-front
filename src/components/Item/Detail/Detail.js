@@ -5,7 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { Button, Chip } from "@mui/material";
+import { Button, Chip, Divider } from "@mui/material";
 import { IconButton } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -17,10 +17,15 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
 import { ApiServices } from "../../../api/api";
 import { useMyContext } from "../../../Context/MyContext";
+import { useNavigate } from "react-router-dom";
+import ReplyIcon from "@mui/icons-material/Reply";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
 const Detail = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState(props.item.size[0]);
+  const navigate = useNavigate();
 
   // const cartItems = useContext(CartItemsContext);
   const wishItems = useContext(WishItemsContext);
@@ -75,6 +80,18 @@ const Detail = (props) => {
     });
   };
 
+  const handelRemoveItem = (id) => {
+    var json = {
+      Id: props.item._id,
+    };
+    ApiServices.RemoveFromFavourites(json).then((res) => {
+      console.log("res", res);
+      if (res.response_code === 200) {
+        getWishlistItems();
+      }
+    });
+  };
+
   const [alignment, setAlignment] = useState("");
 
   const handleChange = (event, newAlignment) => {
@@ -96,8 +113,12 @@ const Detail = (props) => {
             <p className="original">$1344</p>
             <p className="offer">76% off</p>
           </div>
-          <div className="d-flex gap-2 mb-3 align-items-center">
-            <Chip
+          <div className="d-flex gap-2 align-items-center">
+            <div className="rating_chip">
+              4.1
+              <StarIcon fontSize="1rem" />
+            </div>
+            {/* <Chip
               color="success"
               size="small"
               label={
@@ -105,8 +126,10 @@ const Detail = (props) => {
                   4.1 <StarIcon fontSize="1rem" />
                 </Box>
               }
-            />
-            <span style={{ fontSize: "14px" }}>
+            /> */}
+            <span
+              style={{ fontSize: "16px", color: "#878787", cursor: "pointer" }}
+            >
               (1,453 ratings and 21 reviews)
             </span>
           </div>
@@ -117,21 +140,62 @@ const Detail = (props) => {
               style={{ backgroundColor: `${props.item.color}` }}
             ></div>
           </div> */}
-          <ToggleButtonGroup
-            color="primary"
-            value={alignment}
-            exclusive
-            onChange={handleChange}
-            aria-label="Platform"
-            className="mb-3"
-          >
-            {props.item.size.map((size) => (
-              <ToggleButton className="border-left me-2 px-3 py-2" value={size}>
-                {size}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
+          <div className="toggle_button_group">
+            <p>size :</p>
+            <ToggleButtonGroup
+              color="primary"
+              value={alignment}
+              exclusive
+              onChange={handleChange}
+              aria-label="Platform"
+              className="mb-3"
+            >
+              {props.item.size.map((size) => (
+                <ToggleButton
+                  className="border-left me-2 px-3 py-2"
+                  value={size}
+                >
+                  {size}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          </div>
         </div>
+        {/* <div className="toggle_button_group mb-3">
+          <p>Delivery : </p>
+          <div className="border rounded-2 py-2 px-4">
+            <h6 className="delivery_date">
+              Delivery by 7 Sep, Saturday | Free
+            </h6>
+            <h6 className="delivery_time">if ordered before 10:59 AM</h6>
+          </div>
+        </div> */}
+        {/* <div className="toggle_button_group mb-2">
+          <p>Return : </p>
+          <div className="delivery_date" style={{ marginTop: "8px" }}>
+            <ReplyIcon /> 10 Days Return Policy
+          </div>
+        </div> */}
+        <div className="cod mt-3 mb-2 align-items-start">
+          <LocalShippingIcon />
+          <div className="">
+            <h6 className="delivery_date_2">
+              Delivery by 7 Sep, Saturday | Free
+            </h6>
+            <h6 className="delivery_time">if ordered before 10:59 AM</h6>
+          </div>
+        </div>
+        <Divider className="my-1" />
+
+        <div className="cod mb-2">
+          <ReplyIcon style={{ fontWeight: "inherit" }} /> 10 Days Return Policy
+        </div>
+        <Divider className="my-1" />
+        <div className="cod mb-2">
+          <LocalAtmIcon style={{ fontWeight: "inherit" }} /> Cash On Delivery
+          Available
+        </div>
+        {/* <Divider className="my-1" /> */}
 
         <form onSubmit={handelAddToCart} className="product__form">
           {/* <div className="product__quantity__and__size">
@@ -161,51 +225,105 @@ const Detail = (props) => {
             </div>
           </div> */}
           <div className="collect__item__actions">
-            <div className="d-flex gap-3 align-items-center mb-3">
-              <Button
-                variant="outlined"
-                size="large"
-                sx={[
-                  {
-                    "&:hover": {
-                      backgroundColor: "#FFE26E",
-                      borderColor: "#FFE26E",
+            <div className="d-flex gap-3 align-items-center my-3">
+              {cartItems?.some(
+                (cart_item) => cart_item._id === props.item._id
+              ) ? (
+                <Button
+                  variant="outlined"
+                  size="large"
+                  sx={[
+                    {
+                      "&:hover": {
+                        backgroundColor: "#FFE26E",
+                        borderColor: "#FFE26E",
+                        borderWidth: "3px",
+                        color: "black",
+                      },
+                      minWidth: 200,
+                      borderColor: "black",
+                      backgroundColor: "black",
+                      color: "#FFE26E",
                       borderWidth: "3px",
-                      color: "black",
                     },
-                    minWidth: 200,
-                    borderColor: "black",
-                    backgroundColor: "black",
-                    color: "#FFE26E",
-                    borderWidth: "3px",
-                  },
-                ]}
-                onClick={handelAddToCart}
-              >
-                ADD TO BAG
-              </Button>
-
-              <IconButton
-                variant="outlined"
-                size="large"
-                sx={[
-                  {
-                    "&:hover": {
-                      backgroundColor: "#FFE26E",
-                      borderColor: "#FFE26E",
+                  ]}
+                  onClick={() => navigate("/cartitems")}
+                >
+                  GO TO BAG
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  size="large"
+                  sx={[
+                    {
+                      "&:hover": {
+                        backgroundColor: "#FFE26E",
+                        borderColor: "#FFE26E",
+                        borderWidth: "3px",
+                        color: "black",
+                      },
+                      minWidth: 200,
+                      borderColor: "black",
+                      backgroundColor: "black",
+                      color: "#FFE26E",
                       borderWidth: "3px",
-                      color: "black",
                     },
-                    borderColor: "black",
-                    backgroundColor: "black",
-                    color: "#FFE26E",
-                    borderWidth: "3px",
-                  },
-                ]}
-                onClick={handelAddToWish}
-              >
-                <FavoriteBorderIcon sx={{ width: "22px", height: "22px" }} />
-              </IconButton>
+                  ]}
+                  onClick={handelAddToCart}
+                >
+                  ADD TO BAG
+                </Button>
+              )}
+              {wishListItems?.some(
+                (wishlist_item) => wishlist_item._id === props.item._id
+              ) ? (
+                <IconButton
+                  variant="outlined"
+                  size="large"
+                  sx={[
+                    {
+                      "&:hover": {
+                        backgroundColor: "#FFE26E",
+                        borderColor: "#FFE26E",
+                        borderWidth: "3px",
+                        color: "black",
+                      },
+                      borderColor: "black",
+                      backgroundColor: "black",
+                      color: "#FFE26E",
+                      borderWidth: "3px",
+                    },
+                  ]}
+                  onClick={handelRemoveItem}
+                >
+                  <FavoriteBorderIcon sx={{ width: "22px", height: "22px" }} />
+                </IconButton>
+              ) : (
+                <IconButton
+                  variant="outlined"
+                  size="large"
+                  sx={[
+                    {
+                      "&:hover": {
+                        backgroundColor: "#FFE26E",
+                        borderColor: "#FFE26E",
+                        borderWidth: "3px",
+                        color: "black",
+                        boxShadow:
+                          "5px 5px 20px #babecc,-10px -10px 20px #ffffff ",
+                      },
+                      borderColor: "black",
+                      backgroundColor: "#FFE26E",
+                      color: "black",
+                      borderWidth: "3px",
+                    },
+                  ]}
+                  onClick={handelAddToWish}
+                >
+                  <FavoriteBorderIcon sx={{ width: "22px", height: "22px" }} />
+                </IconButton>
+              )}
             </div>
           </div>
         </form>
