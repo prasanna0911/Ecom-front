@@ -27,7 +27,7 @@ const Reviews = ({ item }) => {
           Rate Product
         </Button>
       </div>
-      <div>
+      <div className="d-flex align-items-center gap-3">
         <div className="d-flex flex-column">
           <Typography variant="h4">4.5</Typography>
           <Rating
@@ -39,7 +39,7 @@ const Reviews = ({ item }) => {
 
           <Typography variant="body">546 ratings</Typography>
         </div>
-        <div className="mt-3">
+        <div className="mt-3 w-100 ">
           <div className="d-flex gap-2 align-items-center">
             <span className="d-flex">
               5 <StarRateIcon fontSize="small" />
