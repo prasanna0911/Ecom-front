@@ -1,6 +1,6 @@
-import { Alert, Box, Breadcrumbs, Button, Card, CardContent, Chip, Divider, FormHelperText, IconButton, Link, Rating, Snackbar, Stack, TextareaAutosize, TextField, Typography } from '@mui/material'
+import { Alert, Box, Breadcrumbs, Button, Card, CardContent, Chip, Divider, FormHelperText, IconButton, Link, Rating, Snackbar, Stack, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Star from "@mui/icons-material/Star";
 import { ApiServices } from '../api/api';
@@ -9,6 +9,7 @@ import { Col, Row } from 'react-bootstrap';
 
 const RatingsAndReviews = () => {
     const param = useParams()
+    const navigate = useNavigate()
     const [selectedOrder, setSelectedOrder] = useState({});
     const [reviewTitle, setReviewTitle] = useState('')
     const [reviewBody, setReviewBody] = useState('')
@@ -85,7 +86,7 @@ const RatingsAndReviews = () => {
         <div className='d-flex justify-content-center align-items-center'>
             <div className='py-4 mx-5 w-100' style={{ maxWidth: '700px' }}>
                 <Box className="w-100 d-flex align-items-start gap-1 py-2">
-                    <IconButton >
+                    <IconButton onClick={() => navigate(-1)}>
                         <ArrowBackIosIcon />
                     </IconButton>
                     <div>
@@ -129,7 +130,7 @@ const RatingsAndReviews = () => {
                                                 className="product__img"
                                             />
                                         )}
-                                        <div>
+                                        <div className='cursor-pointer' onClick={() => navigate(`/item/${selectedOrder?.category}/${selectedOrder?._id}`)}>
                                             <h5 className="mb-1">{selectedOrder?.name}</h5>
                                             <h6 className="mb-1">
                                                 {selectedOrder?.description}
@@ -154,7 +155,7 @@ const RatingsAndReviews = () => {
                                         </div>
                                     </div>
                                 </div>
-                                {/* <Divider /> */}
+
                             </Col>
                             <Col xl='12' lg='8' sm='12' xs='12'>
                                 <div>
@@ -170,7 +171,7 @@ const RatingsAndReviews = () => {
                                         <p>{ratingText}</p>
                                     </div>
                                 </div>
-
+                                <Divider />
                                 <div>
                                     <Typography variant='h6' className='my-2'>Review</Typography>
                                     <FormHelperText>

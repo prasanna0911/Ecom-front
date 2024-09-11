@@ -35,6 +35,9 @@ import Order from "../routes/Order";
 import PaymentSuccess from "../components/Checkout/PaymentSuccess";
 import PaymentFailure from "../components/Checkout/PaymentFailure";
 import RatingsAndReviews from "../routes/RatingsAndReviews";
+import AllReviews from "../routes/AllReviews";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [darkThemeMode, setDarkThemeMode] = useState(false);
@@ -68,6 +71,17 @@ function App() {
         {/* <div onContextMenu={handleRightClick}> */}
         <Router>
           <Header />
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            pauseOnHover
+            theme="light"
+          />
           {/* <Switch checked={darkThemeMode} onChange={toggleDarkMode} /> */}
           <Routes>
             <Route index element={<Home />} />
@@ -119,6 +133,7 @@ function App() {
               path="/ratingsandreviews/:id"
               element={<RatingsAndReviews />}
             />
+            <Route path="/allreviews/:id" element={<AllReviews />} />
           </Routes>
           <Footer />
           <Routes>

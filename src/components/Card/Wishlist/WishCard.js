@@ -1,23 +1,13 @@
-import { useContext } from "react";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-import {
-  Box,
-  Card,
-  CardContent,
-  Chip,
-  IconButton,
-  Rating,
-} from "@mui/material";
+import { Box, Card, Chip, IconButton } from "@mui/material";
 import "./WishCard.css";
 import { Button } from "@mui/material";
-import { WishItemsContext } from "../../../Context/WishItemsContext";
 import Star from "@mui/icons-material/Star";
 import { ApiServices } from "../../../api/api";
 import { useMyContext } from "../../../Context/MyContext";
 import { useNavigate } from "react-router-dom";
 
 const WishCard = (props) => {
-  const wishItems = useContext(WishItemsContext);
   const { cartItems, getCartItems, getWishlistItems } = useMyContext();
   const navigate = useNavigate();
   const handelRemoveItem = () => {
@@ -53,7 +43,12 @@ const WishCard = (props) => {
           alt="item"
           className="wish__image"
         />
-        <div className="wish__item__name flex-column">
+        <div
+          className="wish__item__name flex-column cursor-pointer"
+          onClick={() =>
+            navigate(`/item/${props.item.category}/${props.item._id}`)
+          }
+        >
           <p className="mb-1">{props.item.name}</p>
           <h6 className="mb-1">{props.item.description}</h6>
           <div className="d-flex gap-2 mb-2">

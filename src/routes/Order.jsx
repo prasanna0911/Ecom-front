@@ -1,10 +1,9 @@
-import { Box, Breadcrumbs, Button, Card, CardContent, Chip, Divider, IconButton, Link, List, ListItem, Step, StepContent, StepLabel, Stepper, Typography } from '@mui/material'
+import { Box, Breadcrumbs, Button, Card, CardContent, Chip, Divider, IconButton, Link, List, ListItem, Step, StepLabel, Stepper, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ApiServices } from '../api/api'
 import ReceiptIcon from "@mui/icons-material/Receipt";
-import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import CloseIcon from "@mui/icons-material/Close";
 import ReplyIcon from "@mui/icons-material/Reply";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -89,7 +88,7 @@ const Order = () => {
 
     return (
         <div className='d-flex justify-content-center align-items-center'>
-            <div className='py-4 mx-5 w-100' style={{ maxWidth: '900px' }}>
+            <div className='py-4 mx-3 w-100' style={{ maxWidth: '900px' }}>
                 <Box className="w-100 d-flex align-items-start gap-1 py-2">
                     <IconButton onClick={() => navigate(-1)}>
                         <ArrowBackIosIcon />
@@ -184,7 +183,7 @@ const Order = () => {
                                         className="product__img"
                                     />
                                 )}
-                                <div>
+                                <div className='cursor-pointer' onClick={() => navigate(`/item/${selectedOrder?.product_info?.category}/${selectedOrder?.product_info?._id}`)}>
                                     <h5>{selectedOrder?.product_info?.name}</h5>
                                     <h6 className="mb-1">
                                         {selectedOrder?.product_info?.description}

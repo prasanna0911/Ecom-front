@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import ReplyIcon from "@mui/icons-material/Reply";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import { toast } from "react-toastify";
 
 const Detail = (props) => {
   const [quantity, setQuantity] = useState(1);
@@ -62,6 +63,7 @@ const Detail = (props) => {
       console.log("res", res);
       if (res.response_code === 200) {
         getCartItems();
+        toast.success("cart item added successfully");
       }
     });
     // cartItems.addItem(props.item, quantity, size);

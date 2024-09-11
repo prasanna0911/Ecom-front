@@ -13,6 +13,11 @@ import { Col, Row } from "react-bootstrap";
 import StarIcon from "@mui/icons-material/Star";
 import { useMyContext } from "../../Context/MyContext";
 import AccountHeader from "./AccountHeader";
+import StarRateIcon from "@mui/icons-material/StarRate";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import Star from "@mui/icons-material/Star";
 
 const MyReviews = () => {
   const { MobileScreen } = useMyContext();
@@ -46,68 +51,116 @@ const MyReviews = () => {
             </div>
           }
         />
-        <CardContent>
+        <CardContent className="py-0">
           {myReview.map((item, index) => (
-            <Row
-              className="mt-4 p-2"
+            <div
+              className="p-2 pt-4 pb-0 d-flex align-items-start gap-0 gap-md-4 flex-column flex-md-row"
               style={{
                 borderBottom:
                   index !== myReview.length - 1 ? "1px solid #ddd" : "none",
               }}
+              key={item._id}
             >
-              <Col lg={3} md={3} xs={12} className="mb-4 mb-lg-0">
+              <div className="border rounded-3 d-flex flex-row flex-md-column align-items-center  review-product gap-3">
                 <img
                   src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[1].filename}`}
-                  width="100%"
+                  // width={160}
+                  className="review-img"
                   alt="main_img"
                 />
-              </Col>
-              <Col lg={9} md={9} xs={12} className="mb-4 mb-lg-0">
-                <div className="mb-3 mb-lg-0">
-                  <div className="d-flex mb-2 gap-2 align-items-center">
+                <div className="p-2">
+                  <div className="product__name">{item.name}</div>
+                  <div className="product__description">
+                    <span>{item.description?.slice(0, 25)}...</span>
+                  </div>
+                  <div className="d-flex gap-2 mb-2">
                     <Chip
                       color="success"
                       size="small"
+                      className="rounded"
+                      style={{ height: "auto" }}
                       label={
-                        <Box className="d-flex align-items-center justify-content-center gap-1">
-                          4.1 <StarIcon fontSize="1rem" />
+                        <Box
+                          className="d-flex align-items-center justify-content-center gap-1"
+                          style={{ fontSize: "small" }}
+                        >
+                          4.1 <Star fontSize="1rem" />
                         </Box>
                       }
                     />
-
-                    <Typography variant="h6">Review heading </Typography>
+                    <span style={{ fontSize: "small" }}>(1,453)</span>
                   </div>
-                  <div className="d-flex gap-3">
-                    <img
-                      src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[0].filename}`}
-                      width={50}
-                      alt="main_img"
-                    />
-                    <img
-                      src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[1].filename}`}
-                      width={50}
-                      alt="main_img"
-                    />
-                    {item.image[2]?.filename && (
-                      <img
-                        src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[2]?.filename}`}
-                        width={50}
-                        alt="main_img"
-                      />
-                    )}
-                  </div>
-                  <span className="d-block mb-1">
-                    Original Earphones With Remote Note Enjoy your music and
-                    calls with our one of the most luxurious earphones in the
-                    international market. Introducing its elegant Luxury
-                    Flexgrip connection prevents cable damage Perfect headset
-                    for disturbance less experience Maximum comfort and super
-                    performance Excellent for interactive games Compatible with
-                    All 3.5 mm audio jack devices, Speaker size: 13mm
-                  </span>
                 </div>
-              </Col>
-            </Row>
+              </div>
+              <div className="reviews-container border-0">
+                <div className="d-flex gap-2 align-items-center reviews-head">
+                  <div className="rating_chip">
+                    4.1
+                    <StarIcon fontSize="1rem" />
+                  </div>
+                  <div>
+                    <Typography variant="body">
+                      Good product and the delivery time was quick worth buying
+                    </Typography>
+                  </div>
+                </div>
+                <div className="d-flex gap-2" style={{ marginBottom: "12px" }}>
+                  <img
+                    src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[0].filename}`}
+                    width={62}
+                    alt="main_img"
+                  />
+                  <img
+                    src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[1].filename}`}
+                    width={62}
+                    alt="main_img"
+                  />
+                  {item.image[2]?.filename && (
+                    <img
+                      src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[2]?.filename}`}
+                      width={62}
+                      alt="main_img"
+                    />
+                  )}
+                </div>
+                <span className="d-block reviews-body">
+                  Original Earphones With Remote Note Enjoy your music and calls
+                  with our one of the most luxurious earphones in the
+                  international market. Introducing its elegant Luxury Flexgrip
+                  connection prevents cable damage Perfect headset for
+                  disturbance less experience Maximum comfort and super
+                  performance Excellent for interactive games Compatible with
+                  All 3.5 mm audio jack devices, Speaker size: 13mm
+                </span>
+                <div>
+                  <div className="d-flex justify-content-between reviewer">
+                    {/* <div className="d-flex gap-2 align-items-center ">
+                        <p className="mb-0" style={{ fontWeight: "500" }}>
+                          Prasanna
+                        </p>
+                        <p className="mb-0">Feb 2024</p>
+                      </div> */}
+                    <div>
+                      <Button
+                        startIcon={<ThumbUpIcon style={{ fontSize: "12px" }} />}
+                        style={{ fontSize: "12px" }}
+                      >
+                        414
+                      </Button>
+                      <Button
+                        startIcon={
+                          <ThumbDownIcon style={{ fontSize: "12px" }} />
+                        }
+                        style={{ fontSize: "12px" }}
+                        color="error"
+                      >
+                        216
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           ))}
 
           {/* <Dialog

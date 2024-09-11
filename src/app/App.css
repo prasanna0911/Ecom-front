@@ -134,3 +134,7 @@ a:hover {
 .completed .step-content p {
     color: gray;
 }
+
+.cursor-pointer {
+    cursor: pointer !important;
+}

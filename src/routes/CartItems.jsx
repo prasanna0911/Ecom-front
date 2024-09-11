@@ -120,7 +120,7 @@ export const CartItems = () => {
                                                 </IconButton>
                                             </div>
                                         </div>
-                                        <div style={{ maxWidth: "400px" }} className='product_details'>
+                                        <div style={{ maxWidth: "400px" }} className='product_details cursor-pointer' onClick={() => navigate(`/item/${item.category}/${item._id}`)}>
                                             <h5>{item.name}</h5>
                                             <h6 className="mb-1">{item.description}</h6>
                                             <p className="mb-1" style={{ fontSize: 'small' }}>

@@ -131,3 +131,21 @@
 #progressBar .active::after {
     background-color: #164719;
 }
+
+
+.review-img {
+    width: 180px;
+}
+
+
+
+@media(max-width:768px) {
+    .review-img {
+        width: 80px;
+    }
+
+    .review-product {
+        width: 100%;
+        padding: 10px 20px;
+    }
+}

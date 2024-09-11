@@ -1,13 +1,9 @@
-import { useContext } from "react";
-import { WishItemsContext } from "../../Context/WishItemsContext";
 import WishCard from "../Card/Wishlist/WishCard";
 import "./index.css";
 import { useMyContext } from "../../Context/MyContext";
 
 const Wishlist = () => {
-  const wishItems = useContext(WishItemsContext);
-
-  const { wishListItems, setWishListItems, getWishlistItems } = useMyContext();
+  const { wishListItems } = useMyContext();
 
   return (
     <div className="wishlist">
