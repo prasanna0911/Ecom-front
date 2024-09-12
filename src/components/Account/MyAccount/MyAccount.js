@@ -1,18 +1,15 @@
 import { useState, useEffect } from "react";
 import Account from "../Account";
 import "./MyAccount.css";
-import { Link } from "react-router-dom";
-
 import {
-  Avatar,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  IconButton,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
 } from "@mui/material";
 import PropTypes from "prop-types";
@@ -31,10 +28,8 @@ import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useMyContext } from "../../../Context/MyContext";
 import Payments from "../Payments";
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -118,68 +113,10 @@ const MyAccount = () => {
   console.log(groupedByCategory);
   return (
     <Account>
-      {/* <div className="order__history__container">
-        <div className="order__history">
-          <div className="order__history__header">Order History</div>
-          <div className="order__history__detail">You have not place any orders yet</div> 
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-               <TableHead>
-                <TableRow>
-                  <TableCell>Dessert (100g serving)</TableCell>
-                  <TableCell align="right">Calories</TableCell>
-                  <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                  <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                  <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                </TableRow>
-              </TableHead> 
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      className="d-flex align-items-center gap-2"
-                    >
-                      <Avatar />
-                      <div className="d-flex flex-column">
-                        {row.name}
-                        <span>men</span>
-                      </div>
-                    </TableCell>
-
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-      </div>
-      <div className="account__details__container">
-        <div className="account__details__header">
-          <div className="details__header">Account Details</div>
-          <div className="logout__action">Logout</div>
-        </div>
-        <div className="account__details">
-          <div className="account__holder__name">Account holder name</div>
-          <div className="account__holder__email">Account holder email</div>
-          <div className="manage__account__action">
-            <Link to="/account/manage">Manage account</Link>
-          </div>
-        </div>
-      </div> */}
       {matches ? (
         <Box
           sx={{
             flexGrow: 1,
-            // bgcolor: "background.paper",
             display: "flex",
             paddingTop: 0,
           }}
@@ -199,12 +136,6 @@ const MyAccount = () => {
               zIndex: 1,
             }}
           >
-            {/* <div className="d-flex flex-column align-items-center mb-2 gap-2">
-              <Avatar style={{ height: "100px", width: "100px" }} />
-              <Typography variant="body1" className="text-dark">
-                Prasanna
-              </Typography>
-            </div> */}
             <Tab label="My Account" {...a11yProps(0)} />
             <Tab label="My Orders" {...a11yProps(1)} />
             <Tab label="Manage Addresses" {...a11yProps(2)} />
@@ -249,58 +180,78 @@ const MyAccount = () => {
           <ListItem
             className="list-item"
             onClick={() => handleRoute("myaccount")}
+            secondaryAction={
+              <IconButton edge="end" aria-label="delete">
+                <ArrowRightAltIcon />
+              </IconButton>
+            }
           >
-            {/* <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon> */}
             <ListItemText primary="My account" />
           </ListItem>
           <ListItem
             className="list-item"
             onClick={() => handleRoute("myorders")}
+            secondaryAction={
+              <IconButton edge="end" aria-label="delete">
+                <ArrowRightAltIcon />
+              </IconButton>
+            }
           >
-            {/* <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon> */}
             <ListItemText primary="My Orders" />
           </ListItem>
           <ListItem
             className="list-item"
             onClick={() => handleRoute("manageaddress")}
+            secondaryAction={
+              <IconButton edge="end" aria-label="delete">
+                <ArrowRightAltIcon />
+              </IconButton>
+            }
           >
-            {/* <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon> */}
             <ListItemText primary="Manage Addresses" />
           </ListItem>
           <ListItem
             className="list-item"
             onClick={() => handleRoute("myreviews")}
+            secondaryAction={
+              <IconButton edge="end" aria-label="delete">
+                <ArrowRightAltIcon />
+              </IconButton>
+            }
           >
-            {/* <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon> */}
             <ListItemText primary="My Reviews & Ratings" />
           </ListItem>
           <ListItem
             className="list-item"
             onClick={() => handleRoute("payments")}
+            secondaryAction={
+              <IconButton edge="end" aria-label="delete">
+                <ArrowRightAltIcon />
+              </IconButton>
+            }
           >
-            {/* <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon> */}
             <ListItemText primary="Payments" />
           </ListItem>
-          <ListItem className="list-item" onClick={() => setLogoutOpen(true)}>
-            {/* <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon> */}
+          <ListItem
+            secondaryAction={
+              <IconButton edge="end" aria-label="delete">
+                <ArrowRightAltIcon />
+              </IconButton>
+            }
+            className="list-item"
+            onClick={() => setLogoutOpen(true)}
+          >
             <ListItemText primary="Logout" />
           </ListItem>
-          <ListItem className="list-item" onClick={() => setDeleteOpen(true)}>
-            {/* <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon> */}
+          <ListItem
+            className="list-item"
+            secondaryAction={
+              <IconButton edge="end" aria-label="delete">
+                <ArrowRightAltIcon />
+              </IconButton>
+            }
+            onClick={() => setDeleteOpen(true)}
+          >
             <ListItemText primary="Delete Account" />
           </ListItem>
         </List>

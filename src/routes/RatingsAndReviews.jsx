@@ -5,6 +5,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import Star from "@mui/icons-material/Star";
 import { ApiServices } from '../api/api';
 import { Col, Row } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
 
 const RatingsAndReviews = () => {
@@ -58,8 +59,13 @@ const RatingsAndReviews = () => {
             Id: param.id,
             Rating: newValue
         }
-        console.log('json', json)
-        setSnackOpen(true);
+        ApiServices.AddRating(json).then(res => {
+            console.log('res', res)
+            if (res.response_code === 200) {
+                toast.success('Your rating has been saved')
+            }
+        })
+        // setSnackOpen(true);
     }
 
     const handleSubmit = () => {
@@ -69,7 +75,12 @@ const RatingsAndReviews = () => {
             ReviewBody: reviewBody
         }
         console.log('json', json)
-
+        ApiServices.AddReview(json).then(res => {
+            console.log('res', res)
+            if (res.response_code === 200) {
+                toast.success('Your review has been saved')
+            }
+        })
     }
 
     const [snackopen, setSnackOpen] = React.useState(false);
@@ -204,7 +215,7 @@ const RatingsAndReviews = () => {
                                         onChange={(e) => setReviewBody(e.target.value)}
                                     />
                                     <Stack direction='row' gap={1} justifyContent='end' marginTop={1}>
-                                        <Button variant='contained' disabled={!rating || !reviewTitle || !reviewBody} onClick={() => handleSubmit()}>Submit</Button>
+                                        <Button variant='contained' disabled={!reviewTitle || !reviewBody} onClick={() => handleSubmit()}>Submit</Button>
                                         <Button variant='outlined'>cancel</Button>
                                     </Stack>
                                     <Snackbar open={snackopen} autoHideDuration={2000} onClose={handleSnackClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>

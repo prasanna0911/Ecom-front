@@ -134,18 +134,41 @@
 
 
 .review-img {
-    width: 180px;
+    width: 85px;
 }
 
+.review-product {
+    padding: 8px 15px;
+    /* padding: 1rem; */
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    max-width: 300px;
+}
 
+.product-name {
+    font-size: 13px;
+    color: #455a64;
+}
+
+.product-description {
+    font-size: 15px;
+    margin-bottom: 4px;
+    /* max-width: calc(150px - 0.5rem); */
+}
 
 @media(max-width:768px) {
     .review-img {
-        width: 80px;
+        width: 70px;
     }
 
     .review-product {
         width: 100%;
-        padding: 10px 20px;
+        padding: 8px 15px;
+        /* padding: 1rem; */
+        align-items: center;
+        gap: 5px;
+        max-width: auto;
     }
+
 }

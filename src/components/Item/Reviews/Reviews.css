@@ -25,6 +25,7 @@
     line-height: normal;
     font-weight: 500;
     cursor: pointer;
+    gap: 2px;
 }
 
 .reviewer {

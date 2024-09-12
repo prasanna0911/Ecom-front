@@ -138,3 +138,14 @@ a:hover {
 .cursor-pointer {
     cursor: pointer !important;
 }
+
+.Toastify__toast-container {
+    width: auto !important;
+    font-size: 14px;
+}
+
+@media (max-width:500px) {
+    .Toastify__toast-container {
+        font-size: 12px;
+    }
+}

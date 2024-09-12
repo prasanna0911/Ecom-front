@@ -1,6 +1,5 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
-
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "../routes/Home";
@@ -12,18 +11,15 @@ import Shop from "../components/Shop/Shop";
 import ItemView from "../routes/ItemView";
 import CategoryView from "../routes/CategoryView";
 import SearchView from "../routes/Search";
-import CartItemsProvider from "../Context/CartItemsProvider";
 import Login from "../components/Authentication/Login/Login";
 import Register from "../components/Authentication/Register/Register";
 import Wishlist from "../components/Wishlist";
-import WishItemsProvider from "../Context/WishItemsProvider";
-import SearchProvider from "../Context/SearchProvider";
 import "@radix-ui/themes/styles.css";
 import MyOrders from "../components/Account/MyOrders";
 import ShippingAddress from "../components/Account/ShippingAddress";
 import MyReviews from "../components/Account/MyReviews";
-import { MyContextProvider, useMyContext } from "../Context/MyContext";
-import { CssBaseline, Switch, ThemeProvider } from "@mui/material";
+import { MyContextProvider } from "../Context/MyContext";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { useEffect, useState } from "react";
 import lightTheme from "../Themes/lightTheme";
 import darkTheme from "../Themes/darkTheme";
@@ -36,48 +32,48 @@ import PaymentSuccess from "../components/Checkout/PaymentSuccess";
 import PaymentFailure from "../components/Checkout/PaymentFailure";
 import RatingsAndReviews from "../routes/RatingsAndReviews";
 import AllReviews from "../routes/AllReviews";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [darkThemeMode, setDarkThemeMode] = useState(false);
 
-  const toggleDarkMode = () => {
-    const newMode = !darkThemeMode;
-    localStorage.setItem("darkMode", JSON.stringify(newMode));
-    setDarkThemeMode(newMode);
-  };
+  // const toggleDarkMode = () => {
+  //   const newMode = !darkThemeMode;
+  //   localStorage.setItem("darkMode", JSON.stringify(newMode));
+  //   setDarkThemeMode(newMode);
+  // };
 
   useEffect(() => {
     AOS.init({
-      duration: 800, // duration of animations in ms
+      duration: 800,
       easing: "ease-in-sine",
       // delay: 100,
       offset: 100,
     });
     AOS.refresh();
   }, []);
-  const handleRightClick = (event) => {
-    // event.preventDefault(); // Prevent the default context menu
-    alert("Right-click is disabled on this element.");
-  };
+
+  // const handleRightClick = (event) => {
+  //   // event.preventDefault();
+  //   alert("Right-click is disabled on this element.");
+  // };
+
   return (
     <MyContextProvider>
       <ThemeProvider theme={darkThemeMode ? darkTheme : lightTheme}>
         <CssBaseline />
-        {/* <CartItemsProvider>
-          <WishItemsProvider>
-            <SearchProvider> */}
         {/* <div onContextMenu={handleRightClick}> */}
         <Router>
           <Header />
           <ToastContainer
             position="top-center"
             autoClose={5000}
+            // autoClose={false}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
-            rtl={false}
+            // rtl={false}
             pauseOnFocusLoss
             pauseOnHover
             theme="light"
@@ -140,10 +136,6 @@ function App() {
             <Route path="/admin" element={<Wishlist />} />
           </Routes>
         </Router>
-        {/* </div> */}
-        {/* </SearchProvider>
-          </WishItemsProvider>
-        </CartItemsProvider> */}
       </ThemeProvider>
     </MyContextProvider>
   );

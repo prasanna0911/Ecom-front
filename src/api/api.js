@@ -273,6 +273,35 @@ const PayCheck = async (data) => {
   }
 };
 
+//Reviews
+
+const GetMyReviews = async () => {
+  try {
+    const response = await instance.get(baseUrl + "/getmyreviews");
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const AddRating = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/addrating", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const AddReview = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/addreview", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const ApiServices = {
   signup,
   Login,
@@ -301,4 +330,7 @@ export const ApiServices = {
   CancellMyOrder,
   GetOrderHistory,
   PayCheck,
+  GetMyReviews,
+  AddRating,
+  AddReview,
 };

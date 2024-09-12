@@ -6,6 +6,7 @@ import Star from "@mui/icons-material/Star";
 import { ApiServices } from "../../../api/api";
 import { useMyContext } from "../../../Context/MyContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const WishCard = (props) => {
   const { cartItems, getCartItems, getWishlistItems } = useMyContext();
@@ -18,6 +19,7 @@ const WishCard = (props) => {
       console.log("res", res);
       if (res.response_code === 200) {
         getWishlistItems();
+        toast.success("Product successfully removed from your wishlist!");
       }
     });
   };
@@ -31,6 +33,7 @@ const WishCard = (props) => {
       console.log("res", res);
       if (res.response_code === 200) {
         getCartItems();
+        toast.success("Product successfully added to your cart!");
       }
     });
   };

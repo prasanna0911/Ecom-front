@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMyContext } from '../Context/MyContext'
-import { Box, Button, ButtonGroup, Card, CardActionArea, CardActions, CardContent, Chip, IconButton, Rating, TextField, ToggleButtonGroup, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, Chip, IconButton, Typography } from '@mui/material'
 import { TabTitle } from '../utils/General';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CloseIcon from '@mui/icons-material/Close';
@@ -13,11 +13,12 @@ import { useNavigate } from 'react-router-dom';
 import './routestyles/CartItems.css'
 import AccountHeader from '../components/Account/AccountHeader';
 import EmptyComponent from '../components/EmptyComponent';
+import { toast } from 'react-toastify';
 
 
 export const CartItems = () => {
     TabTitle("Cart Items - Shema");
-    const { cartItems, getCartItems, setCartItems, wishListItems, getWishlistItems, MobileScreen } = useMyContext()
+    const { cartItems, getCartItems, wishListItems, getWishlistItems, MobileScreen } = useMyContext()
     const navigate = useNavigate()
     const removeFromCart = async (id) => {
         var json = {
@@ -28,6 +29,7 @@ export const CartItems = () => {
             console.log('res', res);
             if (res.response_code === 200) {
                 getCartItems()
+                toast.success("Product successfully removed from your cart!");
             }
         })
     }
@@ -41,6 +43,7 @@ export const CartItems = () => {
             console.log('res', res);
             if (res.response_code === 200) {
                 getWishlistItems()
+                toast.success("Product successfully added to your wishlist!");
             }
         })
     }
@@ -53,6 +56,7 @@ export const CartItems = () => {
             console.log("res", res);
             if (res.response_code === 200) {
                 getWishlistItems();
+                toast.success("Product successfully removed from your wishlist!");
             }
         });
     };
@@ -69,6 +73,7 @@ export const CartItems = () => {
             }
         })
     }
+
     const decreaseCartItemCount = async (id) => {
         var json = {
             Id: id
@@ -85,7 +90,7 @@ export const CartItems = () => {
     const handleCheckoutRoute = (id) => {
         navigate(`/checkout/${id}`)
     }
-    console.log('wishlist', wishListItems);
+
     return (
         <>
             {cartItems?.length > 0 ? (

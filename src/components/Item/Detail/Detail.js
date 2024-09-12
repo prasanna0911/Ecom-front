@@ -1,16 +1,7 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import "./Detail.css";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { Button, Chip, Divider } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import { IconButton } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import { CartItemsContext } from "../../../Context/CartItemsContext";
-import { WishItemsContext } from "../../../Context/WishItemsContext";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -24,35 +15,10 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { toast } from "react-toastify";
 
 const Detail = (props) => {
-  const [quantity, setQuantity] = useState(1);
-  const [size, setSize] = useState(props.item.size[0]);
   const navigate = useNavigate();
 
-  // const cartItems = useContext(CartItemsContext);
-  const wishItems = useContext(WishItemsContext);
-
-  const handleSizeChange = (event) => {
-    setSize(event.target.value);
-  };
-
-  const handelQuantityIncrement = (event) => {
-    setQuantity((prev) => (prev += 1));
-  };
-
-  const handelQuantityDecrement = (event) => {
-    if (quantity > 1) {
-      setQuantity((prev) => (prev -= 1));
-    }
-  };
-
-  const {
-    cartItems,
-    getCartItems,
-    setCartItems,
-    wishListItems,
-    setWishListItems,
-    getWishlistItems,
-  } = useMyContext();
+  const { cartItems, getCartItems, wishListItems, getWishlistItems } =
+    useMyContext();
 
   const handelAddToCart = () => {
     console.log("props.item", props.item);
@@ -63,7 +29,7 @@ const Detail = (props) => {
       console.log("res", res);
       if (res.response_code === 200) {
         getCartItems();
-        toast.success("cart item added successfully");
+        toast.success("Product successfully added to your cart!");
       }
     });
     // cartItems.addItem(props.item, quantity, size);
@@ -78,6 +44,9 @@ const Detail = (props) => {
       console.log("res", res);
       if (res.response_code === 200) {
         getWishlistItems();
+        toast.success("Product successfully added to your wishlist!", {
+          className: "w-100",
+        });
       }
     });
   };
@@ -90,6 +59,7 @@ const Detail = (props) => {
       console.log("res", res);
       if (res.response_code === 200) {
         getWishlistItems();
+        toast.success("Product successfully removed from your wishlist!");
       }
     });
   };

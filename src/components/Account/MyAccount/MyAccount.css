@@ -93,10 +93,10 @@
 }
 
 .list-item {
-    background-color: aliceblue;
-    border: 1px solid #dadaff;
-    margin-bottom: 5px;
-    border-radius: 10px;
+    background-color: #ffe26e2e;
+    border: 1px solid var(--primary-color);
+    margin-bottom: 3px;
+    border-radius: 5px;
 }
 
 .order-card {
