@@ -87,7 +87,10 @@ const Detail = (props) => {
           </div>
           <div className="d-flex gap-2 align-items-center">
             <div className="rating_chip">
-              4.1
+              {/* {props.item.item.ratings.reduce((acc, rating) => {
+                            return acc + rating.rating;
+                          }, 0) / item.item.ratings.length} */}
+              4.4
               <StarIcon fontSize="1rem" />
             </div>
             {/* <Chip
@@ -102,7 +105,8 @@ const Detail = (props) => {
             <span
               style={{ fontSize: "16px", color: "#878787", cursor: "pointer" }}
             >
-              (1,453 ratings and 21 reviews)
+              ({props.item.reviews.length} ratings and{" "}
+              {props.item.ratings.length} reviews)
             </span>
           </div>
           {/* <div className="product__color mb-1">
@@ -126,6 +130,7 @@ const Detail = (props) => {
                 <ToggleButton
                   className="border-left me-2 px-3 py-2"
                   value={size}
+                  key={size}
                 >
                   {size}
                 </ToggleButton>
@@ -301,8 +306,8 @@ const Detail = (props) => {
         </form>
         <div>Product details</div>
         <ul>
-          {props.item.highlights.map((highlight) => (
-            <li>{highlight}</li>
+          {props.item.highlights.map((highlight, index) => (
+            <li key={index}>{highlight}</li>
           ))}
         </ul>
       </div>

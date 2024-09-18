@@ -10,7 +10,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Control from "../Controls/Control";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import Form from "../Search-Bar/Form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../DrawerNav/DrawerNav.css";
 
 const DrawerNav = () => {
@@ -97,8 +97,8 @@ const DrawerNav = () => {
 
   return (
     <Fragment>
-      {["left"].map((anchor) => (
-        <Fragment>
+      {["left"].map((anchor, index) => (
+        <Fragment key={index}>
           {state.left ? (
             <MenuOpenIcon fontSize="large" />
           ) : (

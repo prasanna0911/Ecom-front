@@ -302,6 +302,24 @@ const AddReview = async (data) => {
   }
 };
 
+const AddReviewLike = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/addreviewlike", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const AddReviewDisLike = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/addreviewdislike", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const ApiServices = {
   signup,
   Login,
@@ -333,4 +351,6 @@ export const ApiServices = {
   GetMyReviews,
   AddRating,
   AddReview,
+  AddReviewLike,
+  AddReviewDisLike,
 };

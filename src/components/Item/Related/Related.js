@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import RelatedCard from "../../Card/RelatedCard/RelatedCard";
 import "./Related.css";
 import { ApiServices } from "../../../api/api";
@@ -44,7 +43,9 @@ const Related = (props) => {
         <div className="related__product__card">
           {menItems &&
             props.category === "men" &&
-            menItems.map((item) => <RelatedCard item={item} />)}
+            menItems.map((item, index) => (
+              <RelatedCard item={item} key={index} />
+            ))}
           {womenItems &&
             props.category === "women" &&
             womenItems.map((item) => <RelatedCard item={item} />)}

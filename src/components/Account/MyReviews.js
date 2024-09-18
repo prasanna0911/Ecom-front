@@ -35,6 +35,25 @@ const MyReviews = () => {
     GetMyReviews();
   }, []);
 
+  const addLike = (id) => {
+    var json = {
+      Id: id,
+    };
+    ApiServices.AddReviewLike(json).then((res) => {
+      console.log(res);
+      GetMyReviews();
+    });
+  };
+  const addDisLike = (id) => {
+    var json = {
+      Id: id,
+    };
+    ApiServices.AddReviewDisLike(json).then((res) => {
+      console.log(res);
+      GetMyReviews();
+    });
+  };
+
   return (
     <div style={{ padding: MobileScreen ? "none" : "10px" }}>
       {!MobileScreen && (
@@ -138,6 +157,7 @@ const MyReviews = () => {
                       <Button
                         startIcon={<ThumbUpIcon style={{ fontSize: "12px" }} />}
                         style={{ fontSize: "12px" }}
+                        onClick={() => addLike(item._id)}
                       >
                         {item.likes.length}
                       </Button>
@@ -147,6 +167,7 @@ const MyReviews = () => {
                         }
                         style={{ fontSize: "12px" }}
                         color="error"
+                        onClick={() => addDisLike(item._id)}
                       >
                         {item.dislikes.length}
                       </Button>
