@@ -1,5 +1,5 @@
 import { Button, Rating, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import StarIcon from "@mui/icons-material/Star";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
@@ -8,10 +8,23 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import "./Reviews.css";
 import { useNavigate } from "react-router-dom";
+import { ApiServices } from "../../../api/api";
 
 const Reviews = ({ item }) => {
   const navigate = useNavigate();
 
+  const getProductReviews = () => {
+    var json = {
+      Id: item?._id,
+    };
+    ApiServices.GetProductReviews(json).then((res) => {
+      console.log("res", res);
+    });
+  };
+
+  useEffect(() => {
+    getProductReviews();
+  }, []);
   const ratingData = [
     { id: 1, rating: 5, percentage: "75%", color: "bg-success" },
     { id: 2, rating: 4, percentage: "45%", color: "bg-success" },

@@ -13,6 +13,14 @@ const instance = axios.create({
   headers: { Authorization: "Bearer " + token },
 });
 
+const form = axios.create({
+  baseURL: baseUrl,
+  headers: {
+    "Content-Type": "multipart/form-data", // Set content type for file upload
+    Authorization: "Bearer " + token,
+  },
+});
+
 console.log("baseUrl", process.env.API_BASE_URL);
 console.log("REACT_APP_API_BASE_URL:", process.env.REACT_APP_API_BASE_URL);
 
@@ -295,7 +303,7 @@ const AddRating = async (data) => {
 
 const AddReview = async (data) => {
   try {
-    const response = await instance.post(baseUrl + "/addreview", data);
+    const response = await form.post(baseUrl + "/addreview", data);
     return response.data;
   } catch (error) {
     return error;
@@ -314,6 +322,15 @@ const AddReviewLike = async (data) => {
 const AddReviewDisLike = async (data) => {
   try {
     const response = await instance.post(baseUrl + "/addreviewdislike", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+const GetProductReviews = async (data) => {
+  try {
+    const response = await instance.post(baseUrl + "/getproductreviews", data);
     return response.data;
   } catch (error) {
     return error;
@@ -353,4 +370,5 @@ export const ApiServices = {
   AddReview,
   AddReviewLike,
   AddReviewDisLike,
+  GetProductReviews,
 };

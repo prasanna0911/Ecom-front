@@ -1,10 +1,7 @@
-import { Col, Row } from "react-bootstrap";
-import Account from "../Account";
 import "./ManageAccount.css";
 import {
   Button,
   Card,
-  CardActions,
   CardContent,
   CardHeader,
   Dialog,
@@ -53,13 +50,6 @@ const ManageAccount = () => {
   const [passwordEditOpen, setPasswordEditOpen] = useState(false);
   const [phonenumberAddOpen, setPhonenumberAddOpen] = useState(false);
   const [phonenumberEditOpen, setPhonenumberEditOpen] = useState(false);
-
-  let count = 0;
-
-  const Increment = () => {
-    count += 1;
-    console.log("count", count);
-  };
 
   const getUserData = async () => {
     ApiServices.UserData().then((res) => {

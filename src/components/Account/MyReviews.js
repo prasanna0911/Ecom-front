@@ -131,25 +131,16 @@ const MyReviews = () => {
                   </div>
                   <Typography variant="body">{item.review_title}</Typography>
                 </div>
-                {/* <div className="d-flex gap-2" style={{ marginBottom: "12px" }}>
-                  <img
-                    src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[0].filename}`}
-                    width={62}
-                    alt="main_img"
-                  />
-                  <img
-                    src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[1].filename}`}
-                    width={62}
-                    alt="main_img"
-                  />
-                  {item.image[2]?.filename && (
-                    <img
-                      src={`https://shema-backend.vercel.app/public/${item.category}/${item.image[2]?.filename}`}
-                      width={62}
-                      alt="main_img"
-                    />
-                  )}
-                </div> */}
+                {item.review_images.length > 0 && (
+                  <div
+                    className="d-flex gap-1"
+                    style={{ marginBottom: "12px" }}
+                  >
+                    {item.review_images?.map((img) => (
+                      <img src={img.URL} width={50} alt="main_img" />
+                    ))}
+                  </div>
+                )}
                 <span className="d-block reviews-body">{item.review_body}</span>
                 <div>
                   <div className="d-flex justify-content-between reviewer">

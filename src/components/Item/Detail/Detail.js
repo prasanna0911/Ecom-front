@@ -105,8 +105,8 @@ const Detail = (props) => {
             <span
               style={{ fontSize: "16px", color: "#878787", cursor: "pointer" }}
             >
-              ({props.item.reviews.length} ratings and{" "}
-              {props.item.ratings.length} reviews)
+              ({props.item.ratings.length} ratings and{" "}
+              {props.item.reviews.length} reviews)
             </span>
           </div>
           {/* <div className="product__color mb-1">

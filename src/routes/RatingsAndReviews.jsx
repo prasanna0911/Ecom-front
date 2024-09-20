@@ -1,4 +1,4 @@
-import { Alert, Box, Breadcrumbs, Button, Card, CardContent, Chip, Divider, FormHelperText, IconButton, Link, Rating, Snackbar, Stack, TextField, Typography } from '@mui/material'
+import { Alert, Box, Breadcrumbs, Button, Card, CardContent, Chip, Divider, FormHelperText, IconButton, Input, Link, Rating, Snackbar, Stack, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -16,6 +16,13 @@ const RatingsAndReviews = () => {
     const [reviewBody, setReviewBody] = useState('')
     const [rating, setRating] = useState(0)
     const [ratingText, setRatingText] = useState('')
+
+    const [images, setImages] = useState([]);
+
+    const handleFileChange = (event) => {
+        // Capture selected files
+        setImages(event.target.files);
+    };
     const getMyOrders = () => {
         ApiServices.GetAllProducts().then((res) => {
             console.log("res orders", res);
@@ -69,13 +76,21 @@ const RatingsAndReviews = () => {
     }
 
     const handleSubmit = () => {
-        var json = {
-            Id: param.id,
-            ReviewTitle: reviewTitle,
-            ReviewBody: reviewBody
+        const form = new FormData();
+        form.append("Id", param.id);
+        form.append("ReviewTitle", reviewTitle);
+        form.append("ReviewBody", reviewBody);
+        form.append("category", "Reviews");
+        for (let i = 0; i < images.length; i++) {
+            form.append("images", images[i]);
         }
-        console.log('json', json)
-        ApiServices.AddReview(json).then(res => {
+        // var json = {
+        //     Id: param.id,
+        //     ReviewTitle: reviewTitle,
+        //     ReviewBody: reviewBody
+        // }
+        console.log('form', form)
+        ApiServices.AddReview(form).then(res => {
             console.log('res', res)
             if (res.response_code === 200) {
                 toast.success('Your review has been saved')
@@ -214,6 +229,16 @@ const RatingsAndReviews = () => {
                                         value={reviewBody}
                                         onChange={(e) => setReviewBody(e.target.value)}
                                     />
+
+                                    <div>
+                                        <input
+                                            type="file"
+                                            multiple
+                                            accept="image/*"
+                                            onChange={handleFileChange} // Capture the file change
+                                        />
+
+                                    </div>
                                     <Stack direction='row' gap={1} justifyContent='end' marginTop={1}>
                                         <Button variant='contained' disabled={!reviewTitle || !reviewBody} onClick={() => handleSubmit()}>Submit</Button>
                                         <Button variant='outlined'>cancel</Button>
