@@ -79,7 +79,6 @@ const Detail = (props) => {
           <div className="product__detail__description">
             {props.item.description}
           </div>
-
           <div className="product__price__detail mb-2">
             <p className="current">${props.item.price}</p>
             <p className="original">$1344</p>
@@ -87,10 +86,10 @@ const Detail = (props) => {
           </div>
           <div className="d-flex gap-2 align-items-center">
             <div className="rating_chip">
-              {/* {props.item.item.ratings.reduce((acc, rating) => {
-                            return acc + rating.rating;
-                          }, 0) / item.item.ratings.length} */}
-              4.4
+              {props.item.ratings?.reduce((acc, rating) => {
+                return acc + rating.rating;
+              }, 0) / props.item.ratings?.length || 0}
+
               <StarIcon fontSize="1rem" />
             </div>
             {/* <Chip
@@ -105,8 +104,8 @@ const Detail = (props) => {
             <span
               style={{ fontSize: "16px", color: "#878787", cursor: "pointer" }}
             >
-              ({props.item.ratings.length} ratings and{" "}
-              {props.item.reviews.length} reviews)
+              ({props.item.ratings?.length || 0} ratings and{" "}
+              {props.item.reviews?.length || 0} reviews)
             </span>
           </div>
           {/* <div className="product__color mb-1">

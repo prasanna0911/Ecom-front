@@ -48,10 +48,14 @@ const Related = (props) => {
             ))}
           {womenItems &&
             props.category === "women" &&
-            womenItems.map((item) => <RelatedCard item={item} />)}
+            womenItems.map((item, index) => (
+              <RelatedCard item={item} key={index} />
+            ))}
           {kidsItems &&
             props.category === "kids" &&
-            kidsItems.map((item) => <RelatedCard item={item} />)}
+            kidsItems.map((item, index) => (
+              <RelatedCard item={item} key={index} />
+            ))}
         </div>
       </div>
     </div>

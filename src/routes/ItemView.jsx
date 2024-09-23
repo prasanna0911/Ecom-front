@@ -23,23 +23,6 @@ const ProductView = (props) => {
     useEffect(() => {
         window.scrollTo(0, 0)
         getFeaturedItems()
-        // ApiServices.GetAllProducts().then(res => {
-        //     console.log(res)
-        //     // if (res.response_code === 200) {
-        //     setItem(res?.filter((item) => item._id === param.id))
-        //     console.log(res.filter((item) => item._id === param.id))
-        //     setLoading(false)
-        //     // }
-        // })
-        // axios.get("https://shema-backend.vercel.app/api/items")
-        //     .then(res => {
-        //         console.log(res)
-        //         setItem(res.data.filter((item) => item._id === param.id))
-        //         console.log(res.data.filter((item) => item._id === param.id))
-        //         setLoading(false)
-        //     })
-        //     .catch(err => console.log(err))
-
     }, [param.id])
 
     return (

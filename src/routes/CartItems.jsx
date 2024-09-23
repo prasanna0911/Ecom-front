@@ -142,11 +142,13 @@ export const CartItems = () => {
                                                             className="d-flex align-items-center justify-content-center gap-1"
                                                             style={{ fontSize: "small" }}
                                                         >
-                                                            4.1 <Star fontSize="1rem" />
+                                                            {item.ratings?.reduce((acc, rating) => {
+                                                                return acc + rating.rating;
+                                                            }, 0) / item.ratings?.length || 0} <Star fontSize="1rem" />
                                                         </Box>
                                                     }
                                                 />
-                                                <span style={{ fontSize: "small" }}>(1,453)</span>
+                                                <span style={{ fontSize: "small" }}>({item.ratings?.length || 0})</span>
                                             </div>
 
                                             <p className="mb-1 fw-bold product__price">Total : ${item.count * item.price}</p>

@@ -10,12 +10,17 @@ import StarIcon from "@mui/icons-material/Star";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import EmptyComponent from '../components/EmptyComponent';
 
 
 const AllReviews = () => {
     const param = useParams()
     const navigate = useNavigate()
     const [selectedOrder, setSelectedOrder] = useState({});
+    const [myReviews, setMyReviews] = useState([]);
+    // const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(3.5); // Initialize state
+    const [ratingData, setRatingData] = useState([]);
     const getMyOrders = () => {
         ApiServices.GetAllProducts().then((res) => {
             console.log("res orders", res);
@@ -30,18 +35,46 @@ const AllReviews = () => {
         window.scrollTo(0, 0);
     }, [param]);
 
-    const ratingData = [
-        { id: 1, rating: 5, percentage: "75%", color: "bg-success" },
-        { id: 2, rating: 4, percentage: "45%", color: "bg-success" },
-        { id: 3, rating: 3, percentage: "35%", color: "bg-success" },
-        { id: 4, rating: 2, percentage: "25%", color: "bg-warning" },
-        { id: 5, rating: 1, percentage: "15%", color: "bg-danger" },
-    ];
+    const getProductReviews = () => {
+        var json = {
+            Id: param.id,
+        };
+        ApiServices.GetProductReviews(json).then((res) => {
+            console.log("res", res);
+            if (res.response_code === 200) {
+                setMyReviews(res.itemReviews);
+                setRating(res.rating);
+                setRatingData(res.ratingData);
+            }
+        });
+    };
 
+    useEffect(() => {
+        getProductReviews();
+    }, []);
+
+    const addLike = (id) => {
+        var json = {
+            Id: id,
+        };
+        ApiServices.AddReviewLike(json).then((res) => {
+            console.log(res);
+            getProductReviews();
+        });
+    };
+    const addDisLike = (id) => {
+        var json = {
+            Id: id,
+        };
+        ApiServices.AddReviewDisLike(json).then((res) => {
+            console.log(res);
+            getProductReviews();
+        });
+    };
 
     return (
         <div className='d-flex justify-content-center align-items-center'>
-            <div className='py-4 mx-2 w-100' style={{ maxWidth: '900px' }}>
+            <div className='py-4 mx-2 w-100' style={{ maxWidth: '800px' }}>
                 {/* <Box className="w-100 d-flex align-items-start gap-1 py-2">
                     <IconButton onClick={() => navigate(-1)}>
                         <ArrowBackIosIcon />
@@ -103,7 +136,9 @@ const AllReviews = () => {
                                                             className="d-flex align-items-center justify-content-center gap-1"
                                                             style={{ fontSize: "small" }}
                                                         >
-                                                            4.1 <Star fontSize="1rem" />
+                                                            {selectedOrder?.ratings?.reduce((acc, rating) => {
+                                                                return acc + rating.rating;
+                                                            }, 0) / selectedOrder?.ratings?.length || 0}<Star fontSize="1rem" />
                                                         </Box>
                                                     }
                                                 />
@@ -117,18 +152,20 @@ const AllReviews = () => {
                             <div className="mt-3">
                                 <div className="d-flex align-items-center gap-3 py-4">
                                     <div className="d-flex flex-column align-items-center gap-1">
-                                        <Typography variant="h4">4.5</Typography>
+                                        <Typography variant="h4">{rating || 0}</Typography>
                                         <Rating
                                             name="half-rating-read"
-                                            defaultValue={4.5}
+                                            value={rating} // Controlled component
                                             precision={0.5}
                                             readOnly
                                         />
 
-                                        <Typography variant="body">546 ratings</Typography>
+                                        <Typography variant="body">
+                                            {selectedOrder?.ratings?.length} ratings
+                                        </Typography>
                                     </div>
                                     <div className="w-100 ">
-                                        {ratingData.map((data) => (
+                                        {ratingData?.map((data) => (
                                             <div className="d-flex gap-2 align-items-center" key={data.id}>
                                                 <span
                                                     className="d-flex align-items-center"
@@ -140,9 +177,14 @@ const AllReviews = () => {
                                                     <div
                                                         className={`progress-bar ${data.color}`}
                                                         role="progressbar"
-                                                        style={{ width: data.percentage }}
+                                                        style={{
+                                                            width: `${data.percentage}%`,
+                                                        }}
                                                     ></div>
                                                 </div>
+                                                <p className="mb-0 text-muted" style={{ fontSize: "12px" }}>
+                                                    ({data.count})
+                                                </p>
                                             </div>
                                         ))}
                                     </div>
@@ -150,65 +192,66 @@ const AllReviews = () => {
                                 <Typography variant="h6" className="mt-3">
                                     All reviews (21 reviews)
                                 </Typography>
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((data, index) => (
-                                    <div className="reviews-container" key={data}>
-                                        <div className="d-flex gap-2 align-items-center reviews-head">
-                                            <div className="rating_chip">
-                                                4.1
-                                                <StarIcon fontSize="1rem" />
-                                            </div>
-                                            <div>
-                                                <Typography variant="body">
-                                                    Good product and the delivery time was quick worth buying
-                                                </Typography>
-                                            </div>
-                                        </div>
-                                        <div className="d-flex gap-2" style={{ marginBottom: "12px" }}>
-                                            <img src={selectedOrder?.image?.[0].URL} width={62} alt="main_img" />
-                                            <img src={selectedOrder?.image?.[1].URL} width={62} alt="main_img" />
-                                            {selectedOrder?.image?.[2]?.URL && (
-                                                <img src={selectedOrder?.image?.[2].URL} width={62} alt="main_img" />
-                                            )}
-                                        </div>
-                                        <span className="d-block reviews-body">
-                                            Original Earphones With Remote Note Enjoy your music and calls with
-                                            our one of the most luxurious earphones in the international market.
-                                            Introducing its elegant Luxury Flexgrip connection prevents cable
-                                            damage Perfect headset for disturbance less experience Maximum
-                                            comfort and super performance Excellent for interactive games
-                                            Compatible with All 3.5 mm audio jack devices, Speaker size: 13mm
-                                        </span>
-                                        <div>
-                                            <div className="d-flex justify-content-between reviewer">
-                                                <div className="d-flex gap-2 align-items-center ">
-                                                    <p className="mb-0" style={{ fontWeight: "500" }}>
-                                                        Prasanna
-                                                    </p>
-                                                    <p className="mb-0">Feb 2024</p>
+                                {myReviews?.length > 0 ? (
+                                    myReviews?.map((data, index) => (
+                                        <div className="reviews-container" key={data._id}>
+                                            <div className="d-flex gap-2 align-items-center reviews-head">
+                                                <div className="rating_chip">
+                                                    {data.rating}
+                                                    <StarIcon fontSize="1rem" />
                                                 </div>
                                                 <div>
-                                                    <Button
-                                                        startIcon={<ThumbUpIcon style={{ fontSize: "12px" }} />}
-                                                        style={{ fontSize: "12px" }}
-                                                    >
-                                                        414
-                                                    </Button>
-                                                    <Button
-                                                        startIcon={<ThumbDownIcon style={{ fontSize: "12px" }} />}
-                                                        style={{ fontSize: "12px" }}
-                                                        color="error"
-                                                    >
-                                                        216
-                                                    </Button>
+                                                    <Typography variant="body">{data.review_title}</Typography>
                                                 </div>
                                             </div>
-                                            <span className="reviewer-certificate d-flex align-items-center gap-2">
-                                                <VerifiedIcon fontSize="small" /> Certified Buyer, Madurai
-                                            </span>
+                                            {data.review_images?.length > 0 && (
+                                                <div className="d-flex gap-2" style={{ marginBottom: "12px" }}>
+                                                    {data.review_images?.map((img) => (
+                                                        <img src={img.URL} key={img.URL} width={62} alt="main_img" />
+                                                    ))}
+                                                </div>
+                                            )}
+                                            <span className="d-block reviews-body">{data.review_body}</span>
+                                            <div>
+                                                <div className="d-flex justify-content-between reviewer">
+                                                    <div className="d-flex gap-2 align-items-center ">
+                                                        <p className="mb-0" style={{ fontWeight: "500" }}>
+                                                            {data.user.username}
+                                                        </p>
+                                                        <p className="mb-0">
+                                                            {new Date(data.review_date).toString().slice(4, 15)}
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <Button
+                                                            startIcon={<ThumbUpIcon style={{ fontSize: "12px" }} />}
+                                                            style={{ fontSize: "12px" }}
+                                                            onClick={() => addLike(data._id)}
+                                                        >
+                                                            {data.likes.length}
+                                                        </Button>
+                                                        <Button
+                                                            startIcon={<ThumbDownIcon style={{ fontSize: "12px" }} />}
+                                                            style={{ fontSize: "12px" }}
+                                                            color="error"
+                                                            onClick={() => addDisLike(data._id)}
+                                                        >
+                                                            {data.dislikes.length}
+                                                        </Button>
+                                                    </div>
+                                                </div>
+                                                <span className="reviewer-certificate d-flex align-items-center gap-2">
+                                                    <VerifiedIcon fontSize="small" /> Certified Buyer, Madurai
+                                                </span>
+                                            </div>
                                         </div>
-
-                                    </div>
-                                ))}
+                                    ))
+                                ) : (
+                                    <EmptyComponent
+                                        height="200px"
+                                        text="No reviews posted. Add yours now!"
+                                    />
+                                )}
                                 <Stack justifyContent='center' alignItems='center' marginTop='20px'>
                                     <Pagination count={10} />
                                 </Stack>

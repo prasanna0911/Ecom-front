@@ -1,28 +1,29 @@
-import { useEffect } from 'react';
-import { useContext } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { SearchContext } from '../../Context/SearchContext';
-import './index.css'
+import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { SearchContext } from "../../Context/SearchContext";
+import "./index.css";
+import { useMyContext } from "../../Context/MyContext";
 
 const Search = () => {
-    const search = useContext(SearchContext)
-    const [ searchParam, setSearchParam ] = useSearchParams()
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const { searchQuery, setSearchQuery } = useMyContext();
+  const [value, setValue] = useState("");
 
-    const searchQuery = {
-        query: search.searchQuery
-    }
+  useEffect(() => {
+    const query = queryParams.get("query");
+    setValue(query);
+  }, [searchQuery]);
 
-    useEffect(() => {
-        setSearchParam(searchQuery, { replace: true })
-    }, [searchQuery.query])
+  return (
+    <div className="search__container">
+      <div className="search__container__header">
+        <h1>No results found for "{value}"</h1>
+      </div>
+    </div>
+  );
+};
 
-    return ( 
-        <div className="search__container">
-            <div className="search__container__header">
-                <h1>No results found for "{search.searchQuery}"</h1>
-            </div>
-        </div>
-     );
-}
- 
 export default Search;

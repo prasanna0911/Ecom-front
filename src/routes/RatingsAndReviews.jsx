@@ -71,6 +71,11 @@ const RatingsAndReviews = () => {
             if (res.response_code === 200) {
                 toast.success('Your rating has been saved')
             }
+            else if (res.response_code === 201) {
+                toast.success('Your ratings has been updated')
+            } else {
+                toast.error('Your ratings has been failed')
+            }
         })
         // setSnackOpen(true);
     }
@@ -95,6 +100,7 @@ const RatingsAndReviews = () => {
             if (res.response_code === 200) {
                 toast.success('Your review has been saved')
             }
+
         })
     }
 

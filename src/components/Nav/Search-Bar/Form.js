@@ -1,6 +1,6 @@
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "./Form.css";
 import { useContext } from "react";
 import { SearchContext } from "../../../Context/SearchContext";
@@ -10,7 +10,14 @@ const Form = () => {
   const [searchInput, setSearchInput] = useState("");
   // const searchContext = useContext(SearchContext)
   const navigate = useNavigate();
+  const location = useLocation();
   const { searchQuery, setSearchQuery } = useMyContext();
+  const queryParams = new URLSearchParams(location.search);
+
+  useEffect(() => {
+    setSearchInput(queryParams.get("query") || "");
+    setSearchQuery(queryParams.get("query"));
+  }, []);
 
   const handelChange = (e) => {
     setSearchInput(e.target.value);
@@ -19,7 +26,7 @@ const Form = () => {
   const handelFormSubmit = (e) => {
     e.preventDefault();
     setSearchQuery(searchInput);
-    navigate("/search");
+    navigate(`/search?query=${searchInput}`);
   };
 
   return (
