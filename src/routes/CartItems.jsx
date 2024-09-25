@@ -14,6 +14,7 @@ import './routestyles/CartItems.css'
 import AccountHeader from '../components/Account/AccountHeader';
 import EmptyComponent from '../components/EmptyComponent';
 import { toast } from 'react-toastify';
+import { DecimalFormatter } from '../utils/DecimalFormatter';
 
 
 export const CartItems = () => {
@@ -142,9 +143,9 @@ export const CartItems = () => {
                                                             className="d-flex align-items-center justify-content-center gap-1"
                                                             style={{ fontSize: "small" }}
                                                         >
-                                                            {item.ratings?.reduce((acc, rating) => {
+                                                            {DecimalFormatter(item.ratings?.reduce((acc, rating) => {
                                                                 return acc + rating.rating;
-                                                            }, 0) / item.ratings?.length || 0} <Star fontSize="1rem" />
+                                                            }, 0) / item.ratings?.length) || 0} <Star fontSize="1rem" />
                                                         </Box>
                                                     }
                                                 />

@@ -25,12 +25,12 @@ const CategoryCard = (props) => {
                 {
                   "&:hover": {
                     backgroundColor: "none",
-                    borderColor: "#FFE26E",
-                    color: "#FFE26E",
+                    borderColor: "var(--primary-color)",
+                    color: "var(--primary-color)",
                   },
                   borderRadius: "20px",
-                  borderColor: "#FFE26E",
-                  backgroundColor: "#FFE26E",
+                  borderColor: "var(--primary-color)",
+                  backgroundColor: "var(--primary-color)",
                   color: "#000",
                   fontWeight: "700",
                 },

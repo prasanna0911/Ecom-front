@@ -28,7 +28,7 @@ const Landing = () => {
                 {
                   "&:hover": {
                     backgroundColor: "black",
-                    color: "#FFE26E",
+                    color: "var(--primary-color)",
                     borderColor: "black",
                   },
                 },

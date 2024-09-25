@@ -27,7 +27,7 @@ const Policy = () => {
   return (
     <div className="policy_container d-flex flex-column align-items-center py-4 rounded-4">
       <h3>Our Policy</h3>
-      <div className="featured__categories__header__line"></div>
+      <div className="policy__header__line"></div>
       <div className="d-flex justify-content-center  gap-4 flex-wrap">
         {PolicyData.map((data, index) => (
           <Card className="shadow-none policy_card flex-grow" key={index}>

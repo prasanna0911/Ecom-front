@@ -78,13 +78,13 @@ const Category = (props) => {
                 height: "50px",
                 borderRadius: "20px",
                 fontWeight: "700",
-                backgroundColor: "#FFE26E",
-                borderColor: "#FFE26E",
+                backgroundColor: "var(--primary-color)",
+                borderColor: "var(--primary-color)",
                 color: "black",
               },
               {
                 "&:hover": {
-                  borderColor: "#FFE26E",
+                  borderColor: "var(--primary-color)",
                   backgroundColor: "none",
                 },
               },

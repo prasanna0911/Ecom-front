@@ -34,6 +34,8 @@ import RatingsAndReviews from "../routes/RatingsAndReviews";
 import AllReviews from "../routes/AllReviews";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ForgetPassword from "../components/Authentication/ForgetPassword/ForgetPassword";
+import ResetPassword from "../components/Authentication/ResetPassword/ResetPassword";
 
 function App() {
   const [darkThemeMode, setDarkThemeMode] = useState(false);
@@ -93,6 +95,8 @@ function App() {
               <Route path="register" element={<Register />} />
               <Route path="*" element={<Login />} />
             </Route>
+            <Route path="/auth/forget-password" element={<ForgetPassword />} />
+            <Route path="/auth/reset-password" element={<ResetPassword />} />
             <Route path="/shop" element={<Shop />} />
 
             <Route path="/category">

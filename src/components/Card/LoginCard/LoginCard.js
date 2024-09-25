@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./LoginCard.css";
 import {
   Card,
@@ -9,7 +9,6 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { Row, Col } from "react-bootstrap";
 import { ApiServices } from "../../../api/api";
 import { useMyContext } from "../../../Context/MyContext";
 
@@ -19,6 +18,7 @@ const LoginCard = () => {
   const [passValue, setPassValue] = useState("");
   const [passError, setPassError] = useState(false);
   const [passErrorMsg, setPassErrorMsg] = useState("");
+  const navigate = useNavigate();
 
   const { setIsLogin } = useMyContext();
 
@@ -53,12 +53,22 @@ const LoginCard = () => {
   };
 
   return (
-    <Card sx={{ maxWidth: 450 }} className="p-3 w-100">
-      <CardHeader title={<h2>Login</h2>} />
-      <CardContent>
+    <Card sx={{ maxWidth: 450 }} className="px-3 pt-3 w-100">
+      <CardHeader
+        title={
+          <div className="d-flex flex-column gap-1 align-items-center">
+            <h4 className="mb-0">Login</h4>
+            <p className="mb-0 text-muted" style={{ fontSize: "17px" }}>
+              {/* Sign in to your Shopsy account and start shopping! */}
+              Sign in to access your Shopsy account
+            </p>
+          </div>
+        }
+      />
+      <CardContent className="pt-0">
         <FormHelperText>
           <Typography variant="subtitle1" gutterBottom>
-            Email
+            Username
           </Typography>
         </FormHelperText>
         <TextField
@@ -70,7 +80,7 @@ const LoginCard = () => {
           value={userValue}
           onChange={(e) => setUserValue(e.target.value)}
           error={mailError}
-          helperText={mailError ? "Email cannot be empty" : ""}
+          helperText={mailError ? "Username cannot be empty" : ""}
         />
         <FormHelperText>
           <Typography variant="subtitle1" gutterBottom>
@@ -88,37 +98,31 @@ const LoginCard = () => {
           error={passError}
           helperText={passError ? passErrorMsg : ""}
         />
-        <div className="login__forgot__password text-end">Forgot password?</div>
-
-        {/* <div className="email__input__container input__container">
-            <label className="email__label input__label">Email</label>
-            
-
-            <input
-              type="email"
-              className="email__input login__input"
-              placeholder="example@gmail.com"
-            />
-          </div>
-          <div className="password__input__container input__container">
-            <label className="password__label input__label">Password</label>
-            <input
-              type="password"
-              className="password__input login__input"
-              placeholder="**********"
-            />
-          </div> */}
+        <div
+          className="login__forgot__password text-end"
+          onClick={() => navigate("/auth/forget-password")}
+        >
+          Forgot password?
+        </div>
         <div className="login__button__container my-2">
           <button className="login__button" onClick={handleSubmit}>
             Login
           </button>
         </div>
-        <div className="login__other__actions">
-          <div className="login__new__account text-center mb-2">
-            Don't have account?{" "}
-            <Link to="/account/register">Create account</Link>{" "}
-          </div>
-        </div>
+        <Typography
+          variant="subtitle1"
+          className="mb-2 mt-2 fw-bold text-center"
+          // onClick={() => location.replace("/authentication/forget-password")}
+          style={{ cursor: "pointer", fontSize: "15px" }}
+        >
+          Don’t have an account?{" "}
+          <span
+            onClick={() => navigate("/account/register")}
+            style={{ color: "#2222b7", cursor: "pointer" }}
+          >
+            Sign up
+          </span>
+        </Typography>
       </CardContent>
     </Card>
   );

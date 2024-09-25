@@ -55,6 +55,24 @@ const Login = async (data) => {
   }
 };
 
+const RecoverPassword = async (data) => {
+  try {
+    const response = await axios.post(baseUrl + "/recover-password", data);
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+const OtpVerification = async (data) => {
+  try {
+    const response = await axios.post(baseUrl + "/verify-otp", data);
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 const UserData = async () => {
   try {
     const response = await instance.get(baseUrl + "/getuserdata");
@@ -340,6 +358,8 @@ const GetProductReviews = async (data) => {
 export const ApiServices = {
   signup,
   Login,
+  RecoverPassword,
+  OtpVerification,
   UserData,
   UpdateName,
   UpdateUserName,

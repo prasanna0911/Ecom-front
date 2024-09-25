@@ -10,7 +10,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Card, Typography } from "@mui/material";
+import { Card } from "@mui/material";
 import { ApiServices } from "../../api/api";
 
 const Payments = () => {

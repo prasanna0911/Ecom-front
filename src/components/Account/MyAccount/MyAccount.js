@@ -29,7 +29,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useMyContext } from "../../../Context/MyContext";
 import Payments from "../Payments";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-// import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -100,17 +99,18 @@ const MyAccount = () => {
     navigate("/account/login");
   };
 
-  const data = [
-    { id: 1, category: "fruits", name: "apple" },
-    { id: 2, category: "fruits", name: "banana" },
-    { id: 3, category: "vegetables", name: "carrot" },
-    { id: 4, category: "fruits", name: "grape" },
-    { id: 5, category: "vegetables", name: "broccoli" },
-  ];
+  // const data = [
+  //   { id: 1, category: "fruits", name: "apple" },
+  //   { id: 2, category: "fruits", name: "banana" },
+  //   { id: 3, category: "vegetables", name: "carrot" },
+  //   { id: 4, category: "fruits", name: "grape" },
+  //   { id: 5, category: "vegetables", name: "broccoli" },
+  // ];
 
-  const groupedByCategory = Object.groupBy(data, ({ category }) => category);
+  // const groupedByCategory = Object.groupBy(data, ({ category }) => category);
 
-  console.log(groupedByCategory);
+  // console.log(groupedByCategory);
+
   return (
     <Account>
       {matches ? (

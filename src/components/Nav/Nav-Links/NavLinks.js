@@ -3,9 +3,7 @@ import "./NavLinks.css";
 
 const NavLinks = () => {
   const location = useLocation();
-  console.log("location", location);
   const path = location.pathname;
-  console.log("path", path);
   return (
     <nav className="nav__bottom__container">
       <div className="bottom__container">

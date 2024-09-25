@@ -67,8 +67,8 @@
     padding: 10px;
     width: 100%;
     font-size: 1.1rem;
-    background-color: #FFE26E;
-    border: 2px solid #FFE26E;
+    background-color: var(--primary-color);
+    border: 2px solid var(--primary-color);
     font-weight: bold;
     border-radius: 16px;
     text-transform: capitalize;
@@ -79,7 +79,7 @@
 .login__button:hover {
 
     background-color: transparent;
-    color: #FFE26E;
+    color: var(--primary-color);
 }
 
 .login__other__actions {
@@ -89,6 +89,13 @@
 
 .css-hdw1oc {
     display: none;
+}
+
+.login__forgot__password {
+    font-weight: 600;
+    color: #2222b7;
+    cursor: pointer;
+    font-size: 15px;
 }
 
 

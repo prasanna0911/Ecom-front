@@ -12,10 +12,10 @@
     width: 300px;
 }
 
-.featured__categories__header__line {
+.policy__header__line {
     width: 100px;
     height: 6px;
-    background-color: #FFE26E;
+    background-color: var(--primary-color);
     align-self: center;
     border-radius: 25px;
     margin-bottom: 30px;

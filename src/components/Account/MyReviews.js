@@ -16,6 +16,7 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import Star from "@mui/icons-material/Star";
 import { ApiServices } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import { DecimalFormatter } from "../../utils/DecimalFormatter";
 
 const MyReviews = () => {
   const { MobileScreen } = useMyContext();
@@ -110,9 +111,11 @@ const MyReviews = () => {
                           className="d-flex align-items-center justify-content-center gap-1"
                           style={{ fontSize: "small" }}
                         >
-                          {item.item.ratings.reduce((acc, rating) => {
-                            return acc + rating.rating;
-                          }, 0) / item.item.ratings.length}
+                          {DecimalFormatter(
+                            item.item.ratings.reduce((acc, rating) => {
+                              return acc + rating.rating;
+                            }, 0) / item.item.ratings.length
+                          )}
                           <Star fontSize="1rem" />
                         </Box>
                       }

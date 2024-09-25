@@ -7,6 +7,7 @@ import { ApiServices } from "../../../api/api";
 import { useMyContext } from "../../../Context/MyContext";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { DecimalFormatter } from "../../../utils/DecimalFormatter";
 
 const WishCard = (props) => {
   const { cartItems, getCartItems, getWishlistItems } = useMyContext();
@@ -65,9 +66,11 @@ const WishCard = (props) => {
                   className="d-flex align-items-center justify-content-center gap-1"
                   style={{ fontSize: "small" }}
                 >
-                  {props.item.ratings?.reduce((acc, rating) => {
-                    return acc + rating.rating;
-                  }, 0) / props.item.ratings?.length || 0}{" "}
+                  {DecimalFormatter(
+                    props.item.ratings?.reduce((acc, rating) => {
+                      return acc + rating.rating;
+                    }, 0) / props.item.ratings?.length
+                  ) || 0}{" "}
                   <Star fontSize="1rem" />
                 </Box>
               }
@@ -91,13 +94,13 @@ const WishCard = (props) => {
             sx={[
               {
                 "&:hover": {
-                  backgroundColor: "#FFE26E",
-                  borderColor: "#FFE26E",
+                  backgroundColor: "var(--primary-color)",
+                  borderColor: "var(--primary-color)",
                   color: "black",
                 },
                 borderColor: "black",
                 backgroundColor: "black",
-                color: "#FFE26E",
+                color: "var(--primary-color)",
               },
             ]}
           >
@@ -110,13 +113,13 @@ const WishCard = (props) => {
             sx={[
               {
                 "&:hover": {
-                  backgroundColor: "#FFE26E",
-                  borderColor: "#FFE26E",
+                  backgroundColor: "var(--primary-color)",
+                  borderColor: "var(--primary-color)",
                   color: "black",
                 },
                 borderColor: "black",
                 backgroundColor: "black",
-                color: "#FFE26E",
+                color: "var(--primary-color)",
               },
             ]}
           >

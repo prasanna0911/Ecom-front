@@ -47,7 +47,7 @@ a:hover {
 }
 
 .sel-nav {
-    border-bottom: 4px solid #FFE26E;
+    border-bottom: 4px solid var(--primary-color);
 }
 
 

@@ -93,9 +93,18 @@ const RegisterCard = () => {
   };
 
   return (
-    <Card sx={{ maxWidth: 450 }} className="p-3 w-100">
-      <CardHeader title={<h2>Create Account</h2>} />
-      <CardContent>
+    <Card sx={{ maxWidth: 450 }} className="px-2 w-100">
+      <CardHeader
+        title={
+          <div className="d-flex flex-column gap-1 align-items-center">
+            <h4 className="mb-0">Sign Up</h4>
+            <p className="mb-0 text-muted" style={{ fontSize: "17px" }}>
+              Create your account
+            </p>
+          </div>
+        }
+      />
+      <CardContent className="pt-0">
         <FormHelperText>
           <Typography variant="subtitle1" gutterBottom>
             First name
@@ -192,7 +201,7 @@ const RegisterCard = () => {
           error={cpassError}
           helperText={cpassError ? cpassErrorMsg : ""}
         />
-        <div className="register__button__container my-2">
+        <div className="register__button__container mt-4 mb-2">
           <button className="register__button" onClick={handleSubmit}>
             Create Account
           </button>
@@ -202,7 +211,7 @@ const RegisterCard = () => {
           startIcon={<GoogleIcon />}
           variant="contained"
           // style={{ backgroundColor: "grey" }}
-          className="text-center mx-auto py-2 my-2"
+          className="text-center mx-auto py-2 my-2 w-100"
         >
           Sign up with google
         </Button>

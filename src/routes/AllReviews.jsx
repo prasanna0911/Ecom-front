@@ -1,7 +1,6 @@
-import { Box, Breadcrumbs, Button, Card, CardContent, Chip, IconButton, Link, Pagination, Rating, Stack, Typography } from '@mui/material'
+import { Box, Button, Card, CardContent, Chip, Pagination, Rating, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import Star from "@mui/icons-material/Star";
 import { ApiServices } from '../api/api';
 import { Col, Row } from 'react-bootstrap';
@@ -11,6 +10,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import EmptyComponent from '../components/EmptyComponent';
+import { DecimalFormatter } from '../utils/DecimalFormatter';
 
 
 const AllReviews = () => {
@@ -18,9 +18,22 @@ const AllReviews = () => {
     const navigate = useNavigate()
     const [selectedOrder, setSelectedOrder] = useState({});
     const [myReviews, setMyReviews] = useState([]);
-    // const [rating, setRating] = useState(0);
-    const [rating, setRating] = useState(3.5); // Initialize state
+    const [rating, setRating] = useState(3.5);
     const [ratingData, setRatingData] = useState([]);
+    const [limit, setLimit] = useState(4)
+    const [totalReviews, setTotalReviews] = useState(0);
+
+
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const initialPage = parseInt(queryParams.get("page") || "1", 10);
+    const [currentPage, setCurrentPage] = useState(initialPage);
+
+    useEffect(() => {
+        queryParams.set("page", currentPage);
+        navigate({ search: queryParams.toString() }, { replace: true });
+    }, [currentPage]);
+
     const getMyOrders = () => {
         ApiServices.GetAllProducts().then((res) => {
             console.log("res orders", res);
@@ -35,9 +48,13 @@ const AllReviews = () => {
         window.scrollTo(0, 0);
     }, [param]);
 
-    const getProductReviews = () => {
+    const getProductReviews = (page, lim) => {
+        console.log('page', page);
+
         var json = {
             Id: param.id,
+            Page: page,
+            Limit: lim,
         };
         ApiServices.GetProductReviews(json).then((res) => {
             console.log("res", res);
@@ -45,12 +62,13 @@ const AllReviews = () => {
                 setMyReviews(res.itemReviews);
                 setRating(res.rating);
                 setRatingData(res.ratingData);
+                setTotalReviews(res.paginationData.length);
             }
         });
     };
 
     useEffect(() => {
-        getProductReviews();
+        getProductReviews(currentPage, limit);
     }, []);
 
     const addLike = (id) => {
@@ -59,7 +77,7 @@ const AllReviews = () => {
         };
         ApiServices.AddReviewLike(json).then((res) => {
             console.log(res);
-            getProductReviews();
+            getProductReviews(currentPage, limit);
         });
     };
     const addDisLike = (id) => {
@@ -68,43 +86,18 @@ const AllReviews = () => {
         };
         ApiServices.AddReviewDisLike(json).then((res) => {
             console.log(res);
-            getProductReviews();
+            getProductReviews(currentPage, limit);
         });
+    };
+
+    const changeCPage = (e, id) => {
+        getProductReviews(id, limit);
+        setCurrentPage(id);
     };
 
     return (
         <div className='d-flex justify-content-center align-items-center'>
             <div className='py-4 mx-2 w-100' style={{ maxWidth: '800px' }}>
-                {/* <Box className="w-100 d-flex align-items-start gap-1 py-2">
-                    <IconButton onClick={() => navigate(-1)}>
-                        <ArrowBackIosIcon />
-                    </IconButton>
-                    <div>
-                        <h5 className='mb-0'>Ratings & Reviews</h5>
-                        <Breadcrumbs aria-label="breadcrumb" className='mb-2'>
-                            <Link underline="hover" color="inherit" href='/' fontSize="small">
-                                Home
-                            </Link>
-                            <Link
-                                underline="hover"
-                                color="inherit"
-                                href={`/category/${selectedOrder?.category}`}
-                                fontSize="small"
-                            >
-                                {selectedOrder?.category}
-                            </Link>
-                            <Link
-                                underline="hover"
-                                color="inherit"
-                                // href="/account/me?tab=1"
-                                fontSize="small"
-                            >
-                                Ratings&Reviews
-                            </Link>
-                            <Typography color="text.primary" fontSize="small">{param.id}</Typography>
-                        </Breadcrumbs>
-                    </div>
-                </Box> */}
                 <Card>
                     <CardContent className='px-4'>
                         <Typography variant='h5' className='mb-3'>All Ratings & Reviews</Typography>
@@ -136,23 +129,26 @@ const AllReviews = () => {
                                                             className="d-flex align-items-center justify-content-center gap-1"
                                                             style={{ fontSize: "small" }}
                                                         >
-                                                            {selectedOrder?.ratings?.reduce((acc, rating) => {
+
+
+                                                            {DecimalFormatter((selectedOrder?.ratings?.reduce((acc, rating) => {
                                                                 return acc + rating.rating;
-                                                            }, 0) / selectedOrder?.ratings?.length || 0}<Star fontSize="1rem" />
+                                                            }, 0) / selectedOrder?.ratings?.length)) || 0}
+
+                                                            <Star fontSize="1rem" />
                                                         </Box>
                                                     }
                                                 />
-                                                <span style={{ fontSize: "small" }}>(1,453)</span>
+                                                <span style={{ fontSize: "small" }}>({totalReviews})</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </Col>
                             <div className="mt-3">
                                 <div className="d-flex align-items-center gap-3 py-4">
                                     <div className="d-flex flex-column align-items-center gap-1">
-                                        <Typography variant="h4">{rating || 0}</Typography>
+                                        <Typography variant="h4">{DecimalFormatter(rating) || 0}</Typography>
                                         <Rating
                                             name="half-rating-read"
                                             value={rating} // Controlled component
@@ -190,10 +186,10 @@ const AllReviews = () => {
                                     </div>
                                 </div>
                                 <Typography variant="h6" className="mt-3">
-                                    All reviews (21 reviews)
+                                    All reviews ({totalReviews} reviews)
                                 </Typography>
                                 {myReviews?.length > 0 ? (
-                                    myReviews?.map((data, index) => (
+                                    myReviews?.map((data) => (
                                         <div className="reviews-container" key={data._id}>
                                             <div className="d-flex gap-2 align-items-center reviews-head">
                                                 <div className="rating_chip">
@@ -252,8 +248,16 @@ const AllReviews = () => {
                                         text="No reviews posted. Add yours now!"
                                     />
                                 )}
-                                <Stack justifyContent='center' alignItems='center' marginTop='20px'>
-                                    <Pagination count={10} />
+                                <Stack spacing={2} mt={2} justifyContent='center' alignItems='center'>
+                                    <Pagination
+                                        count={Math.ceil(totalReviews / limit)}
+                                        page={currentPage}
+                                        color="primary"
+                                        // size="large"
+                                        onChange={changeCPage}
+                                    // variant="outlined"
+                                    // shape="rounded"
+                                    />
                                 </Stack>
                             </div>
                         </Row>

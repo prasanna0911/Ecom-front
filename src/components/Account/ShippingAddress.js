@@ -1,6 +1,6 @@
 // import node module libraries
 import React, { useEffect, useState } from "react";
-import { Row, Col, Modal, Form } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import {
   Card,
   CardContent,
@@ -30,7 +30,6 @@ const ShippingAddress = () => {
   const [myAddresses, setMyAddresses] = useState([]);
 
   //new address
-  const [modalShow, setModalShow] = useState(false);
   const [newAddressDialog, setNewAddressDialog] = useState(false);
   const [newAddressName, setNewAddressName] = useState("");
   const [newAddressLine1, setNewAddressLine1] = useState("");
@@ -90,107 +89,6 @@ const ShippingAddress = () => {
     setAddressDelete(true);
   };
 
-  const countryOptions = [
-    { value: "India", label: "India" },
-    { value: "US", label: "US" },
-    { value: "UK", label: "UK" },
-    { value: "UAE", label: "UAE" },
-  ];
-
-  const cityOptions = [
-    { value: "Ahmedabad", label: "Ahmedabad" },
-    { value: "New York", label: "New York" },
-    { value: "Los Angeles", label: "Los Angeles" },
-    { value: "Chicago", label: "Chicago" },
-  ];
-
-  const NewBillingAddressModal = (props) => {
-    return (
-      <Modal
-        {...props}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
-            <h4 className="mb-1" id="billingAddressModalLabel">
-              Billing Address
-            </h4>
-            <p className="mb-0">
-              Please provide the billing address with the credit card you ve
-              provided.
-            </p>
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form className="row">
-            <Col xs={12} className="mb-3">
-              <Form.Group controlId="country">
-                <Form.Label>Country</Form.Label>
-                <Form.Control
-                  placeholder="Select Country"
-                  options={countryOptions}
-                />
-              </Form.Group>
-            </Col>
-            <Col xs={12} className="mb-3">
-              <Form.Group controlId="addressOne">
-                <Form.Label>Address line 1</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="123 Ocean Ave"
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col xs={12} className="mb-3">
-              <Form.Group controlId="addressTwo">
-                <Form.Label>Address line 2</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="123 Ocean Ave"
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col xs={12} className="mb-3">
-              <Form.Group controlId="city">
-                <Form.Label>City</Form.Label>
-                <Form.Control placeholder="Select City" options={cityOptions} />
-              </Form.Group>
-            </Col>
-            <Col md={6} xs={12} className="mb-3">
-              <Form.Group controlId="state">
-                <Form.Label>State</Form.Label>
-                <Form.Control type="text" placeholder="Gujarat" required />
-              </Form.Group>
-            </Col>
-            <Col md={6} xs={12} className="mb-3">
-              <Form.Group controlId="zipCode">
-                <Form.Label>Zip/Postal Code</Form.Label>
-                <Form.Control type="text" placeholder="000000" required />
-              </Form.Group>
-            </Col>
-            <Col xs={12} className="mb-3">
-              <Form.Check type="checkbox" id="customCheckAddress">
-                <Form.Check.Input type="checkbox" />
-                <Form.Check.Label>
-                  Make this my default payment method.
-                </Form.Check.Label>
-              </Form.Check>
-            </Col>
-            <Col xs={12}>
-              {/* <Button type="submit" className="d-grid">
-                Save Address
-              </Button> */}
-            </Col>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    );
-  };
-
   const handleAddressCreate = async () => {
     console.log("newAddressName", newAddressName);
     console.log("newAddressLine1", newAddressLine1);
@@ -216,7 +114,6 @@ const ShippingAddress = () => {
     ApiServices.AddShippingAddress(json).then((res) => {
       console.log("res", res);
       if (res.response_code === 200) {
-        setModalShow(false);
         getBillingAddresses();
       }
     });
@@ -393,10 +290,6 @@ const ShippingAddress = () => {
                 </Col>
               </Row>
             ))}
-            <NewBillingAddressModal
-              show={modalShow}
-              onHide={() => setModalShow(false)}
-            />
             <Dialog
               open={newAddressDialog}
               onClose={() => setNewAddressDialog(false)}
@@ -712,7 +605,6 @@ const ShippingAddress = () => {
                 <Button onClick={() => setAddressDelete(false)}>Cancel</Button>
               </DialogActions>
             </Dialog>
-            {/* </Row> */}
           </CardContent>
         </Card>
       </Col>

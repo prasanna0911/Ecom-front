@@ -1,5 +1,3 @@
-
-
 .related__products__container {
     height: auto;
     width: 100%;
@@ -20,7 +18,7 @@
     margin: auto;
     display: flex;
     justify-content: center;
-    align-items:center;
+    align-items: center;
     flex-direction: column;
 }
 
@@ -36,7 +34,7 @@
 .related__header__line {
     width: 180px;
     height: 6px;
-    background-color: #FFE26E;
+    background-color: var(--primary-color);
     align-self: center;
     border-radius: 25px;
 }

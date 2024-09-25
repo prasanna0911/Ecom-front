@@ -10,6 +10,7 @@ import "./Reviews.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { ApiServices } from "../../../api/api";
 import EmptyComponent from "../../EmptyComponent";
+import { DecimalFormatter } from "../../../utils/DecimalFormatter";
 
 const Reviews = ({ item }) => {
   const navigate = useNavigate();
@@ -17,10 +18,13 @@ const Reviews = ({ item }) => {
   // const [rating, setRating] = useState(0);
   const [rating, setRating] = useState(3.5); // Initialize state
   const [ratingData, setRatingData] = useState([]);
+  const [totalReviews, setTotalReviews] = useState(0);
 
   const getProductReviews = () => {
     var json = {
       Id: item?._id,
+      Page: 1,
+      Limit: 3,
     };
     ApiServices.GetProductReviews(json).then((res) => {
       console.log("res", res);
@@ -28,6 +32,7 @@ const Reviews = ({ item }) => {
         setMyReviews(res.itemReviews);
         setRating(res.rating);
         setRatingData(res.ratingData);
+        setTotalReviews(res.paginationData ? res.paginationData?.length : 0);
       }
     });
   };
@@ -69,7 +74,7 @@ const Reviews = ({ item }) => {
       </div>
       <div className="d-flex align-items-center gap-3 py-4">
         <div className="d-flex flex-column align-items-center gap-1">
-          <Typography variant="h4">{rating || 0}</Typography>
+          <Typography variant="h4">{DecimalFormatter(rating) || 0}</Typography>
           <Rating
             name="half-rating-read"
             value={rating} // Controlled component
@@ -107,7 +112,7 @@ const Reviews = ({ item }) => {
         </div>
       </div>
       <Typography variant="h6" className="mt-3">
-        All reviews ({myReviews?.length || 0} reviews)
+        All reviews ({totalReviews} reviews)
       </Typography>
       {myReviews?.length > 0 ? (
         myReviews?.map((data, index) => (
@@ -161,15 +166,14 @@ const Reviews = ({ item }) => {
                 <VerifiedIcon fontSize="small" /> Certified Buyer, Madurai
               </span>
             </div>
-            {index === myReviews.length - 1 && (
+            {totalReviews > 3 && index === myReviews.length - 1 && (
               <Button
                 className="rounded-pill"
                 style={{ marginTop: "16px" }}
-                // variant="outlined"
                 endIcon={<KeyboardArrowRightIcon />}
                 onClick={() => navigate(`/allreviews/${item._id}`)}
               >
-                All 1399 reviews
+                All {totalReviews} reviews
               </Button>
             )}
           </div>

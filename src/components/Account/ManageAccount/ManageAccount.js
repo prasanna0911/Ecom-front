@@ -92,11 +92,6 @@ const ManageAccount = () => {
   };
 
   const handleUsernameUpdate = () => {
-    // if (userValue === "prasanna12") {
-    //   setUserError(true);
-    //   return;
-    // }
-    // setUserError(false);
     var json = {
       Username: userValue,
     };
@@ -135,10 +130,6 @@ const ManageAccount = () => {
     setNewPassError(false);
     setNewPassErrorMsg("");
     setCpassError(false);
-    // if (passValue !== "prasanna12") {
-    //   setPassError(true);
-    //   return;
-    // }
     if (newPassValue.length < 8) {
       setNewPassError(true);
       setNewPassErrorMsg("Password must contain atleast 8 charecters");
@@ -193,7 +184,6 @@ const ManageAccount = () => {
     });
   };
   return (
-    // <Account>
     <div className="manage__account__container">
       <div className="edit__account__container">
         <div className="edit__account">
@@ -631,7 +621,6 @@ const ManageAccount = () => {
         </div>
       </div>
     </div>
-    // </Account>
   );
 };
 

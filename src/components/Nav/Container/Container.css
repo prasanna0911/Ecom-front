@@ -2,7 +2,7 @@
     height: 70px;
     width: 100%;
     display: flex;
-    
+
 }
 
 .top__container {
@@ -40,23 +40,34 @@
     align-items: center;
 }
 
+.form__container__mobile {
+    display: none;
+}
+
 @media screen and (max-width: 500px) {
     .nav__top__container {
         height: auto;
     }
+
     .form__container {
         display: none;
     }
+
     .top__container {
         justify-content: space-between;
+    }
+
+    .form__container__mobile {
+        display: block;
     }
 }
 
 @media screen and (max-width: 780px) {
-    .control__bar{
-       display: none;
+    .control__bar {
+        display: none;
     }
-    .drawer{
+
+    .drawer {
         display: flex;
     }
 }

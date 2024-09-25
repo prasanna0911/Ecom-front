@@ -59,8 +59,8 @@
     height: 60%;
     width: 50%;
     font-size: 1rem;
-    background-color: #FFE26E;
-    border-color: #FFE26E;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
     border-style: dashed;
     font-weight: bold;
 }
@@ -69,7 +69,7 @@
     margin-top: 20px;
     height: 5px;
     width: 50%;
-    background-color: #FFE26E;
+    background-color: var(--primary-color);
 }
 
 /* Delete account form */

@@ -1,6 +1,6 @@
 .selected-nav {
-    border: 2px solid #FFE26E !important;
-    background-color: #FFE26E !important;
+    border: 2px solid var(--primary-color) !important;
+    background-color: var(--primary-color) !important;
     transition: 0.5s ease-in-out !important;
 }
 

@@ -6,6 +6,7 @@ import Star from "@mui/icons-material/Star";
 import { ApiServices } from '../api/api';
 import { Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { DecimalFormatter } from '../utils/DecimalFormatter';
 
 
 const RatingsAndReviews = () => {
@@ -178,7 +179,11 @@ const RatingsAndReviews = () => {
                                                             className="d-flex align-items-center justify-content-center gap-1"
                                                             style={{ fontSize: "small" }}
                                                         >
-                                                            4.1 <Star fontSize="1rem" />
+                                                            {DecimalFormatter(
+                                                                selectedOrder?.ratings?.reduce((acc, rating) => {
+                                                                    return acc + rating.rating;
+                                                                }, 0) / selectedOrder?.ratings?.length
+                                                            ) || 0} <Star fontSize="1rem" />
                                                         </Box>
                                                     }
                                                 />

@@ -75,8 +75,8 @@
     border-radius: 5px;
     /* font-size: 0.8rem; */
     background-color: transparent;
-    border-color: #FFE26E;
+    border-color: var(--primary-color);
     border-style: solid;
     font-weight: bold;
-    color: #FFE26E;
+    color: var(--primary-color);
 }

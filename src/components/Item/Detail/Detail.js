@@ -13,6 +13,7 @@ import ReplyIcon from "@mui/icons-material/Reply";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import { toast } from "react-toastify";
+import { DecimalFormatter } from "../../../utils/DecimalFormatter";
 
 const Detail = (props) => {
   const navigate = useNavigate();
@@ -86,9 +87,16 @@ const Detail = (props) => {
           </div>
           <div className="d-flex gap-2 align-items-center">
             <div className="rating_chip">
-              {props.item.ratings?.reduce((acc, rating) => {
-                return acc + rating.rating;
-              }, 0) / props.item.ratings?.length || 0}
+              {DecimalFormatter(
+                props.item.ratings?.reduce((acc, rating) => {
+                  return acc + rating.rating;
+                }, 0) / props.item.ratings?.length
+              )}
+              {/* {(
+                props.item.ratings?.reduce((acc, rating) => {
+                  return acc + rating.rating;
+                }, 0) / props.item.ratings?.length
+              ).toFixed(2) || 0} */}
 
               <StarIcon fontSize="1rem" />
             </div>
@@ -211,15 +219,15 @@ const Detail = (props) => {
                   sx={[
                     {
                       "&:hover": {
-                        backgroundColor: "#FFE26E",
-                        borderColor: "#FFE26E",
+                        backgroundColor: "var(--primary-color)",
+                        borderColor: "var(--primary-color)",
                         borderWidth: "3px",
                         color: "black",
                       },
                       minWidth: 200,
                       borderColor: "black",
                       backgroundColor: "black",
-                      color: "#FFE26E",
+                      color: "var(--primary-color)",
                       borderWidth: "3px",
                     },
                   ]}
@@ -234,15 +242,15 @@ const Detail = (props) => {
                   sx={[
                     {
                       "&:hover": {
-                        backgroundColor: "#FFE26E",
-                        borderColor: "#FFE26E",
+                        backgroundColor: "var(--primary-color)",
+                        borderColor: "var(--primary-color)",
                         borderWidth: "3px",
                         color: "black",
                       },
                       minWidth: 200,
                       borderColor: "black",
                       backgroundColor: "black",
-                      color: "#FFE26E",
+                      color: "var(--primary-color)",
                       borderWidth: "3px",
                     },
                   ]}
@@ -260,14 +268,14 @@ const Detail = (props) => {
                   sx={[
                     {
                       "&:hover": {
-                        backgroundColor: "#FFE26E",
-                        borderColor: "#FFE26E",
+                        backgroundColor: "var(--primary-color)",
+                        borderColor: "var(--primary-color)",
                         borderWidth: "3px",
                         color: "black",
                       },
                       borderColor: "black",
                       backgroundColor: "black",
-                      color: "#FFE26E",
+                      color: "var(--primary-color)",
                       borderWidth: "3px",
                     },
                   ]}
@@ -282,15 +290,15 @@ const Detail = (props) => {
                   sx={[
                     {
                       "&:hover": {
-                        backgroundColor: "#FFE26E",
-                        borderColor: "#FFE26E",
+                        backgroundColor: "var(--primary-color)",
+                        borderColor: "var(--primary-color)",
                         borderWidth: "3px",
                         color: "black",
                         boxShadow:
                           "5px 5px 20px #babecc,-10px -10px 20px #ffffff ",
                       },
                       borderColor: "black",
-                      backgroundColor: "#FFE26E",
+                      backgroundColor: "var(--primary-color)",
                       color: "black",
                       borderWidth: "3px",
                     },
