@@ -12,6 +12,8 @@ const MyContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [wishListItems, setWishListItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [cartLoading, setCartLoading] = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
   const theme = useTheme();
   const MobileScreen = useMediaQuery(theme.breakpoints.up("sm"));
   const MediumScreen = useMediaQuery(theme.breakpoints.up("md"));
@@ -39,12 +41,17 @@ const MyContextProvider = ({ children }) => {
   }, [token]);
 
   const getCartItems = () => {
-    ApiServices.GetCartItems().then((res) => {
-      console.log("res", res);
-      if (res.response_code === 200) {
-        setCartItems(res.cart_items);
-      }
-    });
+    setCartLoading(true);
+    ApiServices.GetCartItems()
+      .then((res) => {
+        console.log("res", res);
+        if (res.response_code === 200) {
+          setCartItems(res.cart_items);
+        }
+      })
+      .finally(() => {
+        setCartLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -52,12 +59,17 @@ const MyContextProvider = ({ children }) => {
   }, []);
 
   const getWishlistItems = () => {
-    ApiServices.GetFavouriteItems().then((res) => {
-      console.log("res", res);
-      if (res.response_code === 200) {
-        setWishListItems(res.wishlist);
-      }
-    });
+    setWishlistLoading(true);
+    ApiServices.GetFavouriteItems()
+      .then((res) => {
+        console.log("res", res);
+        if (res.response_code === 200) {
+          setWishListItems(res.wishlist);
+        }
+      })
+      .finally(() => {
+        setWishlistLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -82,6 +94,8 @@ const MyContextProvider = ({ children }) => {
         getWishlistItems,
         searchQuery,
         setSearchQuery,
+        cartLoading,
+        wishlistLoading,
       }}
     >
       {children}

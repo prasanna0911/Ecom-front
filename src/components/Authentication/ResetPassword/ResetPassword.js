@@ -1,7 +1,11 @@
 import {
+  Button,
   Card,
   CardContent,
   CardHeader,
+  Dialog,
+  DialogContent,
+  DialogTitle,
   FormHelperText,
   TextField,
   Typography,
@@ -9,6 +13,8 @@ import {
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ApiServices } from "../../../api/api";
+import RestoreIcon from "@mui/icons-material/Restore";
 
 const ResetPassword = () => {
   const [passValue, setPassValue] = useState("");
@@ -18,7 +24,9 @@ const ResetPassword = () => {
   const [cpassError, setCpassError] = useState(false);
   const [cpassErrorMsg, setCpassErrorMsg] = useState("");
   const [newToken, setNewToken] = useState("");
-  //   const navigate = useNavigate();
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -56,8 +64,16 @@ const ResetPassword = () => {
         Password: passValue,
       };
       console.log("json", json);
-
-      toast.success("password reset successfully");
+      ApiServices.ResetPassword(json).then((res) => {
+        console.log("res", res);
+        if (res.response_code === 200) {
+          navigate("/account/login");
+          toast.success("password reset successfully");
+        } else if (res.response_code === 401) {
+          setErrorText("Your Session has expired please try again later");
+          setErrorOpen(true);
+        }
+      });
     }
   };
   return (
@@ -119,6 +135,22 @@ const ResetPassword = () => {
             </div>
           </CardContent>
         </Card>
+        <Dialog fullWidth maxWidth="xs" open={errorOpen}>
+          <DialogTitle>
+            <h5>Session Expired</h5>
+          </DialogTitle>
+          <DialogContent className="text-center">
+            <RestoreIcon style={{ fontSize: "150px" }} />
+            <h6 className="text-center">{errorText}</h6>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => navigate("/auth/forget-password")}
+            >
+              Try Again
+            </Button>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

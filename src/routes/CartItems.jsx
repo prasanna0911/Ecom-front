@@ -15,11 +15,12 @@ import AccountHeader from '../components/Account/AccountHeader';
 import EmptyComponent from '../components/EmptyComponent';
 import { toast } from 'react-toastify';
 import { DecimalFormatter } from '../utils/DecimalFormatter';
+import Loader from '../utils/Loader';
 
 
 export const CartItems = () => {
     TabTitle("Cart Items - Shema");
-    const { cartItems, getCartItems, wishListItems, getWishlistItems, MobileScreen } = useMyContext()
+    const { cartItems, getCartItems, wishListItems, getWishlistItems, MobileScreen, cartLoading } = useMyContext()
     const navigate = useNavigate()
     const removeFromCart = async (id) => {
         var json = {
@@ -94,8 +95,9 @@ export const CartItems = () => {
 
     return (
         <>
-            {cartItems?.length > 0 ? (
-
+            {cartLoading ? (
+                <Loader />
+            ) : cartItems?.length > 0 ? (
                 <div className='cart_container' style={{ padding: MobileScreen ? "3rem" : "10px" }}>
                     {!MobileScreen && (
                         <AccountHeader head="My Cart" breadcrumb="" />

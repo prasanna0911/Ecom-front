@@ -5,6 +5,7 @@ import { useMyContext } from "../../Context/MyContext";
 import ItemCard from "../Card/ItemCard/ItemCard";
 import { ApiServices } from "../../api/api";
 import EmptyComponent from "../EmptyComponent.js";
+import Loader from "../../utils/Loader.js";
 
 const Search = () => {
   const location = useLocation();
@@ -13,6 +14,7 @@ const Search = () => {
   const { searchQuery, setSearchQuery } = useMyContext();
   const [value, setValue] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const query = queryParams.get("query");
@@ -20,21 +22,24 @@ const Search = () => {
   }, [searchQuery]);
 
   const getFilteredItems = async () => {
-    ApiServices.GetAllProducts().then((res) => {
-      console.log("res", res);
-      if (res.response_code === 200) {
-        const lowerCaseSearchQuery = searchQuery.toLowerCase();
-        const filteredData = res.Data.filter(
-          (item) =>
-            (item.name &&
-              item.name.toLowerCase().includes(lowerCaseSearchQuery)) ||
-            (item.description &&
-              item.description.toLowerCase().includes(lowerCaseSearchQuery))
-        );
-        console.log("filteredData", filteredData);
-        setFilteredItems(filteredData);
-      }
-    });
+    setLoading(true);
+    ApiServices.GetAllProducts()
+      .then((res) => {
+        console.log("res", res);
+        if (res.response_code === 200) {
+          const lowerCaseSearchQuery = searchQuery.toLowerCase();
+          const filteredData = res.Data.filter(
+            (item) =>
+              (item.name &&
+                item.name.toLowerCase().includes(lowerCaseSearchQuery)) ||
+              (item.description &&
+                item.description.toLowerCase().includes(lowerCaseSearchQuery))
+          );
+          console.log("filteredData", filteredData);
+          setFilteredItems(filteredData);
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -43,7 +48,9 @@ const Search = () => {
 
   return (
     <>
-      {filteredItems.length > 0 ? (
+      {loading ? (
+        <Loader />
+      ) : filteredItems.length > 0 ? (
         <div className="category__card__container flex-column my-4">
           <div>
             <h4>Search results for "{searchQuery}"</h4>

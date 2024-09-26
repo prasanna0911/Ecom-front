@@ -11,13 +11,16 @@ import {
 import { useState } from "react";
 import { ApiServices } from "../../../api/api";
 import { useMyContext } from "../../../Context/MyContext";
+import SuccessDialog from "../../../utils/SuccessDialog";
 
 const LoginCard = () => {
   const [userValue, setUserValue] = useState("");
   const [mailError, setMailError] = useState(false);
+  const [userErrorMsg, setUserErrorMsg] = useState("");
   const [passValue, setPassValue] = useState("");
   const [passError, setPassError] = useState(false);
   const [passErrorMsg, setPassErrorMsg] = useState("");
+  const [successOpen, setSuccessOpen] = useState(false);
   const navigate = useNavigate();
 
   const { setIsLogin } = useMyContext();
@@ -25,8 +28,10 @@ const LoginCard = () => {
   const handleSubmit = () => {
     setMailError(false);
     setPassError(false);
+    setUserErrorMsg("");
     if (!userValue) {
       setMailError(true);
+      setUserErrorMsg("Username cannot be empty");
       return;
     } else if (!passValue) {
       setPassError(true);
@@ -42,8 +47,14 @@ const LoginCard = () => {
         if (res.response_code === 200) {
           localStorage.setItem("token", res.token);
           setIsLogin(true);
-          alert("login successfully");
-          window.location.replace("/account/me");
+          // window.location.replace("/account/me");
+          setSuccessOpen(true);
+        } else if (res.response_code === 404) {
+          setMailError(true);
+          setUserErrorMsg("Wrong username");
+        } else if (res.response_code === 401) {
+          setPassError(true);
+          setPassErrorMsg("Incorrect password");
         } else {
           alert(res.message);
         }
@@ -80,7 +91,7 @@ const LoginCard = () => {
           value={userValue}
           onChange={(e) => setUserValue(e.target.value)}
           error={mailError}
-          helperText={mailError ? "Username cannot be empty" : ""}
+          helperText={mailError ? userErrorMsg : ""}
         />
         <FormHelperText>
           <Typography variant="subtitle1" gutterBottom>
@@ -122,6 +133,16 @@ const LoginCard = () => {
           >
             Sign up
           </span>
+          <SuccessDialog
+            open={successOpen}
+            dialogTitle="Welcome Back!"
+            dialogContent="You've successfully logged in. Ready to explore the latest deals and products? Click 'Continue' to start shopping!"
+            buttonText="Continue"
+            btnClick={() => {
+              setSuccessOpen(false);
+              window.location.replace("/account/me");
+            }}
+          />
         </Typography>
       </CardContent>
     </Card>

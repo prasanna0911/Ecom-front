@@ -26,6 +26,7 @@ a:hover {
 :root {
     --primary-color: #ffe26e;
     --secondary-color: #2ecc71;
+    --success-color: #2e7d32;
 }
 
 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
@@ -147,5 +148,22 @@ a:hover {
 @media (max-width:500px) {
     .Toastify__toast-container {
         font-size: 12px;
+    }
+}
+
+
+.animated-svg .path {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 2s ease forwards;
+}
+
+@keyframes draw {
+    0% {
+        stroke-dashoffset: 1000;
+    }
+
+    100% {
+        stroke-dashoffset: 0;
     }
 }

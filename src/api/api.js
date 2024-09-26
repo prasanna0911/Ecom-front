@@ -51,7 +51,7 @@ const Login = async (data) => {
     const response = await axios.post(baseUrl + "/login", data);
     return response.data;
   } catch (error) {
-    return error;
+    return error.response.data;
   }
 };
 
@@ -70,6 +70,15 @@ const OtpVerification = async (data) => {
     return response.data;
   } catch (error) {
     return error;
+  }
+};
+
+const ResetPassword = async (data) => {
+  try {
+    const response = await axios.post(baseUrl + "/reset-password", data);
+    return response.data;
+  } catch (error) {
+    return error.response.data;
   }
 };
 
@@ -360,6 +369,7 @@ export const ApiServices = {
   Login,
   RecoverPassword,
   OtpVerification,
+  ResetPassword,
   UserData,
   UpdateName,
   UpdateUserName,
