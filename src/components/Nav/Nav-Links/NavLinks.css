@@ -38,6 +38,20 @@ a:hover {
 
 .container .nav-link {
     color: black;
+    transition: 0.5s all ease-in-out;
+}
+
+.nav-link {
+    /* color: black; */
+    transition: 0.5s all ease-in-out;
+}
+
+.nav-link:focus,
+.nav-link:hover {
+    color: var(--primary-color);
+    border-radius: 8px;
+    transition: 0.5s all ease-in-out;
+    background-color: #ffe26e3a;
 }
 
 .control__small {
@@ -47,7 +61,10 @@ a:hover {
 }
 
 .sel-nav {
-    border-bottom: 4px solid var(--primary-color);
+    /* border-bottom: 4px solid var(--primary-color); */
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    color: white !important;
 }
 
 

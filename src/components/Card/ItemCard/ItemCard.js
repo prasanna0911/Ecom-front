@@ -106,8 +106,17 @@ const ItemCard = (props) => {
             </div>
           </Link>
           <div className="item-prices">
-            <span className="item-price-new">${props.item.price}</span>
-            <span className="item-price-old">$1299</span>
+            <span className="item-price-new">
+              ${Math.round((props.item.price * (100 - props.item.offer)) / 100)}
+            </span>
+            {props.item.offer && props.item.offer > 0 ? (
+              <>
+                <span className="item-price-old">${props.item.price}</span>
+                {/* <span className="text-success">{props.item.offer}% off</span> */}
+              </>
+            ) : (
+              <></>
+            )}
             {/* <span className="text-success">12% offer</span> */}
           </div>
           {/* <div className="product__card__action gap-1 align-items-center mt-2">

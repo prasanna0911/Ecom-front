@@ -185,12 +185,12 @@ const Order = () => {
                                         <img
                                             src={selectedOrder?.product_info?.primaryImage?.[0]?.URL}
                                             alt={selectedOrder?.product_info?.name}
-                                            width={70}
+                                            width={60}
                                             className="product__img"
                                         />
                                     )}
                                     <div className='cursor-pointer' onClick={() => navigate(`/item/${selectedOrder?.product_info?.category}/${selectedOrder?.product_info?._id}`)}>
-                                        <h5>{selectedOrder?.product_info?.name}</h5>
+                                        <h5 style={{ fontSize: "13px" }} className="text-muted mb-1">{selectedOrder?.product_info?.name}</h5>
                                         <h6 className="mb-1">
                                             {selectedOrder?.product_info?.description}
                                         </h6>

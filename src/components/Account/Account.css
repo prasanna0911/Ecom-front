@@ -134,7 +134,7 @@
 
 
 .review-img {
-    width: 85px;
+    width: 65px;
 }
 
 .review-product {
@@ -168,7 +168,7 @@
         /* padding: 1rem; */
         align-items: center;
         gap: 5px;
-        max-width: auto;
+        max-width: 768px;
     }
 
 }

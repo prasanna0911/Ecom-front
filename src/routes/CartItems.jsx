@@ -129,36 +129,37 @@ export const CartItems = () => {
                                             </div>
                                         </div>
                                         <div style={{ maxWidth: "400px" }} className='product_details cursor-pointer' onClick={() => navigate(`/item/${item.category}/${item._id}`)}>
-                                            <h5>{item.name}</h5>
+                                            <h5 style={{ fontSize: '13px' }} className='text-muted mb-1'>{item.name}</h5>
                                             <h6 className="mb-1">{item.description}</h6>
                                             <p className="mb-1" style={{ fontSize: 'small' }}>
                                                 Size: {item.size[0]} | color: {item.color}
                                             </p>
-                                            <div className="d-flex gap-2 my-2">
-                                                <Chip
-                                                    color="success"
-                                                    size="small"
-                                                    className="rounded"
-                                                    style={{ height: "auto" }}
-                                                    label={
-                                                        <Box
-                                                            className="d-flex align-items-center justify-content-center gap-1"
-                                                            style={{ fontSize: "small" }}
-                                                        >
-                                                            {DecimalFormatter(item.ratings?.reduce((acc, rating) => {
-                                                                return acc + rating.rating;
-                                                            }, 0) / item.ratings?.length) || 0} <Star fontSize="1rem" />
-                                                        </Box>
-                                                    }
-                                                />
-                                                <span style={{ fontSize: "small" }}>({item.ratings?.length || 0})</span>
-                                            </div>
-
+                                            {item.ratings?.length > 0 && (
+                                                <div className="d-flex gap-2 my-2">
+                                                    <Chip
+                                                        color="success"
+                                                        size="small"
+                                                        className="rounded"
+                                                        style={{ height: "auto" }}
+                                                        label={
+                                                            <Box
+                                                                className="d-flex align-items-center justify-content-center gap-1"
+                                                                style={{ fontSize: "small" }}
+                                                            >
+                                                                {DecimalFormatter(item.ratings?.reduce((acc, rating) => {
+                                                                    return acc + rating.rating;
+                                                                }, 0) / item.ratings?.length) || 0} <Star fontSize="1rem" />
+                                                            </Box>
+                                                        }
+                                                    />
+                                                    <span style={{ fontSize: "small" }}>({item.ratings?.length || 0})</span>
+                                                </div>
+                                            )}
                                             <p className="mb-1 fw-bold product__price">Total : ${item.count * item.price}</p>
 
                                         </div>
                                     </div>
-                                    <p className='mb-0'>Delivery by Thu Jul 25 | Free</p>
+                                    <p className='mb-0' style={{ fontSize: '15px', fontWeight: '600' }}>Delivery by {new Date(new Date().getTime() + item.delivery_time * 24 * 60 * 60 * 1000).toString().slice(0, 10)} <span className='mx-2'>{'  |  '}</span> {item.delivery_charge > 0 ? `$${item.delivery_charge}` : 'Free'}</p>
                                 </CardContent>
                                 <CardContent className='pt-0'>
                                     <div className='d-flex gap-2 flex-wrap align-items-center'>

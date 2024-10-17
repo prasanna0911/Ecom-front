@@ -66,7 +66,9 @@ const MyOrders = () => {
                 className="product__img"
               />
               <div>
-                <h5 style={{ fontSize: "16px" }}>{item.product_info?.name}</h5>
+                <h5 style={{ fontSize: "13px" }} className="text-muted mb-1">
+                  {item.product_info?.name}
+                </h5>
                 <h6 className="mb-1">{item.product_info?.description}</h6>
                 <p className="mb-1" style={{ fontSize: "small" }}>
                   Size: {item.product_info?.size[0]} color:{" "}

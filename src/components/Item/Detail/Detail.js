@@ -81,9 +81,17 @@ const Detail = (props) => {
             {props.item.description}
           </div>
           <div className="product__price__detail mb-2">
-            <p className="current">${props.item.price}</p>
-            <p className="original">$1344</p>
-            <p className="offer">76% off</p>
+            <p className="current">
+              ${(props.item.price * (100 - props.item.offer)) / 100}
+            </p>
+            {props.item.offer && props.item.offer > 0 ? (
+              <>
+                <p className="original">${props.item.price}</p>
+                <p className="offer">{props.item.offer}% off</p>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
           <div className="d-flex gap-2 align-items-center">
             <div className="rating_chip">
@@ -164,7 +172,10 @@ const Detail = (props) => {
           <LocalShippingIcon />
           <div className="">
             <h6 className="delivery_date_2">
-              Delivery by 7 Sep, Saturday | Free
+              Delivery by 7 Sep, Saturday |{" "}
+              {props.item.delivery_charge && props.item.delivery_charge > 0
+                ? `$${props.item.delivery_charge}`
+                : "Free"}
             </h6>
             <h6 className="delivery_time">if ordered before 10:59 AM</h6>
           </div>

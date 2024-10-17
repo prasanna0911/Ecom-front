@@ -118,6 +118,8 @@
 .item .product__name {
     margin: 6px 0px 0px;
     font-weight: 600;
+    font-size: 14px;
+    color: #6c757d;
 }
 
 .item .product__description {

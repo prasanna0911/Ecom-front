@@ -7,7 +7,7 @@ const NavLinks = () => {
   return (
     <nav className="nav__bottom__container">
       <div className="bottom__container">
-        <ul className="nav">
+        <ul className="nav gap-2">
           <li className={path === "/" ? "nav-link sel-nav" : "nav-link"}>
             <Link to="/">Home</Link>
           </li>

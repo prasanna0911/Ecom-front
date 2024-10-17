@@ -53,36 +53,48 @@ const WishCard = (props) => {
             navigate(`/item/${props.item.category}/${props.item._id}`)
           }
         >
-          <p className="mb-1">{props.item.name}</p>
+          <p className="mb-1 text-muted" style={{ fontSize: "13px" }}>
+            {props.item.name}
+          </p>
           <h6 className="mb-1">{props.item.description}</h6>
-          <div className="d-flex gap-2 mb-2">
-            <Chip
-              color="success"
-              size="small"
-              className="rounded"
-              style={{ height: "auto" }}
-              label={
-                <Box
-                  className="d-flex align-items-center justify-content-center gap-1"
-                  style={{ fontSize: "small" }}
-                >
-                  {DecimalFormatter(
-                    props.item.ratings?.reduce((acc, rating) => {
-                      return acc + rating.rating;
-                    }, 0) / props.item.ratings?.length
-                  ) || 0}{" "}
-                  <Star fontSize="1rem" />
-                </Box>
-              }
-            />
-            <span style={{ fontSize: "small" }}>
-              ({props.item.ratings?.length})
-            </span>
-          </div>
+          {props.item.ratings?.length > 0 && (
+            <div className="d-flex gap-2 mb-2">
+              <Chip
+                color="success"
+                size="small"
+                className="rounded"
+                style={{ height: "auto" }}
+                label={
+                  <Box
+                    className="d-flex align-items-center justify-content-center gap-1"
+                    style={{ fontSize: "small" }}
+                  >
+                    {DecimalFormatter(
+                      props.item.ratings?.reduce((acc, rating) => {
+                        return acc + rating.rating;
+                      }, 0) / props.item.ratings?.length
+                    ) || 0}{" "}
+                    <Star fontSize="1rem" />
+                  </Box>
+                }
+              />
+              <span style={{ fontSize: "small" }}>
+                ({props.item.ratings?.length})
+              </span>
+            </div>
+          )}
           <div className="mb-1 fw-bold flex-wrap wish__item__price">
-            <span>${props.item.price}</span>
-            <span className="text-decoration-line-through">$1299</span>
-            <span className="text-success">12% offer</span>
+            <span> ${(props.item.price * (100 - props.item.offer)) / 100}</span>
+            {props.item.offer && props.item.offer > 0 ? (
+              <>
+                <span className="text-decoration-line-through">
+                  ${props.item.price}
+                </span>
+                <span className="text-success">{props.item.offer}% off</span>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
